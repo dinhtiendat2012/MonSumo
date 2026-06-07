@@ -8,31 +8,45 @@ public class TimedBombSkill : SkillDefinition
     [SerializeField] private float explosionRadius = 3f;
     [SerializeField] private float fuseTime = 2.5f;
     [SerializeField] private float placeForwardOffset = 1f;
-    [SerializeField] private float upwardBoost = 0.25f;
     [SerializeField] private LayerMask targetMask = ~0;
 
     public override void Activate(PlayerInventory owner)
     {
         Transform origin = owner.SkillOrigin;
-        Vector3 placePosition = origin.position + origin.forward * placeForwardOffset;
+        Vector2 direction = GetActivationDirection(origin);
+        Vector2 placePosition = (Vector2)origin.position + direction * placeForwardOffset;
 
         TimedBomb bomb = bombPrefab != null
             ? Instantiate(bombPrefab, placePosition, Quaternion.identity)
             : CreateGreyboxBomb(placePosition);
 
-        bomb.Arm(fuseTime, explosionRadius, pushForce, upwardBoost, targetMask);
+        bomb.Arm(fuseTime, explosionRadius, pushForce, targetMask);
     }
 
-    private TimedBomb CreateGreyboxBomb(Vector3 position)
+    private TimedBomb CreateGreyboxBomb(Vector2 position)
     {
-        GameObject bombObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        GameObject bombObject = new GameObject("Greybox Timed Bomb");
         bombObject.name = "Greybox Timed Bomb";
         bombObject.transform.position = position;
-        bombObject.transform.localScale = Vector3.one * 0.7f;
 
-        Rigidbody body = bombObject.AddComponent<Rigidbody>();
-        body.constraints = RigidbodyConstraints.FreezeRotation;
+        BoxCollider2D collider = bombObject.AddComponent<BoxCollider2D>();
+        collider.isTrigger = false;
+
+        Rigidbody2D body = bombObject.AddComponent<Rigidbody2D>();
+        body.gravityScale = 0f;
+        body.freezeRotation = true;
 
         return bombObject.AddComponent<TimedBomb>();
+    }
+
+    private Vector2 GetActivationDirection(Transform origin)
+    {
+        Vector2 direction = origin.right;
+        if (direction.sqrMagnitude <= 0.0001f)
+        {
+            direction = origin.up;
+        }
+
+        return direction.normalized;
     }
 }
