@@ -3,32 +3,31 @@ using UnityEngine;
 public static class PushUtility
 {
     // Push a Rigidbody in the given direction with an impulse force.
-    public static void ApplyImpulse(Rigidbody target, Vector3 direction, float force)
+    public static void ApplyImpulse(Rigidbody2D target, Vector2 direction, float force)
     {
         if (target == null)
         {
             return;
         }
 
-        Vector3 pushDirection = direction.normalized;
+        Vector2 pushDirection = direction.normalized;
         if (pushDirection.sqrMagnitude <= 0.0001f)
         {
-            pushDirection = Vector3.up;
+            pushDirection = Vector2.up;
         }
 
-        target.AddForce(pushDirection * force, ForceMode.Impulse);
+        target.AddForce(pushDirection * force, ForceMode2D.Impulse);
     }
 
     // Push a Rigidbody away from a center point.
-    public static void ApplyExplosionImpulse(Rigidbody target, Vector3 center, float force, float upwardBoost)
+    public static void ApplyExplosionImpulse(Rigidbody2D target, Vector2 center, float force)
     {
         if (target == null)
         {
             return;
         }
 
-        Vector3 direction = target.worldCenterOfMass - center;
-        direction.y += upwardBoost;
+        Vector2 direction = target.worldCenterOfMass - center;
         ApplyImpulse(target, direction, force);
     }
 }

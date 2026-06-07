@@ -5,15 +5,13 @@ public class TimedBomb : MonoBehaviour
 {
     private float explosionRadius;
     private float pushForce;
-    private float upwardBoost;
     private LayerMask targetMask;
 
     // Start the countdown and explode after fuseTime seconds.
-    public void Arm(float fuseTime, float radius, float force, float upward, LayerMask mask)
+    public void Arm(float fuseTime, float radius, float force, LayerMask mask)
     {
         explosionRadius = radius;
         pushForce = force;
-        upwardBoost = upward;
         targetMask = mask;
         StartCoroutine(ExplodeAfterDelay(fuseTime));
     }
@@ -26,16 +24,16 @@ public class TimedBomb : MonoBehaviour
 
     private void Explode()
     {
-        Collider[] hits = Physics.OverlapSphere(transform.position, explosionRadius, targetMask, QueryTriggerInteraction.Ignore);
-        foreach (Collider hit in hits)
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, explosionRadius, targetMask);
+        foreach (Collider2D hit in hits)
         {
-            Rigidbody targetBody = hit.attachedRigidbody;
+            Rigidbody2D targetBody = hit.attachedRigidbody;
             if (targetBody == null)
             {
                 continue;
             }
 
-            PushUtility.ApplyExplosionImpulse(targetBody, transform.position, pushForce, upwardBoost);
+            PushUtility.ApplyExplosionImpulse(targetBody, transform.position, pushForce);
         }
 
         Destroy(gameObject);

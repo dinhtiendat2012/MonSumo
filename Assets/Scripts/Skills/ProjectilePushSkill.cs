@@ -13,29 +13,40 @@ public class ProjectilePushSkill : SkillDefinition
     public override void Activate(PlayerInventory owner)
     {
         Transform origin = owner.SkillOrigin;
-        Vector3 spawnPosition = origin.position + origin.forward * spawnForwardOffset;
+        Vector2 direction = GetActivationDirection(origin);
+        Vector2 spawnPosition = (Vector2)origin.position + direction * spawnForwardOffset;
 
         ProjectilePush projectile = projectilePrefab != null
-            ? Instantiate(projectilePrefab, spawnPosition, origin.rotation)
-            : CreateGreyboxProjectile(spawnPosition, origin.rotation);
+            ? Instantiate(projectilePrefab, spawnPosition, Quaternion.identity)
+            : CreateGreyboxProjectile(spawnPosition);
 
-        projectile.Launch(origin.forward, projectileSpeed, pushForce, lifeTime, owner.gameObject, targetMask);
+        projectile.Launch(direction, projectileSpeed, pushForce, lifeTime, owner.gameObject, targetMask);
     }
 
-    private ProjectilePush CreateGreyboxProjectile(Vector3 position, Quaternion rotation)
+    private ProjectilePush CreateGreyboxProjectile(Vector2 position)
     {
-        GameObject projectileObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        GameObject projectileObject = new GameObject("Greybox Push Projectile");
         projectileObject.name = "Greybox Push Projectile";
-        projectileObject.transform.SetPositionAndRotation(position, rotation);
-        projectileObject.transform.localScale = Vector3.one * 0.45f;
+        projectileObject.transform.position = position;
 
-        Collider collider = projectileObject.GetComponent<Collider>();
+        CircleCollider2D collider = projectileObject.AddComponent<CircleCollider2D>();
         collider.isTrigger = true;
 
-        Rigidbody body = projectileObject.AddComponent<Rigidbody>();
-        body.useGravity = false;
-        body.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+        Rigidbody2D body = projectileObject.AddComponent<Rigidbody2D>();
+        body.gravityScale = 0f;
+        body.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
 
         return projectileObject.AddComponent<ProjectilePush>();
+    }
+
+    private Vector2 GetActivationDirection(Transform origin)
+    {
+        Vector2 direction = origin.right;
+        if (direction.sqrMagnitude <= 0.0001f)
+        {
+            direction = origin.up;
+        }
+
+        return direction.normalized;
     }
 }

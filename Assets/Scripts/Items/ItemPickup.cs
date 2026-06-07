@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(Collider2D))]
 public class ItemPickup : MonoBehaviour
 {
     [SerializeField] private SkillDefinition skill;
@@ -9,20 +9,31 @@ public class ItemPickup : MonoBehaviour
 
     private void Reset()
     {
-        Collider pickupCollider = GetComponent<Collider>();
+        Collider2D pickupCollider = GetComponent<Collider2D>();
         pickupCollider.isTrigger = true;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
+        Debug.Log($"[ITEM] Trigger with {other.name}");
+
         PlayerInventory inventory = other.GetComponentInParent<PlayerInventory>();
+
+        Debug.Log($"[ITEM] Inventory = {inventory}");
+
         if (inventory == null)
         {
+            Debug.Log("[ITEM] Inventory NULL");
             return;
         }
 
-        if (inventory.TryPickup(this))
+        bool picked = inventory.TryPickup(this);
+
+        Debug.Log($"[ITEM] TryPickup = {picked}");
+
+        if (picked)
         {
+            Debug.Log("[ITEM] Destroy item");
             Destroy(gameObject);
         }
     }
