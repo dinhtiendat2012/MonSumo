@@ -20,7 +20,7 @@ public class ItemSpawner : MonoBehaviour
     [SerializeField] private LayerMask blockedMask = 0;
     [SerializeField] private int maxAttempts = 12;
 
-    private readonly List<ItemPickup> spawnedItems = new List<ItemPickup>();
+    private readonly List<GameObject> spawnedItems = new List<GameObject>();
 
     private void OnEnable()
     {
@@ -50,7 +50,7 @@ public class ItemSpawner : MonoBehaviour
 
         for (int attempt = 0; attempt < maxAttempts; attempt++)
         {
-            Vector3 position = GetRandomSpawnPosition();
+            Vector2 position = GetRandomSpawnPosition();
             if (!IsValidPosition(position))
             {
                 continue;
@@ -58,7 +58,7 @@ public class ItemSpawner : MonoBehaviour
 
             GameObject prefab = validPrefabs[Random.Range(0, validPrefabs.Count)];
             GameObject itemObject = Instantiate(prefab, position, Quaternion.identity);
-            spawnedItems.Add(itemObject.GetComponent<ItemPickup>());
+            spawnedItems.Add(itemObject);
             return true;
         }
 
@@ -85,7 +85,7 @@ public class ItemSpawner : MonoBehaviour
         return validPrefabs;
     }
 
-    private Vector3 GetRandomSpawnPosition()
+    private Vector2 GetRandomSpawnPosition()
     {
         if (!useBoundingBox && spawnPoints != null && spawnPoints.Length > 0)
         {
@@ -102,22 +102,22 @@ public class ItemSpawner : MonoBehaviour
         return transform.TransformPoint(boxCenter + localOffset);
     }
 
-    private bool IsValidPosition(Vector3 position)
+    private bool IsValidPosition(Vector2 position)
     {
-        foreach (ItemPickup item in spawnedItems)
+        foreach (GameObject item in spawnedItems)
         {
             if (item == null)
             {
                 continue;
             }
 
-            if (Vector3.Distance(position, item.transform.position) < overlapCheckRadius * 2f)
+            if (Vector2.Distance(position, item.transform.position) < overlapCheckRadius * 2f)
             {
                 return false;
             }
         }
 
-        Collider[] blockers = Physics.OverlapSphere(position, overlapCheckRadius, blockedMask, QueryTriggerInteraction.Collide);
+        Collider2D[] blockers = Physics2D.OverlapCircleAll(position, overlapCheckRadius, blockedMask);
         return blockers.Length == 0;
     }
 

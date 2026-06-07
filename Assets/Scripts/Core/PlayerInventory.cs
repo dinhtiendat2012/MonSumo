@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Rigidbody2D))]
 public class PlayerInventory : MonoBehaviour
 {
     [SerializeField] private KeyCode activationKey = KeyCode.Space;

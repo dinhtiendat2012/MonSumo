@@ -2,24 +2,40 @@ using UnityEngine;
 
 public class Card : MonoBehaviour
 {
-    public GameObject weaponPrefab;
+    public enum BuffType
+    {
+        Stamina,
+        Speed,
+        PushForce
+    }
 
-    private WeaponRotate weaponPivot;
+    [SerializeField] private BuffType buffType;
+
     private Cards cards;
 
-    void Start()
+    private void Start()
     {
-        weaponPivot = FindFirstObjectByType<WeaponRotate>();
-
         cards = GetComponentInParent<Cards>();
     }
 
     private void OnMouseDown()
     {
-        // Equip weapon
-        weaponPivot.Equip(weaponPrefab);
+        switch (buffType)
+        {
+            case BuffType.Stamina:
+                Debug.Log("Stamina Upgraded");
+                break;
+            case BuffType.Speed:
+                Debug.Log("Speed Upgraded");
+                break;
+            case BuffType.PushForce:
+                Debug.Log("Push Force Upgraded");
+                break;
+        }
 
-        // Ẩn toàn bộ card
-        cards.HideAllCards();
+        if (cards != null)
+        {
+            cards.HideAllCards();
+        }
     }
 }

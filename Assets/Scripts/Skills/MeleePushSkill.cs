@@ -6,25 +6,36 @@ public class MeleePushSkill : SkillDefinition
     [SerializeField] private float pushForce = 14f;
     [SerializeField] private float radius = 2.25f;
     [SerializeField] private float forwardOffset = 1.4f;
-    [SerializeField] private float upwardBoost = 0.15f;
     [SerializeField] private LayerMask targetMask = ~0;
 
     public override void Activate(PlayerInventory owner)
     {
         Transform origin = owner.SkillOrigin;
-        Vector3 center = origin.position + origin.forward * forwardOffset;
+        Vector2 direction = GetActivationDirection(origin);
+        Vector2 center = (Vector2)origin.position + direction * forwardOffset;
 
-        // Scan the area in front of the player and push Rigidbody targets away from the activation center.
-        Collider[] hits = Physics.OverlapSphere(center, radius, targetMask, QueryTriggerInteraction.Ignore);
-        foreach (Collider hit in hits)
+        // Scan the area in front of the player and push Rigidbody2D targets away from the activation center.
+        Collider2D[] hits = Physics2D.OverlapCircleAll(center, radius, targetMask);
+        foreach (Collider2D hit in hits)
         {
-            Rigidbody targetBody = hit.attachedRigidbody;
+            Rigidbody2D targetBody = hit.attachedRigidbody;
             if (targetBody == null || targetBody.transform == owner.transform)
             {
                 continue;
             }
 
-            PushUtility.ApplyExplosionImpulse(targetBody, center, pushForce, upwardBoost);
+            PushUtility.ApplyExplosionImpulse(targetBody, center, pushForce);
         }
+    }
+
+    private Vector2 GetActivationDirection(Transform origin)
+    {
+        Vector2 direction = origin.right;
+        if (direction.sqrMagnitude <= 0.0001f)
+        {
+            direction = origin.up;
+        }
+
+        return direction.normalized;
     }
 }
