@@ -9,10 +9,16 @@ namespace MonSumo.World.Zone
     [RequireComponent(typeof(LineRenderer))]
     public class ZoneController : NetworkBehaviour
     {
-        [Header("Zone Visual")]
+        [Header("Zone Visual (Line Renderer)")]
+        [SerializeField] private bool useLineRenderer = true;
         [SerializeField] private int segments = 128;
         [SerializeField] private float lineWidth = 0.15f;
         [SerializeField] private Color zoneColor = Color.red;
+
+        [Header("Zone Visual (Sprite Renderer - Optional)")]
+        [SerializeField] private SpriteRenderer zoneSpriteRenderer;
+        [Tooltip("Bán kính mặc định của sprite khi Scale = 1 (Ví dụ: sprite tròn mặc định của Unity có bán kính 0.5)")]
+        [SerializeField] private float spriteDefaultRadius = 0.5f;
 
         [Header("Zone Size Settings")]
         [SerializeField] private bool autoFitStartRadius = true;
@@ -66,14 +72,18 @@ namespace MonSumo.World.Zone
         private void Awake()
         {
             lineRenderer = GetComponent<LineRenderer>();
-            lineRenderer.useWorldSpace = false;
-            lineRenderer.loop = true;
-            lineRenderer.positionCount = segments;
-            lineRenderer.startWidth = lineWidth;
-            lineRenderer.endWidth = lineWidth;
-            lineRenderer.startColor = zoneColor;
-            lineRenderer.endColor = zoneColor;
-            lineRenderer.sortingOrder = 50;
+            if (lineRenderer != null)
+            {
+                lineRenderer.enabled = useLineRenderer;
+                lineRenderer.useWorldSpace = false;
+                lineRenderer.loop = true;
+                lineRenderer.positionCount = segments;
+                lineRenderer.startWidth = lineWidth;
+                lineRenderer.endWidth = lineWidth;
+                lineRenderer.startColor = zoneColor;
+                lineRenderer.endColor = zoneColor;
+                lineRenderer.sortingOrder = 50;
+            }
         }
 
         public override void OnNetworkSpawn()
@@ -106,6 +116,7 @@ namespace MonSumo.World.Zone
             {
                 transform.position = (Vector3)currentCenter.Value;
                 DrawCircle(currentRadius.Value);
+                UpdateSpriteScale(currentRadius.Value);
             }
         }
 
@@ -118,12 +129,14 @@ namespace MonSumo.World.Zone
         private void HandleRadiusChanged(float previousValue, float newValue)
         {
             DrawCircle(newValue);
+            UpdateSpriteScale(newValue);
         }
 
         private void HandleCenterChanged(Vector2 previousValue, Vector2 newValue)
         {
             transform.position = (Vector3)newValue;
             DrawCircle(currentRadius.Value);
+            UpdateSpriteScale(currentRadius.Value);
         }
 
         private void Update()
@@ -135,6 +148,7 @@ namespace MonSumo.World.Zone
 
             // Sync visual position
             transform.position = (Vector3)currentCenter.Value;
+            UpdateSpriteScale(currentRadius.Value);
         }
 
         private void UpdateServerZone()
@@ -446,6 +460,28 @@ namespace MonSumo.World.Zone
                 mapMin = detectedMin;
                 mapMax = detectedMax;
             }
+        }
+
+        private void UpdateSpriteScale(float radius)
+        {
+            if (zoneSpriteRenderer != null)
+            {
+                float spriteRadius = GetSpriteRadius();
+                if (spriteRadius > 0.01f)
+                {
+                    float scaleFactor = radius / spriteRadius;
+                    zoneSpriteRenderer.transform.localScale = new Vector3(scaleFactor, scaleFactor, 1f);
+                }
+            }
+        }
+
+        private float GetSpriteRadius()
+        {
+            if (zoneSpriteRenderer != null && zoneSpriteRenderer.sprite != null)
+            {
+                return zoneSpriteRenderer.sprite.bounds.extents.x;
+            }
+            return spriteDefaultRadius;
         }
 
 #if UNITY_EDITOR
