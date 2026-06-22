@@ -45,10 +45,15 @@ namespace MonSumo.World.Zone
         private bool _isSpeedingUpMoving;
         private Vector2 _moveDirection;
 
-        // Constants/Parameters
-        private const float ShrinkStartSecond = 180f; // 3 minutes
-        private const float ShrinkSpeedUpSecond = 540f; // 9 minutes
-        private const float MoveSpeedUpDelay = 120f; // 2 minutes after moving starts
+        [Header("Zone Timing & Speed Settings")]
+        [SerializeField] private float shrinkStartSecond = 180f; // 3 minutes
+        [SerializeField] private float shrinkSpeedUpSecond = 540f; // 9 minutes
+        [SerializeField] private float moveSpeedUpDelay = 120f; // 2 minutes after moving starts
+        [SerializeField] private float baseShrinkSpeed = 2f; // units per minute
+        [SerializeField] private float speedUpBaseShrinkSpeed = 5f; // units per minute after 9 minutes
+        [SerializeField] private float shrinkAcceleration = 0.05f; // units/s increase rate
+        [SerializeField] private float baseMoveSpeed = 5f; // units per minute
+        [SerializeField] private float moveAcceleration = 0.05f; // units/s increase rate
 
         public float CurrentRadius => currentRadius.Value;
         public float StartRadius => startRadius;
@@ -122,7 +127,7 @@ namespace MonSumo.World.Zone
             _gameTimer += Time.deltaTime;
 
             // 1. Handle Shrinking
-            if (_gameTimer >= ShrinkStartSecond)
+            if (_gameTimer >= shrinkStartSecond)
             {
                 if (!_isShrinkingStarted)
                 {
@@ -137,15 +142,14 @@ namespace MonSumo.World.Zone
 
                 // Calculate shrink speed (units/minute divided by 60)
                 float shrinkSpeedMin;
-                if (_gameTimer < ShrinkSpeedUpSecond)
+                if (_gameTimer < shrinkSpeedUpSecond)
                 {
-                    shrinkSpeedMin = 2f; // Speed = 2 units/min
+                    shrinkSpeedMin = baseShrinkSpeed;
                 }
                 else
                 {
-                    // Speed = 5 + 0.05 per second since minute 9
-                    float secondsSinceNineMin = _gameTimer - ShrinkSpeedUpSecond;
-                    shrinkSpeedMin = 5f + 0.05f * secondsSinceNineMin;
+                    float secondsSinceNineMin = _gameTimer - shrinkSpeedUpSecond;
+                    shrinkSpeedMin = speedUpBaseShrinkSpeed + shrinkAcceleration * secondsSinceNineMin;
                 }
 
                 float shrinkSpeedSec = shrinkSpeedMin / 60f;
@@ -157,16 +161,16 @@ namespace MonSumo.World.Zone
             {
                 _moveTimer += Time.deltaTime;
 
-                float moveSpeedMin = 5f; // Base speed = 5 units/min
-                if (_moveTimer >= MoveSpeedUpDelay)
+                float moveSpeedMin = baseMoveSpeed;
+                if (_moveTimer >= moveSpeedUpDelay)
                 {
                     if (!_isSpeedingUpMoving)
                     {
                         _isSpeedingUpMoving = true;
                         TriggerAlertClientRpc("Vòng bo đang tăng tốc độ dịch chuyển!");
                     }
-                    float secondsSinceSpeedUp = _moveTimer - MoveSpeedUpDelay;
-                    moveSpeedMin = 5f + 0.05f * secondsSinceSpeedUp;
+                    float secondsSinceSpeedUp = _moveTimer - moveSpeedUpDelay;
+                    moveSpeedMin = baseMoveSpeed + moveAcceleration * secondsSinceSpeedUp;
                 }
 
                 float moveSpeedSec = moveSpeedMin / 60f;
@@ -290,5 +294,31 @@ namespace MonSumo.World.Zone
 
             Debug.Log($"[ZoneController Alert] {message}");
         }
+
+#if UNITY_EDITOR
+        public void DebugForceStartShrink()
+        {
+            if (!IsServer || !IsSpawned) return;
+            if (!_isShrinkingStarted)
+            {
+                _isShrinkingStarted = true;
+                TriggerAlertClientRpc("Vòng bo đang bắt đầu thu nhỏ lại!");
+                _isMovingStarted = true;
+                TriggerAlertClientRpc("Vòng bo đang bắt đầu dịch chuyển!");
+                InitializeMoveDirection();
+            }
+        }
+
+        public void DebugForceStartMoving()
+        {
+            if (!IsServer || !IsSpawned) return;
+            if (!_isMovingStarted)
+            {
+                _isMovingStarted = true;
+                TriggerAlertClientRpc("Vòng bo đang bắt đầu dịch chuyển!");
+                InitializeMoveDirection();
+            }
+        }
+#endif
     }
 }

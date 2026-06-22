@@ -26,7 +26,7 @@ namespace MonSumo.Core.State
                 _dashDirection = controller.GetFacingDirection();
             }
 
-            _dashTimer = 0.2f; // Dash duration is 0.2s
+            _dashTimer = controller.GetDashDuration();
         }
 
         public void Update(PlayerStateMachine stateMachine)
@@ -50,7 +50,7 @@ namespace MonSumo.Core.State
         public void FixedUpdate(PlayerStateMachine stateMachine)
         {
             var controller = stateMachine.Controller;
-            float dashSpeed = controller.GetBaseSpeed() * 4f; // Dash speed multiplier is 4x
+            float dashSpeed = controller.GetBaseSpeed() * controller.GetDashSpeedMultiplier();
             controller.SetVelocity(_dashDirection * dashSpeed);
         }
 

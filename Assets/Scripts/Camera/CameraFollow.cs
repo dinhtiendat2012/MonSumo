@@ -39,6 +39,18 @@ public class CameraFollow : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (target == null)
+        {
+            if (Unity.Netcode.NetworkManager.Singleton != null && Unity.Netcode.NetworkManager.Singleton.LocalClient != null)
+            {
+                var localObj = Unity.Netcode.NetworkManager.Singleton.LocalClient.PlayerObject;
+                if (localObj != null)
+                {
+                    SetTarget(localObj.transform);
+                }
+            }
+        }
+
         if (target == null) return;
 
         Vector3 desiredPosition = GetDesiredCameraPosition();

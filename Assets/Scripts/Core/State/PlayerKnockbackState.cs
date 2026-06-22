@@ -9,7 +9,7 @@ namespace MonSumo.Core.State
 
         public void Enter(PlayerStateMachine stateMachine)
         {
-            _knockbackTimer = 0.3f; // Knockback duration is 0.3s
+            _knockbackTimer = stateMachine.Controller.GetKnockbackDuration();
             // Do not override velocity on enter, let the Rigidbody force apply
         }
 

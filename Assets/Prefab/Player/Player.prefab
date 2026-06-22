@@ -196,7 +196,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  moveSpeed: 5
+  _maxStamina: 100
+  _staminaRegenRate: 120
+  _dashStaminaCost: 10
+  _dashCooldown: 3
+  _attackCooldown: 3
+  _attackRange: 1
+  _attackRadius: 1
 --- !u!114 &347867665543437131
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -210,7 +216,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  maxHP: 3
+  playerData: {fileID: 0}
   respawnPoint: {fileID: 0}
 --- !u!114 &2004544913340270394
 MonoBehaviour:
@@ -242,7 +248,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  activationKey: 32
+  activationKey: 9
   allowMouseLeftClick: 1
   skillOrigin: {fileID: 0}
   skillCatalog: {fileID: 0}
@@ -259,7 +265,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  NetworkTransformExpanded: 0
+  NetworkTransformExpanded: 1
   AutoOwnerAuthorityTickOffset: 1
   PositionInterpolationType: 0
   RotationInterpolationType: 0

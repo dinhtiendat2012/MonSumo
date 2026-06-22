@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 188746581418504831}
   - component: {fileID: 7277831375838870005}
   - component: {fileID: 5979025224732202217}
+  - component: {fileID: 6386744918517759762}
   - component: {fileID: 4702407314192530789}
   m_Layer: 0
   m_Name: PF_Item_ProjectilePush
@@ -163,6 +164,31 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &6386744918517759762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8506292127254685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 2493714100
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!114 &4702407314192530789
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,4 +201,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5a3d0363d6df4e46b911a7a35ebeec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skill: {fileID: 11400000, guid: 468b24b61f0051140a0c42b7a2277f45, type: 2}
+  ShowTopMostFoldoutHeaderGroup: 1
+  _itemData: {fileID: 0}
+  _skill: {fileID: 0}
+  _rotationSpeed: 45
+  _blinkStartThreshold: 5
+  _blinkInterval: 0.2
