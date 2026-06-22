@@ -624,6 +624,14 @@ MonoBehaviour:
   endRadius: 10
   mapMin: {x: -22, y: -14.5}
   mapMax: {x: 22, y: 14.5}
+  shrinkStartSecond: 180
+  shrinkSpeedUpSecond: 540
+  moveSpeedUpDelay: 120
+  baseShrinkSpeed: 2
+  speedUpBaseShrinkSpeed: 5
+  shrinkAcceleration: 0.05
+  baseMoveSpeed: 5
+  moveAcceleration: 0.05
 --- !u!120 &356536037
 LineRenderer:
   serializedVersion: 2
