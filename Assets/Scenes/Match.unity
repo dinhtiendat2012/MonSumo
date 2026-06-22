@@ -404,7 +404,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 306043280}
-  - component: {fileID: 306043281}
   m_Layer: 0
   m_Name: Exp HUD
   m_TagString: Untagged
@@ -434,18 +433,6 @@ RectTransform:
   m_AnchoredPosition: {x: 24, y: -24}
   m_SizeDelta: {x: 260, y: 36}
   m_Pivot: {x: 0, y: 1}
---- !u!114 &306043281
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 306043279}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fb047e5f63e7074f9755e19da700d90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &309838505
 GameObject:
   m_ObjectHideFlags: 0
@@ -622,13 +609,8 @@ MonoBehaviour:
   zoneColor: {r: 0.8980393, g: 0.17254902, b: 0.17254902, a: 1}
   startRadius: 30
   endRadius: 10
-  delayBeforeShrink: 0
-  shrinkDuration: 30
-  enableBouncing: 1
-  bounceSpeed: 1.5
-  customMapBounds: 1
-  localMapMin: {x: -22, y: -14.5}
-  localMapMax: {x: 22, y: 14.5}
+  mapMin: {x: -22, y: -14.5}
+  mapMax: {x: 22, y: 14.5}
 --- !u!120 &356536037
 LineRenderer:
   serializedVersion: 2
@@ -2498,6 +2480,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1492588890}
   - component: {fileID: 1492588891}
+  - component: {fileID: 1492588892}
   m_Layer: 0
   m_Name: Item Spawner
   m_TagString: Untagged
@@ -2533,28 +2516,44 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  itemPrefabs:
-  - {fileID: 591429543255721221, guid: b8402516e04836e49951ee1d6cdbf628, type: 3}
-  - {fileID: 8506292127254685, guid: beb2c28d1b1653942aefd9f5960fce79, type: 3}
-  - {fileID: 516766793641990959, guid: 8d01fd8e1b1e8e049a2c90a262c530fc, type: 3}
-  - {fileID: 1902977281511135976, guid: fed51f54fcaf38f4fad6401d394cf81a, type: 3}
-  spawnPoints:
-  - {fileID: 123609375}
-  - {fileID: 71896803}
-  - {fileID: 918853612}
-  - {fileID: 1452896689}
-  - {fileID: 1439353807}
-  - {fileID: 2012784882}
-  useBoundingBox: 0
-  boxCenter: {x: 0, y: 0, z: 0}
-  boxSize: {x: 8, y: 0, z: 8}
-  spawnCooldown: 3
-  maxItems: 3
-  overlapCheckRadius: 1
-  blockedMask:
+  _itemPrefabs: []
+  _spawnPoints: []
+  _useBoundingBox: 0
+  _boxCenter: {x: 0, y: 0, z: 0}
+  _boxSize: {x: 8, y: 8, z: 0}
+  _spawnInterval: 15
+  _minPlayerDistance: 2
+  _borderBuffer: 1
+  _overlapCheckRadius: 0.75
+  _blockedMask:
     serializedVersion: 2
     m_Bits: 0
-  maxAttempts: 12
+  _maxAttempts: 20
+--- !u!114 &1492588892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1492588889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 1883064557
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!1 &1645041730
 GameObject:
   m_ObjectHideFlags: 0
