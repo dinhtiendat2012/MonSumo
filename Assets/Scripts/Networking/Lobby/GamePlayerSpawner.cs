@@ -42,10 +42,10 @@ namespace MonSumo.Networking.Lobby
 
             if (spawner._armed)
             {
-                net.SceneManager.OnLoadComplete -= spawner.HandleLoadComplete;
+                net.SceneManager.OnLoadEventCompleted -= spawner.HandleLoadEventCompleted;
             }
 
-            net.SceneManager.OnLoadComplete += spawner.HandleLoadComplete;
+            net.SceneManager.OnLoadEventCompleted += spawner.HandleLoadEventCompleted;
             spawner._armed = true;
         }
 
@@ -53,11 +53,11 @@ namespace MonSumo.Networking.Lobby
         {
             if (_armed && _net != null && _net.SceneManager != null)
             {
-                _net.SceneManager.OnLoadComplete -= HandleLoadComplete;
+                _net.SceneManager.OnLoadEventCompleted -= HandleLoadEventCompleted;
             }
         }
 
-        private void HandleLoadComplete(ulong clientId, string sceneName, LoadSceneMode mode)
+        private void HandleLoadEventCompleted(string sceneName, LoadSceneMode mode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
         {
             if (_net == null || !_net.IsServer || sceneName != _gameSceneName)
             {

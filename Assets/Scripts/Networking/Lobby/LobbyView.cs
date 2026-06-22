@@ -27,6 +27,10 @@ namespace MonSumo.Networking.Lobby
         [SerializeField] private Transform _slotContainer;
         [SerializeField] private LobbySlotItem _slotItemPrefab;
 
+        [Header("Panels (Optional)")]
+        [SerializeField] private GameObject _connectionPanel;
+        [SerializeField] private GameObject _roomPanel;
+
         private readonly List<LobbySlotItem> _spawnedItems = new();
 
         protected override void OnPresenterSet()
@@ -81,6 +85,16 @@ namespace MonSumo.Networking.Lobby
             if (_disconnectButton != null)
             {
                 _disconnectButton.gameObject.SetActive(!disconnected);
+            }
+
+            if (_connectionPanel != null)
+            {
+                _connectionPanel.SetActive(disconnected);
+            }
+
+            if (_roomPanel != null)
+            {
+                _roomPanel.SetActive(!disconnected);
             }
 
             RenderSlots(model);

@@ -657,7 +657,13 @@ PlayerSettings:
   XboxOneOverrideIdentityName: 
   XboxOneOverrideIdentityPublisher: 
   vrEditorSettings: {}
-  cloudServicesEnabled: {}
+  cloudServicesEnabled:
+    Build: 0
+    Game Performance: 0
+    Legacy Analytics: 0
+    Purchasing: 0
+    UDP: 0
+    Unity Ads: 0
   luminIcon:
     m_Name: 
     m_ModelFolderPath: 
@@ -679,11 +685,11 @@ PlayerSettings:
   captureStartupLogs: {}
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: fcf777e9-ec6b-4b42-9757-ec83e12b2126
+  cloudProjectId: 161600ec-bb26-41b6-a3b6-fe6106da5ee7
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
   projectName: MonSumo
-  organizationId: datdthe163003
+  organizationId: dqh02010505
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}
