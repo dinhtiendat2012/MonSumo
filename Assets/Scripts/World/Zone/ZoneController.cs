@@ -1,88 +1,294 @@
 using UnityEngine;
+using Unity.Netcode;
+using MonSumo.Core;
+using System.Collections.Generic;
+using VContainer;
 
-[RequireComponent(typeof(LineRenderer))]
-public class ZoneController : MonoBehaviour
+namespace MonSumo.World.Zone
 {
-    [Header("Zone Visual")]
-    [SerializeField] private int segments = 128;
-    [SerializeField] private float lineWidth = 0.15f;
-    [SerializeField] private Color zoneColor = Color.cyan;
-
-    [Header("Zone Size")]
-    [SerializeField] private float startRadius = 10f;
-    [SerializeField] private float endRadius = 3f;
-
-    [Header("Zone Timing")]
-    [SerializeField] private float delayBeforeShrink = 5f;
-    [SerializeField] private float shrinkDuration = 120f;
-
-    private LineRenderer lineRenderer;
-    private float currentRadius;
-    private float shrinkTimer;
-    private bool isShrinking;
-
-    public float CurrentRadius => currentRadius;
-    public Vector2 Center => transform.position;
-
-    private void Awake()
+    [RequireComponent(typeof(LineRenderer))]
+    public class ZoneController : NetworkBehaviour
     {
-        lineRenderer = GetComponent<LineRenderer>();
+        [Header("Zone Visual")]
+        [SerializeField] private int segments = 128;
+        [SerializeField] private float lineWidth = 0.15f;
+        [SerializeField] private Color zoneColor = Color.red;
 
-        lineRenderer.useWorldSpace = false;
-        lineRenderer.loop = true;
-        lineRenderer.positionCount = segments;
+        [Header("Zone Size Settings")]
+        [SerializeField] private float startRadius = 15f;
+        [SerializeField] private float endRadius = 2f;
 
-        lineRenderer.startWidth = lineWidth;
-        lineRenderer.endWidth = lineWidth;
+        [Header("Zone Boundaries")]
+        [SerializeField] private Vector2 mapMin = new Vector2(-22f, -14.5f);
+        [SerializeField] private Vector2 mapMax = new Vector2(22f, 14.5f);
 
-        lineRenderer.startColor = zoneColor;
-        lineRenderer.endColor = zoneColor;
+        // Networked properties to sync with all clients
+        public readonly NetworkVariable<float> currentRadius = new(
+            15f,
+            NetworkVariableReadPermission.Everyone,
+            NetworkVariableWritePermission.Server
+        );
 
-        lineRenderer.sortingOrder = 50;
-    }
+        public readonly NetworkVariable<Vector2> currentCenter = new(
+            Vector2.zero,
+            NetworkVariableReadPermission.Everyone,
+            NetworkVariableWritePermission.Server
+        );
 
-    private void Start()
-    {
-        currentRadius = startRadius;
-        DrawCircle(currentRadius);
+        private LineRenderer lineRenderer;
 
-        Invoke(nameof(StartShrink), delayBeforeShrink);
-    }
+        // Timers and State (Server-only)
+        private float _gameTimer;
+        private float _moveTimer;
+        private bool _isShrinkingStarted;
+        private bool _isMovingStarted;
+        private bool _isSpeedingUpMoving;
+        private Vector2 _moveDirection;
 
-    private void Update()
-    {
-        if (!isShrinking) return;
+        // Constants/Parameters
+        private const float ShrinkStartSecond = 180f; // 3 minutes
+        private const float ShrinkSpeedUpSecond = 540f; // 9 minutes
+        private const float MoveSpeedUpDelay = 120f; // 2 minutes after moving starts
 
-        shrinkTimer += Time.deltaTime;
+        public float CurrentRadius => currentRadius.Value;
+        public float StartRadius => startRadius;
+        public Vector2 Center => currentCenter.Value;
 
-        float t = Mathf.Clamp01(shrinkTimer / shrinkDuration);
-        currentRadius = Mathf.Lerp(startRadius, endRadius, t);
-
-        DrawCircle(currentRadius);
-    }
-
-    private void StartShrink()
-    {
-        isShrinking = true;
-        shrinkTimer = 0f;
-    }
-
-    private void DrawCircle(float radius)
-    {
-        for (int i = 0; i < segments; i++)
+        private void Awake()
         {
-            float angle = ((float)i / segments) * Mathf.PI * 2f;
-
-            float x = Mathf.Cos(angle) * radius;
-            float y = Mathf.Sin(angle) * radius;
-
-            lineRenderer.SetPosition(i, new Vector3(x, y, 0f));
+            lineRenderer = GetComponent<LineRenderer>();
+            lineRenderer.useWorldSpace = false;
+            lineRenderer.loop = true;
+            lineRenderer.positionCount = segments;
+            lineRenderer.startWidth = lineWidth;
+            lineRenderer.endWidth = lineWidth;
+            lineRenderer.startColor = zoneColor;
+            lineRenderer.endColor = zoneColor;
+            lineRenderer.sortingOrder = 50;
         }
-    }
 
-    public bool IsInsideZone(Vector2 position)
-    {
-        float distance = Vector2.Distance(position, Center);
-        return distance <= currentRadius;
+        public override void OnNetworkSpawn()
+        {
+            currentRadius.OnValueChanged += HandleRadiusChanged;
+            currentCenter.OnValueChanged += HandleCenterChanged;
+
+            if (IsServer)
+            {
+                currentRadius.Value = startRadius;
+                currentCenter.Value = (Vector2)transform.position;
+                _gameTimer = 0f;
+                _moveTimer = 0f;
+                _isShrinkingStarted = false;
+                _isMovingStarted = false;
+                _isSpeedingUpMoving = false;
+            }
+            else
+            {
+                transform.position = (Vector3)currentCenter.Value;
+                DrawCircle(currentRadius.Value);
+            }
+        }
+
+        public override void OnNetworkDespawn()
+        {
+            currentRadius.OnValueChanged -= HandleRadiusChanged;
+            currentCenter.OnValueChanged -= HandleCenterChanged;
+        }
+
+        private void HandleRadiusChanged(float previousValue, float newValue)
+        {
+            DrawCircle(newValue);
+        }
+
+        private void HandleCenterChanged(Vector2 previousValue, Vector2 newValue)
+        {
+            transform.position = (Vector3)newValue;
+            DrawCircle(currentRadius.Value);
+        }
+
+        private void Update()
+        {
+            if (IsServer)
+            {
+                UpdateServerZone();
+            }
+
+            // Sync visual position
+            transform.position = (Vector3)currentCenter.Value;
+        }
+
+        private void UpdateServerZone()
+        {
+            _gameTimer += Time.deltaTime;
+
+            // 1. Handle Shrinking
+            if (_gameTimer >= ShrinkStartSecond)
+            {
+                if (!_isShrinkingStarted)
+                {
+                    _isShrinkingStarted = true;
+                    TriggerAlertClientRpc("Vòng bo đang bắt đầu thu nhỏ lại!");
+                    
+                    // Start moving zone as well when shrinking starts
+                    _isMovingStarted = true;
+                    TriggerAlertClientRpc("Vòng bo đang bắt đầu dịch chuyển!");
+                    InitializeMoveDirection();
+                }
+
+                // Calculate shrink speed (units/minute divided by 60)
+                float shrinkSpeedMin;
+                if (_gameTimer < ShrinkSpeedUpSecond)
+                {
+                    shrinkSpeedMin = 2f; // Speed = 2 units/min
+                }
+                else
+                {
+                    // Speed = 5 + 0.05 per second since minute 9
+                    float secondsSinceNineMin = _gameTimer - ShrinkSpeedUpSecond;
+                    shrinkSpeedMin = 5f + 0.05f * secondsSinceNineMin;
+                }
+
+                float shrinkSpeedSec = shrinkSpeedMin / 60f;
+                currentRadius.Value = Mathf.Max(endRadius, currentRadius.Value - shrinkSpeedSec * Time.deltaTime);
+            }
+
+            // 2. Handle Zone Center Movement
+            if (_isMovingStarted)
+            {
+                _moveTimer += Time.deltaTime;
+
+                float moveSpeedMin = 5f; // Base speed = 5 units/min
+                if (_moveTimer >= MoveSpeedUpDelay)
+                {
+                    if (!_isSpeedingUpMoving)
+                    {
+                        _isSpeedingUpMoving = true;
+                        TriggerAlertClientRpc("Vòng bo đang tăng tốc độ dịch chuyển!");
+                    }
+                    float secondsSinceSpeedUp = _moveTimer - MoveSpeedUpDelay;
+                    moveSpeedMin = 5f + 0.05f * secondsSinceSpeedUp;
+                }
+
+                float moveSpeedSec = moveSpeedMin / 60f;
+                MoveAndBounce(moveSpeedSec);
+            }
+        }
+
+        private void InitializeMoveDirection()
+        {
+            Vector2 centroid = GetPlayerCentroid();
+            Vector2 toCentroid = centroid - currentCenter.Value;
+            if (toCentroid.sqrMagnitude > 0.01f)
+            {
+                _moveDirection = toCentroid.normalized;
+            }
+            else
+            {
+                float randomAngle = Random.Range(0f, Mathf.PI * 2f);
+                _moveDirection = new Vector2(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle)).normalized;
+            }
+        }
+
+        private void MoveAndBounce(float speed)
+        {
+            Vector2 nextPosition = currentCenter.Value + _moveDirection * speed * Time.deltaTime;
+            bool bounced = false;
+            float radius = currentRadius.Value;
+
+            // X boundary check
+            if (nextPosition.x - radius <= mapMin.x)
+            {
+                nextPosition.x = mapMin.x + radius;
+                _moveDirection.x = Mathf.Abs(_moveDirection.x); // reflect right
+                bounced = true;
+            }
+            else if (nextPosition.x + radius >= mapMax.x)
+            {
+                nextPosition.x = mapMax.x - radius;
+                _moveDirection.x = -Mathf.Abs(_moveDirection.x); // reflect left
+                bounced = true;
+            }
+
+            // Y boundary check
+            if (nextPosition.y - radius <= mapMin.y)
+            {
+                nextPosition.y = mapMin.y + radius;
+                _moveDirection.y = Mathf.Abs(_moveDirection.y); // reflect up
+                bounced = true;
+            }
+            else if (nextPosition.y + radius >= mapMax.y)
+            {
+                nextPosition.y = mapMax.y - radius;
+                _moveDirection.y = -Mathf.Abs(_moveDirection.y); // reflect down
+                bounced = true;
+            }
+
+            currentCenter.Value = nextPosition;
+
+            // Add slight randomness to reflection angle
+            if (bounced)
+            {
+                float angleChange = Random.Range(-15f, 15f) * Mathf.Deg2Rad;
+                float currentAngle = Mathf.Atan2(_moveDirection.y, _moveDirection.x);
+                currentAngle += angleChange;
+                _moveDirection = new Vector2(Mathf.Cos(currentAngle), Mathf.Sin(currentAngle)).normalized;
+            }
+        }
+
+        private Vector2 GetPlayerCentroid()
+        {
+            var players = FindObjectsByType<Player>(FindObjectsSortMode.None);
+            if (players.Length == 0) return Vector2.zero;
+
+            Vector2 sum = Vector2.zero;
+            int count = 0;
+            foreach (var p in players)
+            {
+                if (p != null)
+                {
+                    sum += (Vector2)p.transform.position;
+                    count++;
+                }
+            }
+            return count > 0 ? sum / count : Vector2.zero;
+        }
+
+        private void DrawCircle(float radius)
+        {
+            if (lineRenderer == null) return;
+            for (int i = 0; i < segments; i++)
+            {
+                float angle = ((float)i / segments) * Mathf.PI * 2f;
+                float x = Mathf.Cos(angle) * radius;
+                float y = Mathf.Sin(angle) * radius;
+                lineRenderer.SetPosition(i, new Vector3(x, y, 0f));
+            }
+        }
+
+        public bool IsInsideZone(Vector2 position)
+        {
+            float distance = Vector2.Distance(position, Center);
+            return distance <= currentRadius.Value;
+        }
+
+        [Rpc(SendTo.Everyone)]
+        private void TriggerAlertClientRpc(string message)
+        {
+            // Raise UI warning event via EventBus (resolving from VContainer active scope)
+            var scope = VContainer.Unity.LifetimeScope.Find<MonSumo.Networking.Scopes.GameLifetimeScope>();
+            var eventBus = scope?.Container.Resolve<EventBus>();
+            
+            // Trigger local EventBus callbacks
+            if (message.Contains("thu nhỏ"))
+            {
+                eventBus?.RaiseZoneShrinkStarted(currentRadius.Value);
+            }
+            else
+            {
+                eventBus?.RaiseZoneMoveStarted(currentCenter.Value);
+            }
+
+            Debug.Log($"[ZoneController Alert] {message}");
+        }
     }
 }

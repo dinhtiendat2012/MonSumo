@@ -1,7 +1,10 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Unity.Netcode;
+using MonSumo.World.Zone;
+using MonSumo.Core;
 
-public class ZoneOut : MonoBehaviour
+public class ZoneOut : NetworkBehaviour
 {
     [Header("Zone")]
     [SerializeField] private ZoneController zoneController;
@@ -16,10 +19,12 @@ public class ZoneOut : MonoBehaviour
     [SerializeField] private float outsideGraceTime = 1.5f;
 
     private float outsideTimer;
-    private bool isGameOver;
+    private bool isGameOver = false;
 
     private Rigidbody2D rb;
     private Collider2D col;
+
+    public GameObject GameOverPanel => gameOverPanel;
 
     private void Awake()
     {
@@ -44,6 +49,8 @@ public class ZoneOut : MonoBehaviour
 
     private void Update()
     {
+        // Only run zone checks on the Server
+        if (!IsServer) return;
         if (isGameOver) return;
         if (zoneController == null) return;
 
@@ -59,41 +66,22 @@ public class ZoneOut : MonoBehaviour
 
         if (outsideTimer >= outsideGraceTime)
         {
-            GameOver();
+            outsideTimer = 0f; // Reset to prevent double triggering
+            Player player = GetComponent<Player>();
+            if (player != null)
+            {
+                player.TakeDamage();
+            }
         }
-    }
-
-    private void GameOver()
-    {
-        isGameOver = true;
-
-        Debug.Log("GAME OVER: Player left the zone.");
-
-        if (gameOverPanel != null)
-        {
-            gameOverPanel.SetActive(true);
-        }
-
-        if (rb != null)
-        {
-            rb.linearVelocity = Vector2.zero;
-            rb.angularVelocity = 0f;
-            rb.simulated = false;
-        }
-
-        if (col != null)
-        {
-            col.enabled = false;
-        }
-
-        // Dừng game để player/bot/bo không chạy tiếp
-        Time.timeScale = 0f;
     }
 
     public void Retry()
     {
         Time.timeScale = 1f;
-
+        if (NetworkManager.Singleton != null)
+        {
+            NetworkManager.Singleton.Shutdown();
+        }
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.name);
     }
@@ -101,7 +89,10 @@ public class ZoneOut : MonoBehaviour
     public void GoHome()
     {
         Time.timeScale = 1f;
-
+        if (NetworkManager.Singleton != null)
+        {
+            NetworkManager.Singleton.Shutdown();
+        }
         SceneManager.LoadScene(menuSceneName);
     }
 }

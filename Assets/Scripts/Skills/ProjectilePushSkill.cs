@@ -20,6 +20,12 @@ public class ProjectilePushSkill : SkillDefinition
             ? Instantiate(projectilePrefab, spawnPosition, Quaternion.identity)
             : CreateGreyboxProjectile(spawnPosition);
 
+        var netObj = projectile.GetComponent<Unity.Netcode.NetworkObject>();
+        if (netObj != null)
+        {
+            netObj.Spawn();
+        }
+
         projectile.Launch(direction, projectileSpeed, pushForce, lifeTime, owner.gameObject, targetMask);
     }
 
@@ -35,6 +41,8 @@ public class ProjectilePushSkill : SkillDefinition
         Rigidbody2D body = projectileObject.AddComponent<Rigidbody2D>();
         body.gravityScale = 0f;
         body.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+
+        projectileObject.AddComponent<Unity.Netcode.NetworkObject>();
 
         return projectileObject.AddComponent<ProjectilePush>();
     }

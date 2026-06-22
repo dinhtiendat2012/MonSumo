@@ -1,8 +1,11 @@
 using UnityEngine;
+using Unity.Netcode;
+using MonSumo.Core;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Collider2D))]
-public class ProjectilePush : MonoBehaviour
+[RequireComponent(typeof(NetworkObject))]
+public class ProjectilePush : NetworkBehaviour
 {
     private Rigidbody2D body;
     private GameObject owner;
@@ -16,19 +19,35 @@ public class ProjectilePush : MonoBehaviour
         GetComponent<Collider2D>().isTrigger = true;
     }
 
-    // Initialize the projectile after it is spawned by a skill.
+    // Initialize the projectile after it is spawned by a skill. Run on Server.
     public void Launch(Vector2 direction, float speed, float force, float lifeTime, GameObject ownerObject, LayerMask mask)
     {
+        if (!IsServer) return;
+
         owner = ownerObject;
         moveDirection = direction.normalized;
         pushForce = force;
         targetMask = mask;
         body.linearVelocity = moveDirection * speed;
-        Destroy(gameObject, lifeTime);
+        
+        // Setup network auto-destruction
+        StartCoroutine(DestroyAfterDelay(lifeTime));
+    }
+
+    private System.Collections.IEnumerator DestroyAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        if (IsSpawned)
+        {
+            GetComponent<NetworkObject>().Despawn();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        // Trigger detection runs strictly on Server
+        if (!IsServer) return;
+
         if (owner != null && other.transform.IsChildOf(owner.transform))
         {
             return;
@@ -45,7 +64,18 @@ public class ProjectilePush : MonoBehaviour
             return;
         }
 
-        PushUtility.ApplyImpulse(targetBody, moveDirection, pushForce);
-        Destroy(gameObject);
+        // Apply knockback via Rpc if player, else apply directly on server
+        Player player = targetBody.GetComponent<Player>();
+        if (player != null)
+        {
+            Vector2 forceVector = moveDirection.normalized * pushForce;
+            player.ApplyKnockbackRpc(forceVector);
+        }
+        else
+        {
+            PushUtility.ApplyImpulse(targetBody, moveDirection, pushForce);
+        }
+
+        GetComponent<NetworkObject>().Despawn();
     }
 }

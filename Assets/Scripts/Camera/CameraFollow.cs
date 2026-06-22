@@ -19,6 +19,9 @@ public class CameraFollow : MonoBehaviour
     [Tooltip("Góc trên bên phải của map")]
     [SerializeField] private Vector2 mapMax = new Vector2(22f, 14.5f);
 
+    public Vector2 MapMin => mapMin;
+    public Vector2 MapMax => mapMax;
+
     private Camera cam;
     private Vector3 velocity;
 

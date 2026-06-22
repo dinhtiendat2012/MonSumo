@@ -1,11 +1,14 @@
 using UnityEngine;
+using Unity.Netcode;
+using MonSumo.Items;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class PlayerInventory : MonoBehaviour
+public class PlayerInventory : NetworkBehaviour
 {
     [SerializeField] private KeyCode activationKey = KeyCode.Space;
     [SerializeField] private bool allowMouseLeftClick = true;
     [SerializeField] private Transform skillOrigin;
+    [SerializeField] private SkillCatalogSO skillCatalog;
 
     private SkillDefinition currentSkill;
 
@@ -22,6 +25,8 @@ public class PlayerInventory : MonoBehaviour
 
     private void Update()
     {
+        if (!IsOwner) return;
+
         if (!HasSkill)
         {
             return;
@@ -32,31 +37,59 @@ public class PlayerInventory : MonoBehaviour
 
         if (pressedKey || pressedMouse)
         {
-            ActivateCurrentSkill();
+            // Request server to activate the skill
+            RequestActivateSkillServerRpc();
         }
     }
 
-    // Pick up an item. The inventory can hold only one skill at a time.
+    // Pick up an item. Run on Server.
     public bool TryPickup(ItemPickup item)
     {
+        if (!IsServer) return false;
         if (item == null || HasSkill)
         {
             return false;
         }
 
         currentSkill = item.Skill;
-        return currentSkill != null;
+        if (currentSkill != null && skillCatalog != null)
+        {
+            int index = skillCatalog.GetIndex(currentSkill);
+            SyncSkillClientRpc(index);
+            return true;
+        }
+
+        return false;
     }
 
-    // Activate the current skill and clear it from the inventory after use.
-    private void ActivateCurrentSkill()
+    [Rpc(SendTo.Owner)]
+    private void SyncSkillClientRpc(int index)
     {
+        if (index == -1)
+        {
+            currentSkill = null;
+        }
+        else if (skillCatalog != null)
+        {
+            currentSkill = skillCatalog.GetSkill(index);
+        }
+    }
+
+    [Rpc(SendTo.Server)]
+    private void RequestActivateSkillServerRpc()
+    {
+        if (currentSkill == null) return;
+
         SkillDefinition skillToUse = currentSkill;
         currentSkill = null;
+
+        // Clear client skill slot
+        SyncSkillClientRpc(-1);
 
         if (skillToUse != null)
         {
             skillToUse.Activate(this);
+            Debug.Log($"[INVENTORY] Player {OwnerClientId} activated skill: {skillToUse.name}");
         }
     }
 }
