@@ -15,6 +15,7 @@ namespace MonSumo.World.Zone
         [SerializeField] private Color zoneColor = Color.red;
 
         [Header("Zone Size Settings")]
+        [SerializeField] private bool autoFitStartRadius = true;
         [SerializeField] private float startRadius = 15f;
         [SerializeField] private float endRadius = 2f;
 
@@ -87,8 +88,14 @@ namespace MonSumo.World.Zone
 
             if (IsServer)
             {
+                Vector2 mapCenter = (mapMin + mapMax) / 2f;
+                if (autoFitStartRadius)
+                {
+                    startRadius = Vector2.Distance(mapCenter, mapMax);
+                }
+
                 currentRadius.Value = startRadius;
-                currentCenter.Value = (Vector2)transform.position;
+                currentCenter.Value = mapCenter;
                 _gameTimer = 0f;
                 _moveTimer = 0f;
                 _isShrinkingStarted = false;
@@ -207,32 +214,51 @@ namespace MonSumo.World.Zone
             bool bounced = false;
             float radius = currentRadius.Value;
 
-            // X boundary check
-            if (nextPosition.x - radius <= mapMin.x)
+            float mapWidth = mapMax.x - mapMin.x;
+            float mapHeight = mapMax.y - mapMin.y;
+
+            // X Axis Boundary Check
+            if (radius * 2f >= mapWidth)
             {
-                nextPosition.x = mapMin.x + radius;
-                _moveDirection.x = Mathf.Abs(_moveDirection.x); // reflect right
-                bounced = true;
+                // Safe zone is too wide to move inside map X, lock center to map center
+                nextPosition.x = (mapMin.x + mapMax.x) / 2f;
             }
-            else if (nextPosition.x + radius >= mapMax.x)
+            else
             {
-                nextPosition.x = mapMax.x - radius;
-                _moveDirection.x = -Mathf.Abs(_moveDirection.x); // reflect left
-                bounced = true;
+                if (nextPosition.x - radius <= mapMin.x)
+                {
+                    nextPosition.x = mapMin.x + radius;
+                    _moveDirection.x = Mathf.Abs(_moveDirection.x); // reflect right
+                    bounced = true;
+                }
+                else if (nextPosition.x + radius >= mapMax.x)
+                {
+                    nextPosition.x = mapMax.x - radius;
+                    _moveDirection.x = -Mathf.Abs(_moveDirection.x); // reflect left
+                    bounced = true;
+                }
             }
 
-            // Y boundary check
-            if (nextPosition.y - radius <= mapMin.y)
+            // Y Axis Boundary Check
+            if (radius * 2f >= mapHeight)
             {
-                nextPosition.y = mapMin.y + radius;
-                _moveDirection.y = Mathf.Abs(_moveDirection.y); // reflect up
-                bounced = true;
+                // Safe zone is too tall to move inside map Y, lock center to map center
+                nextPosition.y = (mapMin.y + mapMax.y) / 2f;
             }
-            else if (nextPosition.y + radius >= mapMax.y)
+            else
             {
-                nextPosition.y = mapMax.y - radius;
-                _moveDirection.y = -Mathf.Abs(_moveDirection.y); // reflect down
-                bounced = true;
+                if (nextPosition.y - radius <= mapMin.y)
+                {
+                    nextPosition.y = mapMin.y + radius;
+                    _moveDirection.y = Mathf.Abs(_moveDirection.y); // reflect up
+                    bounced = true;
+                }
+                else if (nextPosition.y + radius >= mapMax.y)
+                {
+                    nextPosition.y = mapMax.y - radius;
+                    _moveDirection.y = -Mathf.Abs(_moveDirection.y); // reflect down
+                    bounced = true;
+                }
             }
 
             currentCenter.Value = nextPosition;
@@ -425,9 +451,18 @@ namespace MonSumo.World.Zone
 #if UNITY_EDITOR
         private void OnValidate()
         {
-            if (!Application.isPlaying && autoDetectBounds)
+            if (!Application.isPlaying)
             {
-                AutoDetectMapBounds();
+                if (autoDetectBounds)
+                {
+                    AutoDetectMapBounds();
+                }
+
+                if (autoFitStartRadius)
+                {
+                    Vector2 mapCenter = (mapMin + mapMax) / 2f;
+                    startRadius = Vector2.Distance(mapCenter, mapMax);
+                }
             }
         }
 #endif
