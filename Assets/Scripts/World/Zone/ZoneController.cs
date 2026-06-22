@@ -156,7 +156,7 @@ namespace MonSumo.World.Zone
             _gameTimer += Time.deltaTime;
 
             // 1. Handle Shrinking
-            if (_gameTimer >= shrinkStartSecond)
+            if (_gameTimer >= shrinkStartSecond || _isShrinkingStarted)
             {
                 if (!_isShrinkingStarted)
                 {
