@@ -12,6 +12,33 @@ namespace MonSumo.Data
         public Sprite icon;
         public GameObject prefab;
 
+        [Header("Rarity Settings")]
+        [SerializeField] private bool _useCustomRarity = false;
+        [SerializeField] private ItemRarity _customRarity = ItemRarity.Common;
+
+        public ItemRarity Rarity
+        {
+            get
+            {
+                if (_useCustomRarity) return _customRarity;
+
+                switch (itemType)
+                {
+                    case ItemType.SpeedJuice:
+                    case ItemType.HeavyAnchor:
+                        return ItemRarity.Common;
+                    case ItemType.ThornShield:
+                    case ItemType.SuperPush:
+                        return ItemRarity.Rare;
+                    case ItemType.GodForce:
+                        return ItemRarity.Epic;
+                    default:
+                        return ItemRarity.Common;
+                }
+            }
+        }
+
+
         [Header("Spawn Settings")]
         [Range(0f, 1f)]
         public float spawnWeight = 0.5f; // Relative probability of spawning

@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using UnityEditor;
 using UnityEditor.Animations;
+using UnityEditor.U2D.Sprites;
 using UnityEngine;
 
 namespace MonSumo.Editor
@@ -159,22 +160,44 @@ namespace MonSumo.Editor
             int tileWidth = texture.width / frameCount;
             int tileHeight = texture.height;
 
-            var metas = new List<SpriteMetaData>();
+            var factory = new SpriteDataProviderFactories();
+            factory.Init();
+            var dataProvider = factory.GetSpriteEditorDataProviderFromObject(importer);
+            dataProvider.InitSpriteEditorDataProvider();
+
+            // Load existing name-fileID pairs to preserve GUIDs if name matches
+            var nameFileIdProvider = dataProvider.GetDataProvider<ISpriteNameFileIdDataProvider>();
+            var existingPairs = nameFileIdProvider?.GetNameFileIdPairs() ?? new SpriteNameFileIdPair[0];
+            var idMap = existingPairs.ToDictionary(p => p.name, p => p.GetFileGUID());
+
+            var metas = new List<SpriteRect>();
+            var newPairs = new List<SpriteNameFileIdPair>();
             string baseName = Path.GetFileNameWithoutExtension(path);
 
             for (int i = 0; i < frameCount; i++)
             {
-                SpriteMetaData meta = new SpriteMetaData
+                string spriteName = $"{baseName}_{i}";
+                GUID spriteID = idMap.TryGetValue(spriteName, out var id) ? id : GUID.Generate();
+
+                SpriteRect meta = new SpriteRect
                 {
-                    name = $"{baseName}_{i}",
+                    name = spriteName,
                     rect = new Rect(i * tileWidth, 0, tileWidth, tileHeight),
-                    alignment = (int)SpriteAlignment.Center,
-                    pivot = new Vector2(0.5f, 0.5f)
+                    alignment = SpriteAlignment.Center,
+                    pivot = new Vector2(0.5f, 0.5f),
+                    spriteID = spriteID
                 };
                 metas.Add(meta);
+                newPairs.Add(new SpriteNameFileIdPair(spriteName, spriteID));
             }
 
-            importer.spritesheet = metas.ToArray();
+            dataProvider.SetSpriteRects(metas.ToArray());
+            if (nameFileIdProvider != null)
+            {
+                nameFileIdProvider.SetNameFileIdPairs(newPairs);
+            }
+
+            dataProvider.Apply();
             EditorUtility.SetDirty(importer);
             importer.SaveAndReimport();
         }
