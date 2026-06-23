@@ -230,8 +230,19 @@ namespace MonSumo.World.Spawning
             }
 
             // 4. Check physics blockers
-            Collider2D[] blockers = Physics2D.OverlapCircleAll(position, _overlapCheckRadius, _blockedMask);
-            return blockers.Length == 0;
+            LayerMask mask = _blockedMask == 0 ? ~0 : _blockedMask;
+            Collider2D[] blockers = Physics2D.OverlapCircleAll(position, _overlapCheckRadius, mask);
+            foreach (var blocker in blockers)
+            {
+                if (blocker == null) continue;
+                if (blocker.isTrigger) continue;
+                if (blocker.GetComponentInParent<Player>() != null) continue;
+
+                // Non-trigger blocker found!
+                return false;
+            }
+
+            return true;
         }
 
         private void OnDrawGizmosSelected()

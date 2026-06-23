@@ -1,0 +1,897 @@
+fileFormatVersion: 2
+guid: afc7515bf843d0a45a0a75561f445b78
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3297934212856632193
+    second: pixellab-an-item-named--Speed-Juice---H-1782197149212_0
+  - first:
+      213: 8730776961439812231
+    second: pixellab-an-item-named--Speed-Juice---H-1782197149212_1
+  - first:
+      213: -587685678206474538
+    second: pixellab-an-item-named--Speed-Juice---H-1782197149212_2
+  - first:
+      213: 5226867115430496205
+    second: pixellab-an-item-named--Speed-Juice---H-1782197149212_3
+  - first:
+      213: 5598695176970977146
+    second: pixellab-an-item-named--Speed-Juice---H-1782197149212_4
+  - first:
+      213: 7376491524479970526
+    second: pixellab-an-item-named--Speed-Juice---H-1782197149212_5
+  - first:
+      213: 5806471578860260666
+    second: pixellab-an-item-named--Speed-Juice---H-1782197149212_6
+  - first:
+      213: 7840871400268254308
+    second: pixellab-an-item-named--Speed-Juice---H-1782197149212_7
+  - first:
+      213: -8384260633837879017
+    second: pixellab-an-item-named--Speed-Juice---H-1782197149212_8
+  - first:
+      213: 8556724799645344556
+    second: pixellab-an-item-named--Speed-Juice---H-1782197149212_9
+  - first:
+      213: -8950962443046087581
+    second: pixellab-an-item-named--Speed-Juice---H-1782197149212_10
+  - first:
+      213: -5532718137271290910
+    second: pixellab-an-item-named--Speed-Juice---H-1782197149212_11
+  - first:
+      213: 5052456868640732437
+    second: pixellab-an-item-named--Speed-Juice---H-1782197149212_12
+  - first:
+      213: 5721375521409735840
+    second: pixellab-an-item-named--Speed-Juice---H-1782197149212_13
+  - first:
+      213: -5681184234661209818
+    second: pixellab-an-item-named--Speed-Juice---H-1782197149212_14
+  - first:
+      213: -7711145227796425117
+    second: pixellab-an-item-named--Speed-Juice---H-1782197149212_15
+  - first:
+      213: -6539061998286466756
+    second: pixellab-an-item-named--Speed-Juice---H-1782197149212_16
+  - first:
+      213: -5154776441267218950
+    second: pixellab-an-item-named--Speed-Juice---H-1782197149212_17
+  - first:
+      213: -7455722953994433053
+    second: pixellab-an-item-named--Speed-Juice---H-1782197149212_18
+  - first:
+      213: -1306844436644091786
+    second: pixellab-an-item-named--Speed-Juice---H-1782197149212_19
+  - first:
+      213: -7652442268581980480
+    second: pixellab-an-item-named--Speed-Juice---H-1782197149212_20
+  - first:
+      213: 2268834445430476129
+    second: pixellab-an-item-named--Speed-Juice---H-1782197149212_21
+  - first:
+      213: -8982799878590058371
+    second: pixellab-an-item-named--Speed-Juice---H-1782197149212_22
+  - first:
+      213: 4101189668665260775
+    second: pixellab-an-item-named--Speed-Juice---H-1782197149212_23
+  - first:
+      213: -3155630038916607091
+    second: pixellab-an-item-named--Speed-Juice---H-1782197149212_24
+  - first:
+      213: -4612107256393723109
+    second: pixellab-an-item-named--Speed-Juice---H-1782197149212_25
+  - first:
+      213: -1035663804643140016
+    second: pixellab-an-item-named--Speed-Juice---H-1782197149212_26
+  - first:
+      213: 1316514899544803201
+    second: pixellab-an-item-named--Speed-Juice---H-1782197149212_27
+  - first:
+      213: -4466227172247477509
+    second: pixellab-an-item-named--Speed-Juice---H-1782197149212_28
+  - first:
+      213: 4462121413138453709
+    second: pixellab-an-item-named--Speed-Juice---H-1782197149212_29
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Speed-Juice---H-1782197149212_0
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 196
+        width: 38
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f7ca21e7e426b32d0800000000000000
+      internalID: -3297934212856632193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Speed-Juice---H-1782197149212_1
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 194
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78ac8c78363f92970800000000000000
+      internalID: 8730776961439812231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Speed-Juice---H-1782197149212_2
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 195
+        width: 38
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d62be64dfe18d7f0800000000000000
+      internalID: -587685678206474538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Speed-Juice---H-1782197149212_3
+      rect:
+        serializedVersion: 2
+        x: 116
+        y: 194
+        width: 10
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc7c767c2ff898840800000000000000
+      internalID: 5226867115430496205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Speed-Juice---H-1782197149212_4
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 199
+        width: 37
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7f3c0da99f82bd40800000000000000
+      internalID: 5598695176970977146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Speed-Juice---H-1782197149212_5
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 193
+        width: 30
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: edcee4d85ff8e5660800000000000000
+      internalID: 7376491524479970526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Speed-Juice---H-1782197149212_6
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 128
+        width: 36
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a3d0e50132bb49050800000000000000
+      internalID: 5806471578860260666
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Speed-Juice---H-1782197149212_7
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 135
+        width: 37
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 46c428eeefe50dc60800000000000000
+      internalID: 7840871400268254308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Speed-Juice---H-1782197149212_8
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 129
+        width: 44
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7114dcf006f15ab80800000000000000
+      internalID: -8384260633837879017
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Speed-Juice---H-1782197149212_9
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 163
+        width: 23
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c23e2abaed79fb670800000000000000
+      internalID: 8556724799645344556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Speed-Juice---H-1782197149212_10
+      rect:
+        serializedVersion: 2
+        x: 204
+        y: 128
+        width: 40
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3641060151bc7c380800000000000000
+      internalID: -8950962443046087581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Speed-Juice---H-1782197149212_11
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 69
+        width: 54
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e37591fa26d733b0800000000000000
+      internalID: -5532718137271290910
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Speed-Juice---H-1782197149212_12
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 65
+        width: 43
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5153052c0ceed1640800000000000000
+      internalID: 5052456868640732437
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Speed-Juice---H-1782197149212_13
+      rect:
+        serializedVersion: 2
+        x: 109
+        y: 113
+        width: 16
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ac1e3c39b8666f40800000000000000
+      internalID: 5721375521409735840
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Speed-Juice---H-1782197149212_14
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 65
+        width: 37
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 629187de9016821b0800000000000000
+      internalID: -5681184234661209818
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Speed-Juice---H-1782197149212_15
+      rect:
+        serializedVersion: 2
+        x: 149
+        y: 119
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 366debd45428cf490800000000000000
+      internalID: -7711145227796425117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Speed-Juice---H-1782197149212_16
+      rect:
+        serializedVersion: 2
+        x: 165
+        y: 119
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c3111eb02c59045a0800000000000000
+      internalID: -6539061998286466756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Speed-Juice---H-1782197149212_17
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 67
+        width: 30
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af517b9432e8678b0800000000000000
+      internalID: -5154776441267218950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Speed-Juice---H-1782197149212_18
+      rect:
+        serializedVersion: 2
+        x: 237
+        y: 109
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ed8f67b973f78890800000000000000
+      internalID: -7455722953994433053
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Speed-Juice---H-1782197149212_19
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 107
+        width: 17
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6782229a8e72ddde0800000000000000
+      internalID: -1306844436644091786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Speed-Juice---H-1782197149212_20
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 100
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c69cf41d401dc590800000000000000
+      internalID: -7652442268581980480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Speed-Juice---H-1782197149212_21
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 102
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16dcd0648e48c7f10800000000000000
+      internalID: 2268834445430476129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Speed-Juice---H-1782197149212_22
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 103
+        width: 12
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d70b7347a1fa65380800000000000000
+      internalID: -8982799878590058371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Speed-Juice---H-1782197149212_23
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 67
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ea7b4d464a5ae830800000000000000
+      internalID: 4101189668665260775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Speed-Juice---H-1782197149212_24
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 1
+        width: 50
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d83d2d7e233f434d0800000000000000
+      internalID: -3155630038916607091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Speed-Juice---H-1782197149212_25
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 4
+        width: 56
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1396a4e2e08effb0800000000000000
+      internalID: -4612107256393723109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Speed-Juice---H-1782197149212_26
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 4
+        width: 46
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05e1481c14590a1f0800000000000000
+      internalID: -1035663804643140016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Speed-Juice---H-1782197149212_27
+      rect:
+        serializedVersion: 2
+        x: 204
+        y: 1
+        width: 41
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 18780e07353354210800000000000000
+      internalID: 1316514899544803201
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Speed-Juice---H-1782197149212_28
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 52
+        width: 11
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf2edf7cc06c402c0800000000000000
+      internalID: -4466227172247477509
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Speed-Juice---H-1782197149212_29
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 46
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc418cea8c3aced30800000000000000
+      internalID: 4462121413138453709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      pixellab-an-item-named--Speed-Juice---H-1782197149212_0: -3297934212856632193
+      pixellab-an-item-named--Speed-Juice---H-1782197149212_1: 8730776961439812231
+      pixellab-an-item-named--Speed-Juice---H-1782197149212_10: -8950962443046087581
+      pixellab-an-item-named--Speed-Juice---H-1782197149212_11: -5532718137271290910
+      pixellab-an-item-named--Speed-Juice---H-1782197149212_12: 5052456868640732437
+      pixellab-an-item-named--Speed-Juice---H-1782197149212_13: 5721375521409735840
+      pixellab-an-item-named--Speed-Juice---H-1782197149212_14: -5681184234661209818
+      pixellab-an-item-named--Speed-Juice---H-1782197149212_15: -7711145227796425117
+      pixellab-an-item-named--Speed-Juice---H-1782197149212_16: -6539061998286466756
+      pixellab-an-item-named--Speed-Juice---H-1782197149212_17: -5154776441267218950
+      pixellab-an-item-named--Speed-Juice---H-1782197149212_18: -7455722953994433053
+      pixellab-an-item-named--Speed-Juice---H-1782197149212_19: -1306844436644091786
+      pixellab-an-item-named--Speed-Juice---H-1782197149212_2: -587685678206474538
+      pixellab-an-item-named--Speed-Juice---H-1782197149212_20: -7652442268581980480
+      pixellab-an-item-named--Speed-Juice---H-1782197149212_21: 2268834445430476129
+      pixellab-an-item-named--Speed-Juice---H-1782197149212_22: -8982799878590058371
+      pixellab-an-item-named--Speed-Juice---H-1782197149212_23: 4101189668665260775
+      pixellab-an-item-named--Speed-Juice---H-1782197149212_24: -3155630038916607091
+      pixellab-an-item-named--Speed-Juice---H-1782197149212_25: -4612107256393723109
+      pixellab-an-item-named--Speed-Juice---H-1782197149212_26: -1035663804643140016
+      pixellab-an-item-named--Speed-Juice---H-1782197149212_27: 1316514899544803201
+      pixellab-an-item-named--Speed-Juice---H-1782197149212_28: -4466227172247477509
+      pixellab-an-item-named--Speed-Juice---H-1782197149212_29: 4462121413138453709
+      pixellab-an-item-named--Speed-Juice---H-1782197149212_3: 5226867115430496205
+      pixellab-an-item-named--Speed-Juice---H-1782197149212_4: 5598695176970977146
+      pixellab-an-item-named--Speed-Juice---H-1782197149212_5: 7376491524479970526
+      pixellab-an-item-named--Speed-Juice---H-1782197149212_6: 5806471578860260666
+      pixellab-an-item-named--Speed-Juice---H-1782197149212_7: 7840871400268254308
+      pixellab-an-item-named--Speed-Juice---H-1782197149212_8: -8384260633837879017
+      pixellab-an-item-named--Speed-Juice---H-1782197149212_9: 8556724799645344556
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

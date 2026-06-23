@@ -1,0 +1,559 @@
+fileFormatVersion: 2
+guid: 026dd8ccec716504d9a87c5802f8993f
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1034430437451468424
+    second: pixellab-an-item-named--Heavy-Anchor----1782220776091_0
+  - first:
+      213: 3502230002821191409
+    second: pixellab-an-item-named--Heavy-Anchor----1782220776091_1
+  - first:
+      213: 8601169638463341704
+    second: pixellab-an-item-named--Heavy-Anchor----1782220776091_2
+  - first:
+      213: -2155737039835271415
+    second: pixellab-an-item-named--Heavy-Anchor----1782220776091_3
+  - first:
+      213: 2242108613399497749
+    second: pixellab-an-item-named--Heavy-Anchor----1782220776091_4
+  - first:
+      213: 7931608769175869986
+    second: pixellab-an-item-named--Heavy-Anchor----1782220776091_5
+  - first:
+      213: -4907119914465132189
+    second: pixellab-an-item-named--Heavy-Anchor----1782220776091_6
+  - first:
+      213: 7469254921383870289
+    second: pixellab-an-item-named--Heavy-Anchor----1782220776091_7
+  - first:
+      213: 7572390884071128822
+    second: pixellab-an-item-named--Heavy-Anchor----1782220776091_8
+  - first:
+      213: 4523718650427474730
+    second: pixellab-an-item-named--Heavy-Anchor----1782220776091_9
+  - first:
+      213: -1175086127533353059
+    second: pixellab-an-item-named--Heavy-Anchor----1782220776091_10
+  - first:
+      213: 1569714389585170731
+    second: pixellab-an-item-named--Heavy-Anchor----1782220776091_11
+  - first:
+      213: -5239283682671723350
+    second: pixellab-an-item-named--Heavy-Anchor----1782220776091_12
+  - first:
+      213: 7768006371978980527
+    second: pixellab-an-item-named--Heavy-Anchor----1782220776091_13
+  - first:
+      213: 4774155938873637532
+    second: pixellab-an-item-named--Heavy-Anchor----1782220776091_14
+  - first:
+      213: 8925858022903554730
+    second: pixellab-an-item-named--Heavy-Anchor----1782220776091_15
+  - first:
+      213: 7861851650299209428
+    second: pixellab-an-item-named--Heavy-Anchor----1782220776091_16
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Heavy-Anchor----1782220776091_0
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 194
+        width: 48
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88e852190090b5e00800000000000000
+      internalID: 1034430437451468424
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Heavy-Anchor----1782220776091_1
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 194
+        width: 50
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f65fd7c1ab6a9030800000000000000
+      internalID: 3502230002821191409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Heavy-Anchor----1782220776091_2
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 194
+        width: 48
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8848b79173e7d5770800000000000000
+      internalID: 8601169638463341704
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Heavy-Anchor----1782220776091_3
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 194
+        width: 36
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90f677775984512e0800000000000000
+      internalID: -2155737039835271415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Heavy-Anchor----1782220776091_4
+      rect:
+        serializedVersion: 2
+        x: 235
+        y: 203
+        width: 13
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51c458997e19d1f10800000000000000
+      internalID: 2242108613399497749
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Heavy-Anchor----1782220776091_5
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 130
+        width: 48
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22ad910f62cb21e60800000000000000
+      internalID: 7931608769175869986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Heavy-Anchor----1782220776091_6
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 129
+        width: 46
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3618f04df6866ebb0800000000000000
+      internalID: -4907119914465132189
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Heavy-Anchor----1782220776091_7
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 130
+        width: 48
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15f7ce5f6cf18a760800000000000000
+      internalID: 7469254921383870289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Heavy-Anchor----1782220776091_8
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 130
+        width: 60
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6fe37798369861960800000000000000
+      internalID: 7572390884071128822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Heavy-Anchor----1782220776091_9
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 65
+        width: 54
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a230a86152a77ce30800000000000000
+      internalID: 4523718650427474730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Heavy-Anchor----1782220776091_10
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 65
+        width: 48
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d9792e3946141bfe0800000000000000
+      internalID: -1175086127533353059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Heavy-Anchor----1782220776091_11
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 65
+        width: 50
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b211b0eabeeb8c510800000000000000
+      internalID: 1569714389585170731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Heavy-Anchor----1782220776091_12
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 66
+        width: 50
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aacf9d0ef335a47b0800000000000000
+      internalID: -5239283682671723350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Heavy-Anchor----1782220776091_13
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 1
+        width: 50
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fac27ce73a08dcb60800000000000000
+      internalID: 7768006371978980527
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Heavy-Anchor----1782220776091_14
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 1
+        width: 50
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c9a72e62885314240800000000000000
+      internalID: 4774155938873637532
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Heavy-Anchor----1782220776091_15
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 4
+        width: 60
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa2acb2a4940fdb70800000000000000
+      internalID: 8925858022903554730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixellab-an-item-named--Heavy-Anchor----1782220776091_16
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 1
+        width: 50
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d627ec0c68ea1d60800000000000000
+      internalID: 7861851650299209428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      pixellab-an-item-named--Heavy-Anchor----1782220776091_0: 1034430437451468424
+      pixellab-an-item-named--Heavy-Anchor----1782220776091_1: 3502230002821191409
+      pixellab-an-item-named--Heavy-Anchor----1782220776091_10: -1175086127533353059
+      pixellab-an-item-named--Heavy-Anchor----1782220776091_11: 1569714389585170731
+      pixellab-an-item-named--Heavy-Anchor----1782220776091_12: -5239283682671723350
+      pixellab-an-item-named--Heavy-Anchor----1782220776091_13: 7768006371978980527
+      pixellab-an-item-named--Heavy-Anchor----1782220776091_14: 4774155938873637532
+      pixellab-an-item-named--Heavy-Anchor----1782220776091_15: 8925858022903554730
+      pixellab-an-item-named--Heavy-Anchor----1782220776091_16: 7861851650299209428
+      pixellab-an-item-named--Heavy-Anchor----1782220776091_2: 8601169638463341704
+      pixellab-an-item-named--Heavy-Anchor----1782220776091_3: -2155737039835271415
+      pixellab-an-item-named--Heavy-Anchor----1782220776091_4: 2242108613399497749
+      pixellab-an-item-named--Heavy-Anchor----1782220776091_5: 7931608769175869986
+      pixellab-an-item-named--Heavy-Anchor----1782220776091_6: -4907119914465132189
+      pixellab-an-item-named--Heavy-Anchor----1782220776091_7: 7469254921383870289
+      pixellab-an-item-named--Heavy-Anchor----1782220776091_8: 7572390884071128822
+      pixellab-an-item-named--Heavy-Anchor----1782220776091_9: 4523718650427474730
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
