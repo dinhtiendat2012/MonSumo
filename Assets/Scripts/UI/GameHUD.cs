@@ -3,16 +3,25 @@ using UnityEngine.UI;
 using TMPro;
 using Unity.Netcode;
 using MonSumo.Core;
+using System.Collections;
+using System.Collections.Generic;
 using VContainer;
 
 namespace MonSumo.UI
 {
     public class GameHUD : MonoBehaviour
     {
-        [Header("Player HUD")]
-        [SerializeField] private Slider _hpSlider; // or separate heart icons
-        [SerializeField] private TMP_Text _hpText;
+        [Header("Player Avatar")]
+        [SerializeField] private Image _avatarImage;
+
+        [Header("Hearts Life HUD")]
+        [SerializeField] private Image[] _heartImages = new Image[3];
+        [SerializeField] private Sprite _fullHeartSprite;
+        [SerializeField] private Sprite _emptyHeartSprite;
+
+        [Header("Stamina HUD")]
         [SerializeField] private Slider _staminaSlider;
+        [SerializeField] private Image _staminaFillImage;
         [SerializeField] private TMP_Text _staminaText;
         [SerializeField] private Image _dashCooldownOverlay;
 
@@ -24,6 +33,9 @@ namespace MonSumo.UI
         private PlayerMovement _localMovement;
         private EventBus _eventBus;
         private float _alertTimer;
+
+        private int _lastHpValue = 3;
+        private Coroutine[] _heartCoroutines = new Coroutine[3];
 
         private void Start()
         {
@@ -40,6 +52,12 @@ namespace MonSumo.UI
             if (_alertText != null)
             {
                 _alertText.gameObject.SetActive(false);
+            }
+
+            // Set stamina bar color to green by default
+            if (_staminaFillImage != null)
+            {
+                _staminaFillImage.color = new Color(0.2f, 0.8f, 0.3f, 1f); // Vibrant Sumo green
             }
         }
 
@@ -64,6 +82,7 @@ namespace MonSumo.UI
                     if (_localPlayer != null)
                     {
                         _localMovement = _localPlayer.GetComponent<PlayerMovement>();
+                        InitializeHUD();
                     }
                 }
             }
@@ -75,20 +94,32 @@ namespace MonSumo.UI
             UpdateAlertUI();
         }
 
+        private void InitializeHUD()
+        {
+            if (_localPlayer == null) return;
+
+            // Setup avatar icon
+            if (_avatarImage != null && _localPlayer.playerData != null)
+            {
+                _avatarImage.sprite = _localPlayer.playerData.lobbyIcon != null 
+                    ? _localPlayer.playerData.lobbyIcon 
+                    : (_localPlayer.playerData.animatorController != null ? _localPlayer.playerData.lobbyIcon : null);
+            }
+
+            _lastHpValue = _localPlayer.currentHP.Value;
+            UpdateHeartsUI(_lastHpValue, false);
+        }
+
         private void UpdatePlayerUI()
         {
             if (_localPlayer == null) return;
 
-            // HP
+            // HP Change Detection
             int currentHp = _localPlayer.currentHP.Value;
-            if (_hpSlider != null)
+            if (currentHp != _lastHpValue)
             {
-                _hpSlider.maxValue = 3;
-                _hpSlider.value = currentHp;
-            }
-            if (_hpText != null)
-            {
-                _hpText.text = $"HP: {currentHp}/3";
+                UpdateHeartsUI(currentHp, true);
+                _lastHpValue = currentHp;
             }
 
             // Stamina
@@ -104,7 +135,7 @@ namespace MonSumo.UI
                 }
                 if (_staminaText != null)
                 {
-                    _staminaText.text = $"STAMINA: {Mathf.RoundToInt(stamina)}/{Mathf.RoundToInt(maxStamina)}";
+                    _staminaText.text = $"{Mathf.RoundToInt(stamina)}/{Mathf.RoundToInt(maxStamina)}";
                 }
 
                 // Dash Cooldown Overlay (fillAmount = remaining time / 3s)
@@ -114,6 +145,92 @@ namespace MonSumo.UI
                     _dashCooldownOverlay.fillAmount = Mathf.Clamp01(ratio);
                 }
             }
+        }
+
+        private void UpdateHeartsUI(int currentHp, bool animate)
+        {
+            for (int i = 0; i < _heartImages.Length; i++)
+            {
+                Image heartImg = _heartImages[i];
+                if (heartImg == null) continue;
+
+                bool shouldBeFull = i < currentHp;
+
+                if (shouldBeFull)
+                {
+                    if (heartImg.sprite != _fullHeartSprite)
+                    {
+                        heartImg.sprite = _fullHeartSprite;
+                        heartImg.rectTransform.localScale = Vector3.one;
+                        heartImg.color = Color.white;
+                    }
+                }
+                else
+                {
+                    // If it just became empty, play the bounce-shrink animation
+                    if (heartImg.sprite == _fullHeartSprite && animate)
+                    {
+                        if (_heartCoroutines[i] != null)
+                        {
+                            StopCoroutine(_heartCoroutines[i]);
+                        }
+                        _heartCoroutines[i] = StartCoroutine(AnimateHeartLoss(heartImg));
+                    }
+                    else if (!animate)
+                    {
+                        heartImg.sprite = _emptyHeartSprite;
+                        heartImg.rectTransform.localScale = Vector3.one;
+                        heartImg.color = new Color(1f, 1f, 1f, 0.4f); // Semi-transparent for empty heart look
+                    }
+                }
+            }
+        }
+
+        private IEnumerator AnimateHeartLoss(Image heartImg)
+        {
+            float duration = 0.5f;
+            float elapsed = 0f;
+
+            Vector3 startScale = Vector3.one;
+            // Scale up first (pop), then shrink down
+            while (elapsed < duration)
+            {
+                elapsed += Time.deltaTime;
+                float t = elapsed / duration;
+
+                // Simple bouncy curve: pop up to 1.4x, then shrink to 0
+                float scale;
+                if (t < 0.3f)
+                {
+                    float tPop = t / 0.3f;
+                    scale = Mathf.Lerp(1f, 1.4f, tPop);
+                }
+                else
+                {
+                    float tShrink = (t - 0.3f) / 0.7f;
+                    scale = Mathf.Lerp(1.4f, 0f, tShrink);
+                }
+
+                heartImg.rectTransform.localScale = new Vector3(scale, scale, 1f);
+                yield return null;
+            }
+
+            // Once shrunk, swap sprite to empty, scale back to 1.0, and fade in slightly
+            heartImg.sprite = _emptyHeartSprite;
+            
+            elapsed = 0f;
+            float fadeInDuration = 0.2f;
+            while (elapsed < fadeInDuration)
+            {
+                elapsed += Time.deltaTime;
+                float t = elapsed / fadeInDuration;
+                heartImg.rectTransform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one, t);
+                heartImg.color = Color.Lerp(new Color(1f, 1f, 1f, 0f), new Color(1f, 1f, 1f, 0.4f), t);
+                yield return null;
+            }
+
+            heartImg.rectTransform.localScale = Vector3.one;
+            heartImg.color = new Color(1f, 1f, 1f, 0.4f);
         }
 
         private void UpdateAlertUI()

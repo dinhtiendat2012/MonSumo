@@ -15,10 +15,10 @@ public class ZoneOut : NetworkBehaviour
     [Header("Scene Names")]
     [SerializeField] private string menuSceneName = "MainMenu";
 
-    [Header("Rule")]
-    [SerializeField] private float outsideGraceTime = 1.5f;
+    [Header("Damage Cooldown")]
+    [SerializeField] private float damageCooldown = 0.5f;
 
-    private float outsideTimer;
+    private float _cooldownTimer;
     private bool isGameOver = false;
 
     private Rigidbody2D rb;
@@ -54,25 +54,41 @@ public class ZoneOut : NetworkBehaviour
         if (isGameOver) return;
         if (zoneController == null) return;
 
-        bool isInsideZone = zoneController.IsInsideZone(transform.position);
-
-        if (isInsideZone)
+        if (_cooldownTimer > 0f)
         {
-            outsideTimer = 0f;
+            _cooldownTimer -= Time.deltaTime;
             return;
         }
 
-        outsideTimer += Time.deltaTime;
+        bool isOutside = IsFullyOutsideZone();
 
-        if (outsideTimer >= outsideGraceTime)
+        if (isOutside)
         {
-            outsideTimer = 0f; // Reset to prevent double triggering
             Player player = GetComponent<Player>();
             if (player != null)
             {
                 player.TakeDamage();
+                _cooldownTimer = damageCooldown; // Cooldown to avoid double-triggering before respawn syncs
             }
         }
+    }
+
+    private bool IsFullyOutsideZone()
+    {
+        if (col == null)
+        {
+            // Fallback to center point if no collider
+            return !zoneController.IsInsideZone(transform.position);
+        }
+
+        // Get the closest point on the player's collider to the zone center
+        Vector2 zoneCenter = zoneController.Center;
+        Vector2 closestPoint = col.ClosestPoint(zoneCenter);
+
+        // Calculate distance from closest point on player to zone center.
+        // If the closest point's distance is greater than the radius, the entire collider is outside!
+        float distance = Vector2.Distance(closestPoint, zoneCenter);
+        return distance > zoneController.CurrentRadius;
     }
 
     public void Retry()
