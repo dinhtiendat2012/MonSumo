@@ -59,6 +59,11 @@ namespace MonSumo.Core
                 _dashStaminaCost = data.dashStaminaCost;
                 _dashCooldown = data.dashCooldown;
                 _attackCooldown = data.pushCooldown;
+
+                if (_animator != null && data.animatorController != null)
+                {
+                    _animator.runtimeAnimatorController = data.animatorController;
+                }
             }
 
             _currentStamina = _maxStamina;
@@ -217,6 +222,8 @@ namespace MonSumo.Core
             float speedMagnitude = _rb != null ? _rb.linearVelocity.magnitude : 0f;
             _animator.SetFloat("Speed", speedMagnitude);
             _animator.SetInteger("State", (int)_stateMachine.StateEnum);
+            _animator.SetFloat("DirX", _facingDirection.x);
+            _animator.SetFloat("DirY", _facingDirection.y);
         }
 
         #endregion
