@@ -14,9 +14,12 @@ namespace MonSumo.World.Zone
         [SerializeField] private int segments = 128;
         [SerializeField] private float lineWidth = 0.15f;
         [SerializeField] private Color zoneColor = Color.red;
+        [Tooltip("How many times the rope texture repeats per world unit of circumference.")]
+        [SerializeField] private float ropeTileDensity = 1.0f;
 
         [Header("Zone Visual (Sprite Renderer - Optional)")]
         [SerializeField] private SpriteRenderer zoneSpriteRenderer;
+        [SerializeField] private SpriteMask zoneSpriteMask;
         [Tooltip("Bán kính mặc định của sprite khi Scale = 1 (Ví dụ: sprite tròn mặc định của Unity có bán kính 0.5)")]
         [SerializeField] private float spriteDefaultRadius = 0.5f;
 
@@ -83,6 +86,7 @@ namespace MonSumo.World.Zone
                 lineRenderer.startColor = zoneColor;
                 lineRenderer.endColor = zoneColor;
                 lineRenderer.sortingOrder = 50;
+                lineRenderer.textureMode = LineTextureMode.Tile;
             }
         }
 
@@ -315,6 +319,13 @@ namespace MonSumo.World.Zone
                 float y = Mathf.Sin(angle) * radius;
                 lineRenderer.SetPosition(i, new Vector3(x, y, 0f));
             }
+
+            // Update tiling scale dynamically based on circumference
+            if (lineRenderer.sharedMaterial != null)
+            {
+                float circumference = 2f * Mathf.PI * radius;
+                lineRenderer.sharedMaterial.mainTextureScale = new Vector2(circumference * ropeTileDensity, 1f);
+            }
         }
 
         public bool IsInsideZone(Vector2 position)
@@ -471,6 +482,20 @@ namespace MonSumo.World.Zone
                 {
                     float scaleFactor = radius / spriteRadius;
                     zoneSpriteRenderer.transform.localScale = new Vector3(scaleFactor, scaleFactor, 1f);
+                }
+            }
+
+            if (zoneSpriteMask != null)
+            {
+                float maskSpriteRadius = spriteDefaultRadius;
+                if (zoneSpriteMask.sprite != null)
+                {
+                    maskSpriteRadius = zoneSpriteMask.sprite.bounds.extents.x;
+                }
+                if (maskSpriteRadius > 0.01f)
+                {
+                    float scaleFactor = radius / maskSpriteRadius;
+                    zoneSpriteMask.transform.localScale = new Vector3(scaleFactor, scaleFactor, 1f);
                 }
             }
         }
