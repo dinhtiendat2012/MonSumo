@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4368551700618054424}
   - component: {fileID: 884220670732385863}
   m_Layer: 0
-  m_Name: PF_Item_MeleePush
+  m_Name: PF_Item_SuperPush
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -81,7 +81,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 5
   m_Sprite: {fileID: 3198672796679677951, guid: 7fe17d1b98bd7974ead58d51920025e2, type: 2}
-  m_Color: {r: 0.95, g: 0.35, b: 0.25, a: 1}
+  m_Color: {r: 0.9, g: 0.9, b: 0.1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -202,8 +202,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  _itemData: {fileID: 0}
-  _skill: {fileID: 11400000, guid: c870f4579c79bb94c8f5e36f1f051100, type: 2}
+  _itemData: {fileID: 11400000, guid: ac02fbe80e2136e49951ee1d6cdbf020, type: 2}
+  _skill: {fileID: 0}
   _rotationSpeed: 45
   _blinkStartThreshold: 5
   _blinkInterval: 0.2

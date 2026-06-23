@@ -404,7 +404,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 306043280}
-  - component: {fileID: 306043281}
   m_Layer: 0
   m_Name: Exp HUD
   m_TagString: Untagged
@@ -434,18 +433,6 @@ RectTransform:
   m_AnchoredPosition: {x: 24, y: -24}
   m_SizeDelta: {x: 260, y: 36}
   m_Pivot: {x: 0, y: 1}
---- !u!114 &306043281
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 306043279}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fb047e5f63e7074f9755e19da700d90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &309838505
 GameObject:
   m_ObjectHideFlags: 0
@@ -627,8 +614,8 @@ MonoBehaviour:
   startRadius: 27.041636
   endRadius: 10
   autoDetectBounds: 1
-  mapMin: {x: -22.5, y: -15}
-  mapMax: {x: 22.5, y: 15}
+  mapMin: {x: -22, y: -14.5}
+  mapMax: {x: 22, y: 14.5}
   shrinkStartSecond: 180
   shrinkSpeedUpSecond: 540
   moveSpeedUpDelay: 120
@@ -2629,6 +2616,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1492588890}
   - component: {fileID: 1492588891}
+  - component: {fileID: 1492588892}
   m_Layer: 0
   m_Name: Item Spawner
   m_TagString: Untagged
@@ -2677,6 +2665,31 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   _maxAttempts: 20
+--- !u!114 &1492588892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1492588889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 1883064557
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!1 &1645041730
 GameObject:
   m_ObjectHideFlags: 0

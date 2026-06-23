@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 88f73044ffec83a40845306ee8255625, type: 3}
-  m_Name: SpeedJuice
+  m_Name: HeavyAnchor
   m_EditorClassIdentifier: 
-  itemType: 0
-  itemName: Speed Juice
+  itemType: 1
+  itemName: Heavy Anchor
   icon: {fileID: 0}
   prefab: {fileID: 0}
   spawnWeight: 0.3
   duration: 10
-  speedModifierPercent: 0.3
-  massModifierPercent: 0
+  speedModifierPercent: 0
+  massModifierPercent: 0.5
   pushForceModifierPercent: 0
   receivedPushMultiplier: 1
   reflectedPushPercent: 0
