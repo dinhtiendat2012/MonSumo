@@ -1457,11 +1457,11 @@ MonoBehaviour:
   zoneSpriteRenderer: {fileID: 0}
   spriteDefaultRadius: 0.5
   autoFitStartRadius: 1
-  startRadius: 24.579365
+  startRadius: 7.8747206
   endRadius: 10
   autoDetectBounds: 1
-  mapMin: {x: -20.908937, y: -10.105791}
-  mapMax: {x: 22.008936, y: 13.865791}
+  mapMin: {x: -6.325, y: -1.9599999}
+  mapMax: {x: 7.425, y: 5.72}
   shrinkStartSecond: 0
   shrinkSpeedUpSecond: 540
   moveSpeedUpDelay: 120
@@ -2845,8 +2845,8 @@ MonoBehaviour:
   offset: {x: 0, y: 0, z: -10}
   useBounds: 1
   autoDetectBounds: 1
-  mapMin: {x: -20.908937, y: -10.105791}
-  mapMax: {x: 22.008936, y: 13.865791}
+  mapMin: {x: -6.325, y: -1.9599999}
+  mapMax: {x: 7.425, y: 5.72}
 --- !u!1 &538218203
 GameObject:
   m_ObjectHideFlags: 0
@@ -6900,6 +6900,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1601686550
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1601686551}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1601686551
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1601686550}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.093478, y: -0.2698108, z: -8.792513}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1645041730
 GameObject:
   m_ObjectHideFlags: 0
@@ -8788,3 +8819,4 @@ SceneRoots:
   - {fileID: 3366728367051444084}
   - {fileID: 1716877212}
   - {fileID: 1281706742}
+  - {fileID: 1601686551}
