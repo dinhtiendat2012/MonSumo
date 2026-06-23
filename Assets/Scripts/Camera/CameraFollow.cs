@@ -179,6 +179,7 @@ public class CameraFollow : MonoBehaviour
             {
                 if (sr.gameObject.layer == 5 || sr.transform is RectTransform) continue; // Skip UI
                 if (sr.gameObject.CompareTag("Player")) continue; // Skip player
+                if (sr.gameObject.name == "ZoneVignetteOverlay") continue; // Skip large overlay shader vignetting
 
                 float area = sr.bounds.size.x * sr.bounds.size.y;
                 if (area > maxArea && area > 10f)
