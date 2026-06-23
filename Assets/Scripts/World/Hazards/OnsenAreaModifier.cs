@@ -23,6 +23,9 @@ namespace MonSumo.World.Hazards
         [SerializeField] private float _waveInterval = 8f; // Wave every 8s
         [SerializeField] private float _wavePushForce = 15f;
 
+        [Header("Bath Settings")]
+        [SerializeField] [Range(0f, 1f)] private float _slowSpeedMultiplier = 0.5f;
+
         private float _waveTimer;
         private readonly List<PlayerMovement> _affectedMovements = new();
         private readonly List<Rigidbody2D> _affectedRigidbodies = new();
@@ -92,9 +95,7 @@ namespace MonSumo.World.Hazards
                 // Apply Slow effect
                 if (_modifierType == ModifierType.BathSlow)
                 {
-                    // Slow speed by 50%
-                    // We will implement AreaSpeedMultiplier in PlayerMovement
-                    movement.SetAreaSpeedMultiplier(0.5f);
+                    movement.SetAreaSpeedMultiplier(_slowSpeedMultiplier);
                     Debug.Log($"[Onsen Hazard] Player {movement.OwnerClientId} entered bath slow area.");
                 }
             }

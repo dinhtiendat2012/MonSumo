@@ -33,5 +33,6 @@ namespace MonSumo.Data
 
         [Header("Combat settings")]
         public float pushCooldown = 3f;
+        public float knockbackDuration = 0.3f;
     }
 }

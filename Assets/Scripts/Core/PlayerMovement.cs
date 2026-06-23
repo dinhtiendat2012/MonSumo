@@ -51,6 +51,21 @@ namespace MonSumo.Core
 
         private void Start()
         {
+            if (_player != null && _player.playerData != null)
+            {
+                var data = _player.playerData;
+                _maxStamina = data.maxStamina;
+                _staminaRegenRate = data.staminaRegenPerSecond;
+                _dashStaminaCost = data.dashStaminaCost;
+                _dashCooldown = data.dashCooldown;
+                _attackCooldown = data.pushCooldown;
+
+                if (_animator != null && data.animatorController != null)
+                {
+                    _animator.runtimeAnimatorController = data.animatorController;
+                }
+            }
+
             _currentStamina = _maxStamina;
             _stateMachine.Initialize(new PlayerIdleState(), PlayerMovementState.Idle);
         }
@@ -151,8 +166,38 @@ namespace MonSumo.Core
 
         public void ConsumeSprintStamina(float dt)
         {
-            // Sprint cost is 2 pow/sec
-            _currentStamina = Mathf.Max(0f, _currentStamina - 2f * dt);
+            float cost = (_player != null && _player.playerData != null)
+                ? _player.playerData.sprintStaminaCostPerSecond
+                : 2f;
+            _currentStamina = Mathf.Max(0f, _currentStamina - cost * dt);
+        }
+
+        public float GetDashDuration()
+        {
+            return (_player != null && _player.playerData != null)
+                ? _player.playerData.dashDuration
+                : 0.2f;
+        }
+
+        public float GetDashSpeedMultiplier()
+        {
+            return (_player != null && _player.playerData != null)
+                ? _player.playerData.dashSpeedMultiplier
+                : 4f;
+        }
+
+        public float GetSprintSpeedMultiplier()
+        {
+            return (_player != null && _player.playerData != null)
+                ? _player.playerData.sprintSpeedMultiplier
+                : 1.5f;
+        }
+
+        public float GetKnockbackDuration()
+        {
+            return (_player != null && _player.playerData != null)
+                ? _player.playerData.knockbackDuration
+                : 0.3f;
         }
 
         public void StartKnockback()
@@ -177,6 +222,8 @@ namespace MonSumo.Core
             float speedMagnitude = _rb != null ? _rb.linearVelocity.magnitude : 0f;
             _animator.SetFloat("Speed", speedMagnitude);
             _animator.SetInteger("State", (int)_stateMachine.StateEnum);
+            _animator.SetFloat("DirX", _facingDirection.x);
+            _animator.SetFloat("DirY", _facingDirection.y);
         }
 
         #endregion

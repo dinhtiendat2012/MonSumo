@@ -37,6 +37,7 @@ namespace MonSumo.Networking.Lobby
 
             _net.NetworkConfig.ConnectionApproval = true;
             _net.ConnectionApprovalCallback = ApprovalCheck;
+            _net.NetworkConfig.AutoSpawnPlayerPrefabClientSide = false;
 
             var transport = _net.GetComponent<UnityTransport>();
             if (transport != null)
@@ -65,6 +66,7 @@ namespace MonSumo.Networking.Lobby
             }
 
             _net.NetworkConfig.ConnectionApproval = true;
+            _net.NetworkConfig.AutoSpawnPlayerPrefabClientSide = false;
 
             var transport = _net.GetComponent<UnityTransport>();
             if (transport != null)

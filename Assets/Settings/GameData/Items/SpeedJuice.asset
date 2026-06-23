@@ -16,10 +16,10 @@ MonoBehaviour:
   itemName: Speed Juice
   icon: {fileID: 0}
   prefab: {fileID: 0}
-  spawnWeight: 0.6
+  spawnWeight: 0.3
   duration: 10
-  speedModifierPercent: 0
-  massModifierPercent: 0.5
+  speedModifierPercent: 0.3
+  massModifierPercent: 0
   pushForceModifierPercent: 0
   receivedPushMultiplier: 1
   reflectedPushPercent: 0

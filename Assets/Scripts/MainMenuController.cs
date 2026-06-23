@@ -4,11 +4,11 @@ using UnityEngine.SceneManagement;
 public class MainMenuController : MonoBehaviour
 {
     [Header("Scene Names")]
-    [SerializeField] private string matchSceneName = "Match";
+    [SerializeField] private string lobbySceneName = "Lobby";
 
     public void StartGame()
     {
-        SceneManager.LoadScene(matchSceneName);
+        SceneManager.LoadScene(lobbySceneName);
     }
 
     public void QuitGame()

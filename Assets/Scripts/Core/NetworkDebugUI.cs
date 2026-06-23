@@ -30,7 +30,10 @@ public sealed class NetworkDebugUI : MonoBehaviour
         if (GUILayout.Button("Start CLIENT"))
         {
             var transport = NetworkManager.Singleton.GetComponent<Unity.Netcode.Transports.UTP.UnityTransport>();
-            if (transport != null) transport.SetConnectionData(hostAddress, 7777);
+            if (transport != null)
+            {
+                transport.SetConnectionData(hostAddress, transport.ConnectionData.Port);
+            }
             NetworkManager.Singleton.StartClient();
         }
 

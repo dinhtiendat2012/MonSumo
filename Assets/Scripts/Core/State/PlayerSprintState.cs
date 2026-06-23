@@ -38,7 +38,7 @@ namespace MonSumo.Core.State
         {
             var controller = stateMachine.Controller;
             Vector2 input = controller.GetMoveInput();
-            float speed = controller.GetBaseSpeed() * 1.5f; // Sprint speed multiplier is 1.5x
+            float speed = controller.GetBaseSpeed() * controller.GetSprintSpeedMultiplier();
             controller.SetVelocity(input.normalized * speed);
 
             // Consume stamina
