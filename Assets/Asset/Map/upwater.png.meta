@@ -1,0 +1,547 @@
+fileFormatVersion: 2
+guid: c468fc928d0884e49aedf6a6a4e58fc2
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 8732575877298635209
+    second: upwater_0
+  - first:
+      213: 8027789532032117765
+    second: upwater_1
+  - first:
+      213: 2365478567446883751
+    second: upwater_2
+  - first:
+      213: 8471307505656265632
+    second: upwater_3
+  - first:
+      213: 7050577941081114129
+    second: upwater_4
+  - first:
+      213: 8164116415710990157
+    second: upwater_5
+  - first:
+      213: 8747121610567309267
+    second: upwater_6
+  - first:
+      213: 3810710899505788670
+    second: upwater_7
+  - first:
+      213: 1273750960218318821
+    second: upwater_8
+  - first:
+      213: -689773013598714127
+    second: upwater_9
+  - first:
+      213: 8825984307081704607
+    second: upwater_10
+  - first:
+      213: -9053684839960426870
+    second: upwater_11
+  - first:
+      213: 4564373847638292961
+    second: upwater_12
+  - first:
+      213: -3204232808374064177
+    second: upwater_13
+  - first:
+      213: 4863459059799692502
+    second: upwater_14
+  - first:
+      213: 2488707656541311146
+    second: upwater_15
+  - first:
+      213: -2841512687914902902
+    second: upwater_16
+  - first:
+      213: 3828951564226695109
+    second: upwater_17
+  - first:
+      213: -4638258620358309471
+    second: upwater_18
+  - first:
+      213: -4585621110584284992
+    second: upwater_19
+  - first:
+      213: -192516856755169774
+    second: upwater_20
+  - first:
+      213: -8113534444454889699
+    second: upwater_21
+  - first:
+      213: -7863371119915134024
+    second: upwater_22
+  - first:
+      213: 7613561655483543735
+    second: upwater_23
+  - first:
+      213: -4004864630318351269
+    second: upwater_24
+  - first:
+      213: 7590422140710367912
+    second: upwater_25
+  - first:
+      213: 4368461688459167547
+    second: upwater_26
+  - first:
+      213: -906819433221693176
+    second: upwater_27
+  - first:
+      213: -7678719354495037859
+    second: upwater_28
+  - first:
+      213: -7066996964191643595
+    second: upwater_29
+  - first:
+      213: -6516298847084973289
+    second: upwater_30
+  - first:
+      213: -779162335309619626
+    second: upwater_31
+  - first:
+      213: -1162647016027563393
+    second: upwater_32
+  - first:
+      213: 6505970365806351952
+    second: upwater_33
+  - first:
+      213: -7298709661090271480
+    second: upwater_34
+  - first:
+      213: -4751393193408716785
+    second: upwater_35
+  - first:
+      213: -5066528647626481985
+    second: upwater_36
+  - first:
+      213: -7773355185362083204
+    second: upwater_37
+  - first:
+      213: -3421235484324757854
+    second: upwater_38
+  - first:
+      213: 7860596442283584460
+    second: upwater_39
+  - first:
+      213: 6519823606607713159
+    second: upwater_40
+  - first:
+      213: 1100186843029069232
+    second: upwater_41
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: upwater_23
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 311
+        width: 107
+        height: 88
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50caf5cdb00786f60800000000000000
+      internalID: 8027789532032117765
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: upwater_3
+      rect:
+        serializedVersion: 2
+        x: 450
+        y: 312
+        width: 107
+        height: 90
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0abfdb12b41209570800000000000000
+      internalID: 8471307505656265632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: upwater_11
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 310
+        width: 58
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a86c1d54b99da5280800000000000000
+      internalID: -9053684839960426870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: upwater_13
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 312
+        width: 81
+        height: 65
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fcb263fcc374883d0800000000000000
+      internalID: -3204232808374064177
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: upwater_19
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 310
+        width: 46
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c8671545e99c50c0800000000000000
+      internalID: -4585621110584284992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: upwater_20
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 176
+        width: 130
+        height: 92
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 21655d350fa045df0800000000000000
+      internalID: -192516856755169774
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: upwater_27
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 176
+        width: 119
+        height: 85
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 801666fa7845a63f0800000000000000
+      internalID: -906819433221693176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: upwater_29
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 176
+        width: 125
+        height: 86
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 538d79024bbfced90800000000000000
+      internalID: -7066996964191643595
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: upwater_30
+      rect:
+        serializedVersion: 2
+        x: 414
+        y: 176
+        width: 158
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 713763139b47195a0800000000000000
+      internalID: -6516298847084973289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: upwater_33
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 77
+        width: 164
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0561b1dd399d94a50800000000000000
+      internalID: 6505970365806351952
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: upwater_34
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 77
+        width: 189
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 80fa004cb36c5ba90800000000000000
+      internalID: -7298709661090271480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: upwater_36
+      rect:
+        serializedVersion: 2
+        x: 423
+        y: 67
+        width: 147
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fbe12e1e90310b9b0800000000000000
+      internalID: -5066528647626481985
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: c10413a3fd7aa284db91e9e87db7ff26
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      upwater_0: 8732575877298635209
+      upwater_10: 8825984307081704607
+      upwater_11: -9053684839960426870
+      upwater_12: 4564373847638292961
+      upwater_13: -3204232808374064177
+      upwater_14: 4863459059799692502
+      upwater_15: 2488707656541311146
+      upwater_16: -2841512687914902902
+      upwater_17: 3828951564226695109
+      upwater_18: -4638258620358309471
+      upwater_19: -4585621110584284992
+      upwater_20: -192516856755169774
+      upwater_21: -8113534444454889699
+      upwater_22: -7863371119915134024
+      upwater_23: 8027789532032117765
+      upwater_24: -4004864630318351269
+      upwater_25: 7590422140710367912
+      upwater_26: 4368461688459167547
+      upwater_27: -906819433221693176
+      upwater_28: -7678719354495037859
+      upwater_29: -7066996964191643595
+      upwater_3: 8471307505656265632
+      upwater_30: -6516298847084973289
+      upwater_31: -779162335309619626
+      upwater_32: -1162647016027563393
+      upwater_33: 6505970365806351952
+      upwater_34: -7298709661090271480
+      upwater_35: -4751393193408716785
+      upwater_36: -5066528647626481985
+      upwater_37: -7773355185362083204
+      upwater_38: -3421235484324757854
+      upwater_39: 7860596442283584460
+      upwater_4: 7050577941081114129
+      upwater_40: 6519823606607713159
+      upwater_41: 1100186843029069232
+      upwater_5: 8164116415710990157
+      upwater_6: 8747121610567309267
+      upwater_7: 3810710899505788670
+      upwater_8: 1273750960218318821
+      upwater_9: -689773013598714127
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
