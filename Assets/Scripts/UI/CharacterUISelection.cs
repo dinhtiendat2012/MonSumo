@@ -12,13 +12,14 @@ public class CharacterUISelection : MonoBehaviour
     {
         if (selectedName !=null)
         {   
-            selectedName.gameObject.SetActive(true);
             selectedName.text = ((CharacterType)CharacterSelection.SelectionCharacterId).ToString();
+            selectedName.gameObject.SetActive(true);
         }
         if (selectedImage != null )
         {
-            selectedImage.gameObject.SetActive(true);
             selectedImage.sprite = characterSprite;
+            selectedImage.gameObject.SetActive(true);
+            
         }
 
     }

@@ -783,7 +783,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: No selected
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1031,7 +1031,7 @@ GameObject:
   - component: {fileID: 701413363}
   - component: {fileID: 701413362}
   m_Layer: 5
-  m_Name: 4Button
+  m_Name: YukiButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1400,7 +1400,7 @@ GameObject:
   m_Component:
   - component: {fileID: 845591155}
   m_Layer: 5
-  m_Name: RobotSelectionContainer
+  m_Name: SelectionContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1970,9 +1970,9 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.05724299
+    x: 0.122509964
     y: 0
-    width: 0.88551396
+    width: 0.7549801
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
@@ -2235,7 +2235,7 @@ GameObject:
   - component: {fileID: 1508642743}
   - component: {fileID: 1508642746}
   m_Layer: 5
-  m_Name: 5Button
+  m_Name: NurikabeButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
