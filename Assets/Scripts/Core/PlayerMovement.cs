@@ -21,6 +21,10 @@ namespace MonSumo.Core
         [SerializeField] private float _attackRange = 1.0f;
         [SerializeField] private float _attackRadius = 1.0f;
 
+        [Header("Skill Settings")]
+        [SerializeField] private float _skillCooldown = 10f;
+
+        private float _skillCooldownTimer;
         private float _attackCooldownTimer;
         private float _areaSpeedMultiplier = 1f;
         private Vector2 _moveInput;
@@ -30,7 +34,7 @@ namespace MonSumo.Core
         private Player _player;
         private Animator _animator;
         private SpriteRenderer _spriteRenderer;
-        
+        private SkillController _skillController;
         private PlayerStateMachine _stateMachine;
 
         private readonly NetworkVariable<int> _netState = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
@@ -48,8 +52,8 @@ namespace MonSumo.Core
             _player = GetComponent<Player>();
             _animator = GetComponentInChildren<Animator>();
             _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-
             _stateMachine = new PlayerStateMachine(this);
+            _skillController = GetComponentInChildren<SkillController>();
         }
 
         private void Start()
@@ -62,7 +66,7 @@ namespace MonSumo.Core
                 _dashStaminaCost = data.dashStaminaCost;
                 _dashCooldown = data.dashCooldown;
                 _attackCooldown = data.pushCooldown;
-
+                
                 if (_animator != null && data.animatorController != null)
                 {
                     _animator.runtimeAnimatorController = data.animatorController;
@@ -101,6 +105,12 @@ namespace MonSumo.Core
                     _attackCooldownTimer -= Time.deltaTime;
                 }
 
+                // Update Skill Cooldown Timer
+                if (_skillCooldownTimer > 0f)
+                {
+                    _skillCooldownTimer -= Time.deltaTime;
+                }
+
                 // Stamina regeneration (only when not sprinting or dashing)
                 if (_stateMachine.StateEnum != PlayerMovementState.Sprint && _stateMachine.StateEnum != PlayerMovementState.Dash)
                 {
@@ -118,6 +128,16 @@ namespace MonSumo.Core
                 if (Input.GetMouseButtonDown(0))
                 {
                     RequestAttack();
+                }
+
+                // Skill Activation (KeyCode.E)
+                if (Input.GetKey(KeyCode.E))
+                {
+                    if (_skillCooldownTimer <= 0f)
+                    {
+                        _skillCooldownTimer = _skillCooldown;
+                        _skillController.UseSkill();
+                    }
                 }
             }
 
