@@ -13,7 +13,21 @@ public class SceneNavigator : MonoBehaviour
     public void GoToBattle()
     {
         Debug.Log("Going to Battle Scene");
-        SceneManager.LoadScene("Match");
+        if (Unity.Netcode.NetworkManager.Singleton != null && Unity.Netcode.NetworkManager.Singleton.IsListening)
+        {
+            if (Unity.Netcode.NetworkManager.Singleton.IsServer)
+            {
+                Unity.Netcode.NetworkManager.Singleton.SceneManager.LoadScene("Match", UnityEngine.SceneManagement.LoadSceneMode.Single);
+            }
+            else
+            {
+                Debug.Log("[SceneNavigator] Client clicked confirm, waiting for host to start.");
+            }
+        }
+        else
+        {
+            SceneManager.LoadScene("Match");
+        }
     }
 
     public void GoToMainMenu()

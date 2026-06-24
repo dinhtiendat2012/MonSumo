@@ -29,8 +29,12 @@ namespace MonSumo.UI
         [SerializeField] private TMP_Text _alertText;
         [SerializeField] private float _alertDuration = 3f;
 
+        [Header("Zone Alarm HUD")]
+        [SerializeField] private TMP_Text _zoneAlarmText;
+
         private Player _localPlayer;
         private PlayerMovement _localMovement;
+        private MonSumo.World.Zone.ZoneController _zoneController;
         private EventBus _eventBus;
         private float _alertTimer;
 
@@ -87,8 +91,17 @@ namespace MonSumo.UI
                 }
             }
 
+            // Locate active ZoneController if null
+            if (_zoneController == null)
+            {
+                _zoneController = FindFirstObjectByType<MonSumo.World.Zone.ZoneController>();
+            }
+
             // Update Player HP & Stamina UI
             UpdatePlayerUI();
+
+            // Update Zone Alarm UI
+            UpdateZoneAlarmUI();
 
             // Update Alert Timer
             UpdateAlertUI();
@@ -242,6 +255,53 @@ namespace MonSumo.UI
                 {
                     _alertText.gameObject.SetActive(false);
                 }
+            }
+        }
+
+        private void UpdateZoneAlarmUI()
+        {
+            if (_zoneAlarmText == null || _zoneController == null) return;
+
+            float countdown = _zoneController.shrinkCountdown.Value;
+
+            if (countdown > 0.01f)
+            {
+                if (countdown <= 30f)
+                {
+                    _zoneAlarmText.gameObject.SetActive(true);
+                    int seconds = Mathf.CeilToInt(countdown);
+                    
+                    if (seconds <= 10)
+                    {
+                        // Flashing red
+                        float flashValue = Mathf.Abs(Mathf.Sin(Time.time * 8f));
+                        _zoneAlarmText.color = Color.Lerp(Color.red, new Color(1f, 0.5f, 0.5f), flashValue);
+                        _zoneAlarmText.text = $"WARNING! RING SHRINKING IN: {seconds}s";
+                        _zoneAlarmText.transform.localScale = Vector3.one * (1f + 0.05f * flashValue); // slight pulsing
+                    }
+                    else
+                    {
+                        // Flat gold/orange warning
+                        _zoneAlarmText.color = new Color(0.95f, 0.6f, 0.15f, 1f); // Orange-gold
+                        _zoneAlarmText.text = $"RING PREPARATION: {seconds}s";
+                        _zoneAlarmText.transform.localScale = Vector3.one;
+                    }
+                }
+                else
+                {
+                    _zoneAlarmText.gameObject.SetActive(false);
+                }
+            }
+            else
+            {
+                // Active shrinking & moving
+                _zoneAlarmText.gameObject.SetActive(true);
+                _zoneAlarmText.color = Color.red;
+                _zoneAlarmText.text = "SAFE ZONE SHRINKING & MOVING!";
+                
+                // Pulsing warning
+                float pulse = Mathf.Abs(Mathf.Sin(Time.time * 4f));
+                _zoneAlarmText.transform.localScale = Vector3.one * (1f + 0.03f * pulse);
             }
         }
 

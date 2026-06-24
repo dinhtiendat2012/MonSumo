@@ -37,6 +37,9 @@ namespace MonSumo.Core
         private SkillController _skillController;
         private PlayerStateMachine _stateMachine;
 
+        private readonly NetworkVariable<int> _netState = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+        private readonly NetworkVariable<Vector2> _netFacingDirection = new NetworkVariable<Vector2>(Vector2.down, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
         // Public properties for debug and UI
         public float CurrentStamina => _currentStamina;
         public float MaxStamina => _maxStamina;
@@ -76,67 +79,70 @@ namespace MonSumo.Core
 
         private void Update()
         {
-            if (!IsOwner) return;
+            // Dynamically ignore solid collisions between players to prevent passive pushing
+            IgnoreOtherPlayersCollisions();
 
-            // Handle WASD inputs
-            _moveInput.x = Input.GetAxisRaw("Horizontal");
-            _moveInput.y = Input.GetAxisRaw("Vertical");
-
-            if (_moveInput.sqrMagnitude > 0.01f)
+            if (IsOwner)
             {
-                _facingDirection = _moveInput.normalized;
-                
-                // Optional Sprite Flip
-                if (_spriteRenderer != null)
+                // Handle WASD inputs
+                _moveInput.x = Input.GetAxisRaw("Horizontal");
+                _moveInput.y = Input.GetAxisRaw("Vertical");
+
+                if (_moveInput.sqrMagnitude > 0.01f)
                 {
-                    if (_moveInput.x < -0.01f) _spriteRenderer.flipX = true;
-                    else if (_moveInput.x > 0.01f) _spriteRenderer.flipX = false;
+                    _facingDirection = _moveInput.normalized;
+                }
+
+                // Update Dash Cooldown Timer
+                if (_dashCooldownTimer > 0f)
+                {
+                    _dashCooldownTimer -= Time.deltaTime;
+                }
+
+                // Update Attack Cooldown Timer
+                if (_attackCooldownTimer > 0f)
+                {
+                    _attackCooldownTimer -= Time.deltaTime;
+                }
+
+                // Update Skill Cooldown Timer
+                if (_skillCooldownTimer > 0f)
+                {
+                    _skillCooldownTimer -= Time.deltaTime;
+                }
+
+                // Stamina regeneration (only when not sprinting or dashing)
+                if (_stateMachine.StateEnum != PlayerMovementState.Sprint && _stateMachine.StateEnum != PlayerMovementState.Dash)
+                {
+                    _currentStamina = Mathf.Min(_maxStamina, _currentStamina + _staminaRegenRate * Time.deltaTime);
+                }
+
+                // Update State Machine
+                _stateMachine.Update();
+
+                // Write to synchronized network variables
+                _netState.Value = (int)_stateMachine.StateEnum;
+                _netFacingDirection.Value = _facingDirection;
+
+                // Normal Attack (Wired in Phase 4)
+                if (Input.GetMouseButtonDown(0))
+                {
+                    RequestAttack();
+                }
+
+                // Skill Activation (KeyCode.E)
+                if (Input.GetKey(KeyCode.E))
+                {
+                    if (_skillCooldownTimer <= 0f)
+                    {
+                        _skillCooldownTimer = _skillCooldown;
+                        _skillController.UseSkill();
+                    }
                 }
             }
 
-            // Update Dash Cooldown Timer
-            if (_dashCooldownTimer > 0f)
-            {
-                _dashCooldownTimer -= Time.deltaTime;
-            }
-
-            // Update Attack Cooldown Timer
-            if (_attackCooldownTimer > 0f)
-            {
-                _attackCooldownTimer -= Time.deltaTime;
-            }
-
-            // Update Skill Cooldown Timer
-            if (_skillCooldownTimer > 0f)
-            {
-                _skillCooldownTimer -= Time.deltaTime;
-            }
-
-            // Stamina regeneration (only when not sprinting or dashing)
-            if (_stateMachine.StateEnum != PlayerMovementState.Sprint && _stateMachine.StateEnum != PlayerMovementState.Dash)
-            {
-                _currentStamina = Mathf.Min(_maxStamina, _currentStamina + _staminaRegenRate * Time.deltaTime);
-            }
-
-            // Update State Machine
-            _stateMachine.Update();
-
             // Sync animation parameters if available
             UpdateAnimator();
-
-            // Normal Attack (Wired in Phase 4)
-            if (Input.GetMouseButtonDown(0))
-            {
-                RequestAttack();
-            }
-            // Normal Attack (Wired in Phase 4)
-            if (Input.GetKey(KeyCode.E))
-            {
-                if (_skillCooldownTimer > 0f) return;
-                _skillCooldownTimer = _skillCooldown;
-                _skillController.UseSkill();
-               
-            }
         }
 
         private void FixedUpdate()
@@ -237,11 +243,39 @@ namespace MonSumo.Core
         {
             if (_animator == null) return;
 
+            // Use networked variables to synchronize animations for remote clones
+            int stateVal = _netState.Value;
+            Vector2 facingDir = _netFacingDirection.Value;
+
             float speedMagnitude = _rb != null ? _rb.linearVelocity.magnitude : 0f;
             _animator.SetFloat("Speed", speedMagnitude);
-            _animator.SetInteger("State", (int)_stateMachine.StateEnum);
-            _animator.SetFloat("DirX", _facingDirection.x);
-            _animator.SetFloat("DirY", _facingDirection.y);
+            _animator.SetInteger("State", stateVal);
+            _animator.SetFloat("DirX", facingDir.x);
+            _animator.SetFloat("DirY", facingDir.y);
+
+            // Synchronize Sprite flipping based on the synchronized facing direction
+            if (_spriteRenderer != null)
+            {
+                if (facingDir.x < -0.01f) _spriteRenderer.flipX = true;
+                else if (facingDir.x > 0.01f) _spriteRenderer.flipX = false;
+            }
+        }
+
+        private void IgnoreOtherPlayersCollisions()
+        {
+            Collider2D myCol = GetComponent<Collider2D>();
+            if (myCol == null) return;
+
+            var allMovements = FindObjectsByType<PlayerMovement>(FindObjectsSortMode.None);
+            foreach (var other in allMovements)
+            {
+                if (other == this) continue;
+                Collider2D otherCol = other.GetComponent<Collider2D>();
+                if (otherCol != null)
+                {
+                    Physics2D.IgnoreCollision(myCol, otherCol, true);
+                }
+            }
         }
 
         #endregion
@@ -269,11 +303,9 @@ namespace MonSumo.Core
         [Rpc(SendTo.Server)]
         private void RequestAttackServerRpc(Vector2 attackDirection)
         {
-            float attackerMass = _player != null ? _player.currentWeight.Value : 10f;
-            float attackerForce = _player != null ? _player.currentPushForce.Value : 5f;
-            float attackerSpeed = _rb != null ? _rb.linearVelocity.magnitude : 0f;
-
-            float baseKnockbackStrength = attackerMass + attackerForce + attackerSpeed;
+            float baseKnockbackStrength = (_player != null && _player.playerData != null)
+                ? _player.playerData.meleePushForce
+                : 8f;
 
             Vector2 origin = (Vector2)transform.position + attackDirection.normalized * _attackRange;
             Collider2D[] colliders = Physics2D.OverlapCircleAll(origin, _attackRadius);
@@ -306,6 +338,42 @@ namespace MonSumo.Core
                     {
                         float reflectedForce = baseKnockbackStrength * targetPlayer.ReflectedPushPercent;
                         Vector2 reflectDirection = -pushDirection; // Push back to attacker
+                        if (_player != null)
+                        {
+                            _player.ApplyKnockbackRpc(reflectDirection * reflectedForce);
+                            Debug.Log($"[Combat] Server: Player {targetPlayer.OwnerClientId} reflected {reflectedForce} force back to attacker {OwnerClientId}!");
+                        }
+                    }
+                }
+            }
+        }
+
+        [Rpc(SendTo.Server)]
+        public void RequestDashKnockbackServerRpc(ulong targetObjectId, Vector2 pushDirection)
+        {
+            if (NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(targetObjectId, out var networkObject))
+            {
+                Player targetPlayer = networkObject.GetComponent<Player>();
+                if (targetPlayer != null)
+                {
+                    float force = (_player != null && _player.playerData != null)
+                        ? _player.playerData.dashPushForce
+                        : 18f;
+
+                    float actualKnockbackStrength = force;
+                    if (targetPlayer.ReceivedPushMultiplier != 1f)
+                    {
+                        actualKnockbackStrength *= targetPlayer.ReceivedPushMultiplier;
+                    }
+
+                    targetPlayer.ApplyKnockbackRpc(pushDirection.normalized * actualKnockbackStrength);
+                    Debug.Log($"[Combat] Server: Player {OwnerClientId} dashed into Player {targetPlayer.OwnerClientId} with force {actualKnockbackStrength}");
+
+                    // Apply Thorn Shield force reflection back to attacker
+                    if (targetPlayer.ReflectedPushPercent > 0.01f)
+                    {
+                        float reflectedForce = force * targetPlayer.ReflectedPushPercent;
+                        Vector2 reflectDirection = -pushDirection.normalized;
                         if (_player != null)
                         {
                             _player.ApplyKnockbackRpc(reflectDirection * reflectedForce);

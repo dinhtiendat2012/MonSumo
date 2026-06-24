@@ -22,6 +22,8 @@ namespace MonSumo.World.Zone
         [SerializeField] private SpriteMask zoneSpriteMask;
         [Tooltip("Bán kính mặc định của sprite khi Scale = 1 (Ví dụ: sprite tròn mặc định của Unity có bán kính 0.5)")]
         [SerializeField] private float spriteDefaultRadius = 0.5f;
+        [Tooltip("Bù trừ bán kính mặt nạ bóng tối (nhập số âm để kéo bóng tối sát vào mép trong của dây thừng)")]
+        [SerializeField] private float maskRadiusOffset = -0.3f;
 
         [Header("Zone Size Settings")]
         [SerializeField] private bool autoFitStartRadius = true;
@@ -44,6 +46,12 @@ namespace MonSumo.World.Zone
 
         public readonly NetworkVariable<Vector2> currentCenter = new(
             Vector2.zero,
+            NetworkVariableReadPermission.Everyone,
+            NetworkVariableWritePermission.Server
+        );
+
+        public readonly NetworkVariable<float> shrinkCountdown = new(
+            180f,
             NetworkVariableReadPermission.Everyone,
             NetworkVariableWritePermission.Server
         );
@@ -158,6 +166,7 @@ namespace MonSumo.World.Zone
         private void UpdateServerZone()
         {
             _gameTimer += Time.deltaTime;
+            shrinkCountdown.Value = Mathf.Max(0f, shrinkStartSecond - _gameTimer);
 
             // 1. Handle Shrinking
             if (_gameTimer >= shrinkStartSecond || _isShrinkingStarted)
@@ -422,6 +431,7 @@ namespace MonSumo.World.Zone
                 {
                     if (sr.gameObject.layer == 5 || sr.transform is RectTransform) continue; // Skip UI
                     if (sr.gameObject.CompareTag("Player")) continue; // Skip player
+                    if (sr.gameObject.name == "ZoneVignetteOverlay") continue; // Skip large overlay shader vignetting
 
                     float area = sr.bounds.size.x * sr.bounds.size.y;
                     if (area > maxArea && area > 10f)
@@ -494,7 +504,8 @@ namespace MonSumo.World.Zone
                 }
                 if (maskSpriteRadius > 0.01f)
                 {
-                    float scaleFactor = radius / maskSpriteRadius;
+                    float targetRadius = radius + maskRadiusOffset;
+                    float scaleFactor = targetRadius / maskSpriteRadius;
                     zoneSpriteMask.transform.localScale = new Vector3(scaleFactor, scaleFactor, 1f);
                 }
             }
@@ -524,6 +535,10 @@ namespace MonSumo.World.Zone
                     Vector2 mapCenter = (mapMin + mapMax) / 2f;
                     startRadius = Vector2.Distance(mapCenter, mapMax);
                 }
+
+                // Draw starting circle and scale the mask in editor for previewing
+                DrawCircle(startRadius);
+                UpdateSpriteScale(startRadius);
             }
         }
 #endif

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using MonSumo.Core.Enums;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ namespace MonSumo.Core.State
     {
         private float _dashTimer;
         private Vector2 _dashDirection;
+        private readonly HashSet<ulong> _hitClients = new HashSet<ulong>();
 
         public void Enter(PlayerStateMachine stateMachine)
         {
@@ -52,6 +54,46 @@ namespace MonSumo.Core.State
             var controller = stateMachine.Controller;
             float dashSpeed = controller.GetBaseSpeed() * controller.GetDashSpeedMultiplier();
             controller.SetVelocity(_dashDirection * dashSpeed);
+
+            // Active dash collision check
+            DetectDashCollisions(stateMachine);
+        }
+
+        private void DetectDashCollisions(PlayerStateMachine stateMachine)
+        {
+            var controller = stateMachine.Controller;
+            Collider2D myCol = controller.GetComponent<Collider2D>();
+            if (myCol == null) return;
+
+            ContactFilter2D filter = new ContactFilter2D();
+            filter.useTriggers = true;
+
+            Collider2D[] results = new Collider2D[10];
+            int count = myCol.Overlap(filter, results);
+
+            for (int i = 0; i < count; i++)
+            {
+                Collider2D col = results[i];
+                if (col == null || col.gameObject == controller.gameObject) continue;
+
+                Player targetPlayer = col.GetComponent<Player>();
+                if (targetPlayer != null)
+                {
+                    ulong targetId = targetPlayer.NetworkObjectId;
+                    if (!_hitClients.Contains(targetId))
+                    {
+                        _hitClients.Add(targetId);
+
+                        Vector2 pushDir = (targetPlayer.transform.position - controller.transform.position).normalized;
+                        if (pushDir.sqrMagnitude < 0.01f)
+                        {
+                            pushDir = _dashDirection;
+                        }
+
+                        controller.RequestDashKnockbackServerRpc(targetId, pushDir);
+                    }
+                }
+            }
         }
 
         public void Exit(PlayerStateMachine stateMachine)
