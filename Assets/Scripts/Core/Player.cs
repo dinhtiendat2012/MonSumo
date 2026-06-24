@@ -337,6 +337,15 @@ namespace MonSumo.Core
             if (!IsServer) return;
 
             Vector2 spawnPos = respawnPoint != null ? (Vector2)respawnPoint.position : Vector2.zero;
+
+            // Try to respawn in the center of the active shrinking/moving safe zone instead of the static initial point
+            var zoneController = Object.FindAnyObjectByType<MonSumo.World.Zone.ZoneController>();
+            if (zoneController != null)
+            {
+                spawnPos = zoneController.Center;
+                Debug.Log($"[Respawn] Dynamically set respawn position to current Zone Center: {spawnPos}");
+            }
+
             RespawnClientRpc(spawnPos);
         }
 

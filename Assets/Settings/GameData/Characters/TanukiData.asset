@@ -20,14 +20,15 @@ MonoBehaviour:
   baseSpeed: 5
   basePushForce: 100
   maxStamina: 100
-  staminaRegenPerSecond: 120
-  dashStaminaCost: 10
+  staminaRegenPerSecond: 50
+  dashStaminaCost: 30
   dashCooldown: 3
   dashSpeedMultiplier: 4
   dashDuration: 0.2
-  sprintStaminaCostPerSecond: 2
+  sprintStaminaCostPerSecond: 20
   sprintSpeedMultiplier: 1.5
-  pushCooldown: 3
+  pushCooldown: 1
+  skillCooldown: 5
   knockbackDuration: 0.3
   meleePushForce: 200
   dashPushForce: 400

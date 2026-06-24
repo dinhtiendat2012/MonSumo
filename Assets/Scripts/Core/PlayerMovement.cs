@@ -45,6 +45,11 @@ namespace MonSumo.Core
         public float CurrentStamina => _currentStamina;
         public float MaxStamina => _maxStamina;
         public float DashCooldownTimer => _dashCooldownTimer;
+        public float DashCooldown => _dashCooldown;
+        public float AttackCooldownTimer => _attackCooldownTimer;
+        public float AttackCooldown => _attackCooldown;
+        public float SkillCooldownTimer => _skillCooldownTimer;
+        public float SkillCooldown => _skillCooldown;
         public PlayerMovementState CurrentStateEnum => _stateMachine != null ? _stateMachine.StateEnum : PlayerMovementState.Idle;
 
         private void Awake()
@@ -110,8 +115,10 @@ namespace MonSumo.Core
                     _skillCooldownTimer -= Time.deltaTime;
                 }
 
-                // Stamina regeneration (only when not sprinting or dashing)
-                if (_stateMachine.StateEnum != PlayerMovementState.Sprint && _stateMachine.StateEnum != PlayerMovementState.Dash)
+                // Stamina regeneration (only when not sprinting, not dashing, AND not holding the LeftShift key)
+                if (_stateMachine.StateEnum != PlayerMovementState.Sprint && 
+                    _stateMachine.StateEnum != PlayerMovementState.Dash &&
+                    !Input.GetKey(KeyCode.LeftShift))
                 {
                     _currentStamina = Mathf.Min(_maxStamina, _currentStamina + _staminaRegenRate * Time.deltaTime);
                 }
