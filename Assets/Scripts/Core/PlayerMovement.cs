@@ -1,161 +1,321 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
+using MonSumo.Core.State;
+using MonSumo.Core.Enums;
 
-public class PlayerMovement : MonoBehaviour
+namespace MonSumo.Core
 {
-    [Header("Base Stats")]
-    public float baseSpeed = 5f;
-    public float baseForce = 5f;
-    public float baseMass = 10f;
-
-    [Header("Stamina")]
-    public float maxStamina = 100f;
-    public float currentStamina = 100f;
-    public float staminaRegen = 2f;
-
-    [Header("Sprint")]
-    private bool isSprinting;
-    [SerializeField] public float sprintCostPerSecond = 10f;
-
-    [Header("Dash")]
-    [SerializeField] float dashCooldown = 3f;
-    [SerializeField] float dashCost = 10f;
-    float dashDuration;
-    bool isDashing= false;
-
-    [Header("Combat")]
-    public float attackCooldown = 3f;
-
-    private Rigidbody2D rb;
-    private Vector2 moveInput;
-
-    private float currentSpeed;
-
-    private float pushTimer;
-    private float dashTimer;
-
-    void Start()
+    public class PlayerMovement : NetworkBehaviour
     {
-        rb = GetComponent<Rigidbody2D>();
-        currentStamina = maxStamina;
-    }
+        [Header("Stamina UI (Local debug)")]
+        [SerializeField] private float _maxStamina = 100f;
+        [SerializeField] private float _staminaRegenRate = 120f;
+        [SerializeField] private float _dashStaminaCost = 10f;
+        [SerializeField] private float _dashCooldown = 3f;
 
-    void Update()
-    {
-        HandleInput();
-        HandleStamina();
+        private float _currentStamina;
+        private float _dashCooldownTimer;
 
-        pushTimer -= Time.deltaTime;
+        [Header("Attack Settings")]
+        [SerializeField] private float _attackCooldown = 3f;
+        [SerializeField] private float _attackRange = 1.0f;
+        [SerializeField] private float _attackRadius = 1.0f;
 
-        if (Input.GetMouseButtonDown(0))
+        [Header("Skill Settings")]
+        [SerializeField] private float _skillCooldown = 10f;
+
+        private float _skillCooldownTimer;
+        private float _attackCooldownTimer;
+        private float _areaSpeedMultiplier = 1f;
+        private Vector2 _moveInput;
+        private Vector2 _facingDirection = Vector2.down;
+
+        private Rigidbody2D _rb;
+        private Player _player;
+        private Animator _animator;
+        private SpriteRenderer _spriteRenderer;
+        private SkillController _skillController;
+        private PlayerStateMachine _stateMachine;
+
+        // Public properties for debug and UI
+        public float CurrentStamina => _currentStamina;
+        public float MaxStamina => _maxStamina;
+        public float DashCooldownTimer => _dashCooldownTimer;
+        public PlayerMovementState CurrentStateEnum => _stateMachine != null ? _stateMachine.StateEnum : PlayerMovementState.Idle;
+
+        private void Awake()
         {
-            Push();
+            _rb = GetComponent<Rigidbody2D>();
+            _player = GetComponent<Player>();
+            _animator = GetComponentInChildren<Animator>();
+            _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+            _stateMachine = new PlayerStateMachine(this);
+            _skillController = GetComponentInChildren<SkillController>();
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
+        private void Start()
         {
-            UseMonsterSkill();
-        }
-
-        dashTimer -= Time.deltaTime;
-
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            Dash();
-        }
-    }
-
-    private void Dash()
-    {
-        if (dashTimer > 0) return;
-        if (currentStamina < dashCost) return;
-
-        dashTimer = dashCooldown;
-        currentStamina -= dashCost;
-
-        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePos.z = 0;
-
-        Vector2 dashDirection = (mousePos - transform.position).normalized;
-        float dashDistance = 10f;
-        float dashSpeed = baseSpeed * 20f;
-
-        dashDuration = dashDistance / dashSpeed;
-        rb.linearVelocity = dashDirection * dashSpeed;
-        Debug.Log("Dash");
-        isDashing = true;
-        StartCoroutine(DashRoutine());
-    }
-    IEnumerator DashRoutine()
-    {
-        yield return new WaitForSeconds(dashDuration);
-        Debug.Log("Dash Ended");
-        isDashing = false;
-    }
-
-    void FixedUpdate()
-    {
-        if (!isDashing) 
-            rb.linearVelocity = moveInput.normalized * currentSpeed;
-    }
-
-    private void UseMonsterSkill()
-    {
-        Debug.Log("Use Monster Skill");
-    }
-
-    private void Push()
-    {   
-        //chỉ có thể push khi cooldown về 0
-        if (pushTimer > 0) return;
-        pushTimer = attackCooldown;
-        
-        Debug.Log($"Attack Knockback: {KnockbackForce()}");
-    }
-
-    private void HandleStamina()
-    {
-        //Tăng 2 stamina mỗi giây
-        currentStamina += staminaRegen * Time.deltaTime;
-        currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
-
-    }
-
-    private void HandleInput()
-    {
-        moveInput.x = Input.GetAxisRaw("Horizontal");
-        moveInput.y = Input.GetAxisRaw("Vertical");
-
-        if (moveInput == Vector2.zero)
-        {
-            currentSpeed = 0;
-            return;
-        }
-        //chưa cộng speed ++ của quái
-        isSprinting = Input.GetKey(KeyCode.Space);
-        if (isSprinting)
-        {
-            // Nếu còn stamina thì tăng speed và giảm stamina
-            if (currentStamina >= sprintCostPerSecond)
+            if (_player != null && _player.playerData != null)
             {
-                Debug.Log("Chạy!!!!");
-                // Tăng tốc độ di chuyển khi chạy
-                currentSpeed = baseSpeed * 1.5f;
-                currentStamina -= sprintCostPerSecond * Time.deltaTime;
+                var data = _player.playerData;
+                _maxStamina = data.maxStamina;
+                _staminaRegenRate = data.staminaRegenPerSecond;
+                _dashStaminaCost = data.dashStaminaCost;
+                _dashCooldown = data.dashCooldown;
+                _attackCooldown = data.pushCooldown;
+                
+                if (_animator != null && data.animatorController != null)
+                {
+                    _animator.runtimeAnimatorController = data.animatorController;
+                }
+            }
+
+            _currentStamina = _maxStamina;
+            _stateMachine.Initialize(new PlayerIdleState(), PlayerMovementState.Idle);
+        }
+
+        private void Update()
+        {
+            if (!IsOwner) return;
+
+            // Handle WASD inputs
+            _moveInput.x = Input.GetAxisRaw("Horizontal");
+            _moveInput.y = Input.GetAxisRaw("Vertical");
+
+            if (_moveInput.sqrMagnitude > 0.01f)
+            {
+                _facingDirection = _moveInput.normalized;
+                
+                // Optional Sprite Flip
+                if (_spriteRenderer != null)
+                {
+                    if (_moveInput.x < -0.01f) _spriteRenderer.flipX = true;
+                    else if (_moveInput.x > 0.01f) _spriteRenderer.flipX = false;
+                }
+            }
+
+            // Update Dash Cooldown Timer
+            if (_dashCooldownTimer > 0f)
+            {
+                _dashCooldownTimer -= Time.deltaTime;
+            }
+
+            // Update Attack Cooldown Timer
+            if (_attackCooldownTimer > 0f)
+            {
+                _attackCooldownTimer -= Time.deltaTime;
+            }
+
+            // Update Skill Cooldown Timer
+            if (_skillCooldownTimer > 0f)
+            {
+                _skillCooldownTimer -= Time.deltaTime;
+            }
+
+            // Stamina regeneration (only when not sprinting or dashing)
+            if (_stateMachine.StateEnum != PlayerMovementState.Sprint && _stateMachine.StateEnum != PlayerMovementState.Dash)
+            {
+                _currentStamina = Mathf.Min(_maxStamina, _currentStamina + _staminaRegenRate * Time.deltaTime);
+            }
+
+            // Update State Machine
+            _stateMachine.Update();
+
+            // Sync animation parameters if available
+            UpdateAnimator();
+
+            // Normal Attack (Wired in Phase 4)
+            if (Input.GetMouseButtonDown(0))
+            {
+                RequestAttack();
+            }
+            // Normal Attack (Wired in Phase 4)
+            if (Input.GetKey(KeyCode.E))
+            {
+                if (_skillCooldownTimer > 0f) return;
+                _skillCooldownTimer = _skillCooldown;
+                _skillController.UseSkill();
+               
             }
         }
-        else
-        {
-            // Nếu không chạy thì trở về tốc độ cơ bản
-            currentSpeed = baseSpeed;
-        }
-        
-    }
-    public float KnockbackForce()
-    {
-        return baseMass + baseForce + currentSpeed;
-    }
 
+        private void FixedUpdate()
+        {
+            if (!IsOwner) return;
+
+            _stateMachine.FixedUpdate();
+        }
+
+        #region Helper methods for States
+
+        public Vector2 GetMoveInput() => _moveInput;
+
+        public Vector2 GetFacingDirection() => _facingDirection;
+
+        public float GetBaseSpeed()
+        {
+            float baseSpeed = _player != null ? _player.currentSpeed.Value : 5f;
+            return baseSpeed * _areaSpeedMultiplier;
+        }
+
+        public void SetVelocity(Vector2 velocity)
+        {
+            if (_rb != null)
+            {
+                _rb.linearVelocity = velocity;
+            }
+        }
+
+        public bool HasStamina() => _currentStamina > 0.01f;
+
+        public bool CanDash()
+        {
+            return _currentStamina >= _dashStaminaCost && _dashCooldownTimer <= 0.01f;
+        }
+
+        public void TriggerDash()
+        {
+            _currentStamina = Mathf.Max(0f, _currentStamina - _dashStaminaCost);
+            _dashCooldownTimer = _dashCooldown;
+            
+            // Send dash event to server for optional visual sync / log
+            NotifyServerDashServerRpc();
+        }
+
+        public void ConsumeSprintStamina(float dt)
+        {
+            float cost = (_player != null && _player.playerData != null)
+                ? _player.playerData.sprintStaminaCostPerSecond
+                : 2f;
+            _currentStamina = Mathf.Max(0f, _currentStamina - cost * dt);
+        }
+
+        public float GetDashDuration()
+        {
+            return (_player != null && _player.playerData != null)
+                ? _player.playerData.dashDuration
+                : 0.2f;
+        }
+
+        public float GetDashSpeedMultiplier()
+        {
+            return (_player != null && _player.playerData != null)
+                ? _player.playerData.dashSpeedMultiplier
+                : 4f;
+        }
+
+        public float GetSprintSpeedMultiplier()
+        {
+            return (_player != null && _player.playerData != null)
+                ? _player.playerData.sprintSpeedMultiplier
+                : 1.5f;
+        }
+
+        public float GetKnockbackDuration()
+        {
+            return (_player != null && _player.playerData != null)
+                ? _player.playerData.knockbackDuration
+                : 0.3f;
+        }
+
+        public void StartKnockback()
+        {
+            if (!IsOwner) return;
+            _stateMachine.ChangeState(new PlayerKnockbackState(), PlayerMovementState.Knockback);
+        }
+
+        public void SetAreaSpeedMultiplier(float multiplier)
+        {
+            _areaSpeedMultiplier = multiplier;
+        }
+
+        #endregion
+
+        #region Animator Integration
+
+        private void UpdateAnimator()
+        {
+            if (_animator == null) return;
+
+            float speedMagnitude = _rb != null ? _rb.linearVelocity.magnitude : 0f;
+            _animator.SetFloat("Speed", speedMagnitude);
+            _animator.SetInteger("State", (int)_stateMachine.StateEnum);
+            _animator.SetFloat("DirX", _facingDirection.x);
+            _animator.SetFloat("DirY", _facingDirection.y);
+        }
+
+        #endregion
+
+        #region Combat System (Phase 4)
+
+        private void RequestAttack()
+        {
+            if (_attackCooldownTimer > 0f) return;
+            _attackCooldownTimer = _attackCooldown;
+            RequestAttackServerRpc(_facingDirection);
+        }
+
+        #endregion
+
+        #region Network Rpc Calls
+
+        [Rpc(SendTo.Server)]
+        private void NotifyServerDashServerRpc()
+        {
+            // Server-side logging or validation if needed
+            Debug.Log($"[PlayerMovement] Client {OwnerClientId} triggered Dash.");
+        }
+
+        [Rpc(SendTo.Server)]
+        private void RequestAttackServerRpc(Vector2 attackDirection)
+        {
+            float attackerMass = _player != null ? _player.currentWeight.Value : 10f;
+            float attackerForce = _player != null ? _player.currentPushForce.Value : 5f;
+            float attackerSpeed = _rb != null ? _rb.linearVelocity.magnitude : 0f;
+
+            float baseKnockbackStrength = attackerMass + attackerForce + attackerSpeed;
+
+            Vector2 origin = (Vector2)transform.position + attackDirection.normalized * _attackRange;
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(origin, _attackRadius);
+
+            foreach (var col in colliders)
+            {
+                if (col.gameObject == gameObject) continue;
+
+                var targetPlayer = col.GetComponent<Player>();
+                if (targetPlayer != null)
+                {
+                    Vector2 pushDirection = (col.transform.position - transform.position).normalized;
+                    if (pushDirection.sqrMagnitude < 0.01f)
+                    {
+                        pushDirection = attackDirection.normalized;
+                    }
+
+                    // Apply Thorn Shield received push reduction
+                    float actualKnockbackStrength = baseKnockbackStrength;
+                    if (targetPlayer.ReceivedPushMultiplier != 1f)
+                    {
+                        actualKnockbackStrength *= targetPlayer.ReceivedPushMultiplier;
+                    }
+
+                    targetPlayer.ApplyKnockbackRpc(pushDirection * actualKnockbackStrength);
+                    Debug.Log($"[Combat] Server: Player {OwnerClientId} pushed Player {targetPlayer.OwnerClientId} with force {actualKnockbackStrength}");
+
+                    // Apply Thorn Shield force reflection back to attacker
+                    if (targetPlayer.ReflectedPushPercent > 0.01f)
+                    {
+                        float reflectedForce = baseKnockbackStrength * targetPlayer.ReflectedPushPercent;
+                        Vector2 reflectDirection = -pushDirection; // Push back to attacker
+                        if (_player != null)
+                        {
+                            _player.ApplyKnockbackRpc(reflectDirection * reflectedForce);
+                            Debug.Log($"[Combat] Server: Player {targetPlayer.OwnerClientId} reflected {reflectedForce} force back to attacker {OwnerClientId}!");
+                        }
+                    }
+                }
+            }
+        }
+
+        #endregion
+    }
 }

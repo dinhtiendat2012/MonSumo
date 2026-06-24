@@ -1,4 +1,5 @@
 using UnityEngine;
+using MonSumo.Core;
 
 [CreateAssetMenu(menuName = "MonSumo/Skills/Melee Push Skill")]
 public class MeleePushSkill : SkillDefinition
@@ -24,7 +25,21 @@ public class MeleePushSkill : SkillDefinition
                 continue;
             }
 
-            PushUtility.ApplyExplosionImpulse(targetBody, center, pushForce);
+            Player player = targetBody.GetComponent<Player>();
+            if (player != null)
+            {
+                Vector2 diff = targetBody.worldCenterOfMass - center;
+                Vector2 pushDirection = diff.normalized;
+                if (pushDirection.sqrMagnitude <= 0.0001f)
+                {
+                    pushDirection = Vector2.up;
+                }
+                player.ApplyKnockbackRpc(pushDirection * pushForce);
+            }
+            else
+            {
+                PushUtility.ApplyExplosionImpulse(targetBody, center, pushForce);
+            }
         }
     }
 

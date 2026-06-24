@@ -20,6 +20,12 @@ public class TimedBombSkill : SkillDefinition
             ? Instantiate(bombPrefab, placePosition, Quaternion.identity)
             : CreateGreyboxBomb(placePosition);
 
+        var netObj = bomb.GetComponent<Unity.Netcode.NetworkObject>();
+        if (netObj != null)
+        {
+            netObj.Spawn();
+        }
+
         bomb.Arm(fuseTime, explosionRadius, pushForce, targetMask);
     }
 
@@ -35,6 +41,8 @@ public class TimedBombSkill : SkillDefinition
         Rigidbody2D body = bombObject.AddComponent<Rigidbody2D>();
         body.gravityScale = 0f;
         body.freezeRotation = true;
+
+        bombObject.AddComponent<Unity.Netcode.NetworkObject>();
 
         return bombObject.AddComponent<TimedBomb>();
     }

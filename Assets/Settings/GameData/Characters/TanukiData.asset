@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41f5dcc3021e10f49b52cad63b37faa7, type: 3}
+  m_Name: TanukiData
+  m_EditorClassIdentifier: 
+  yokaiType: 4
+  yokaiName: Tanuki
+  lobbyIcon: {fileID: 0}
+  animatorController: {fileID: 9100000, guid: de2d20338dbf3614384fc110ce9f45c7, type: 2}
+  baseMass: 10
+  baseSpeed: 5
+  basePushForce: 5
+  maxStamina: 100
+  staminaRegenPerSecond: 120
+  dashStaminaCost: 10
+  dashCooldown: 3
+  dashSpeedMultiplier: 4
+  dashDuration: 0.2
+  sprintStaminaCostPerSecond: 2
+  sprintSpeedMultiplier: 1.5
+  pushCooldown: 3
+  knockbackDuration: 0.3

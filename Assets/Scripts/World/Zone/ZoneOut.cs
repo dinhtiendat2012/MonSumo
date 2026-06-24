@@ -1,7 +1,10 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Unity.Netcode;
+using MonSumo.World.Zone;
+using MonSumo.Core;
 
-public class ZoneOut : MonoBehaviour
+public class ZoneOut : NetworkBehaviour
 {
     [Header("Zone")]
     [SerializeField] private ZoneController zoneController;
@@ -12,14 +15,16 @@ public class ZoneOut : MonoBehaviour
     [Header("Scene Names")]
     [SerializeField] private string menuSceneName = "MainMenu";
 
-    [Header("Rule")]
-    [SerializeField] private float outsideGraceTime = 1.5f;
+    [Header("Damage Cooldown")]
+    [SerializeField] private float damageCooldown = 0.5f;
 
-    private float outsideTimer;
-    private bool isGameOver;
+    private float _cooldownTimer;
+    private bool isGameOver = false;
 
     private Rigidbody2D rb;
     private Collider2D col;
+
+    public GameObject GameOverPanel => gameOverPanel;
 
     private void Awake()
     {
@@ -44,56 +49,55 @@ public class ZoneOut : MonoBehaviour
 
     private void Update()
     {
+        // Only run zone checks on the Server
+        if (!IsServer) return;
         if (isGameOver) return;
         if (zoneController == null) return;
 
-        bool isInsideZone = zoneController.IsInsideZone(transform.position);
-
-        if (isInsideZone)
+        if (_cooldownTimer > 0f)
         {
-            outsideTimer = 0f;
+            _cooldownTimer -= Time.deltaTime;
             return;
         }
 
-        outsideTimer += Time.deltaTime;
+        bool isOutside = IsFullyOutsideZone();
 
-        if (outsideTimer >= outsideGraceTime)
+        if (isOutside)
         {
-            GameOver();
+            Player player = GetComponent<Player>();
+            if (player != null)
+            {
+                player.TakeDamage();
+                _cooldownTimer = damageCooldown; // Cooldown to avoid double-triggering before respawn syncs
+            }
         }
     }
 
-    private void GameOver()
+    private bool IsFullyOutsideZone()
     {
-        isGameOver = true;
-
-        Debug.Log("GAME OVER: Player left the zone.");
-
-        if (gameOverPanel != null)
+        if (col == null)
         {
-            gameOverPanel.SetActive(true);
+            // Fallback to center point if no collider
+            return !zoneController.IsInsideZone(transform.position);
         }
 
-        if (rb != null)
-        {
-            rb.linearVelocity = Vector2.zero;
-            rb.angularVelocity = 0f;
-            rb.simulated = false;
-        }
+        // Get the closest point on the player's collider to the zone center
+        Vector2 zoneCenter = zoneController.Center;
+        Vector2 closestPoint = col.ClosestPoint(zoneCenter);
 
-        if (col != null)
-        {
-            col.enabled = false;
-        }
-
-        // Dừng game để player/bot/bo không chạy tiếp
-        Time.timeScale = 0f;
+        // Calculate distance from closest point on player to zone center.
+        // If the closest point's distance is greater than the radius, the entire collider is outside!
+        float distance = Vector2.Distance(closestPoint, zoneCenter);
+        return distance > zoneController.CurrentRadius;
     }
 
     public void Retry()
     {
         Time.timeScale = 1f;
-
+        if (NetworkManager.Singleton != null)
+        {
+            NetworkManager.Singleton.Shutdown();
+        }
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.name);
     }
@@ -101,7 +105,10 @@ public class ZoneOut : MonoBehaviour
     public void GoHome()
     {
         Time.timeScale = 1f;
-
+        if (NetworkManager.Singleton != null)
+        {
+            NetworkManager.Singleton.Shutdown();
+        }
         SceneManager.LoadScene(menuSceneName);
     }
 }
