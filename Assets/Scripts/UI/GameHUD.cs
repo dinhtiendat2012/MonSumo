@@ -32,6 +32,11 @@ namespace MonSumo.UI
         [Header("Zone Alarm HUD")]
         [SerializeField] private TMP_Text _zoneAlarmText;
 
+        [Header("End Game HUD")]
+        [SerializeField] private GameObject _endGamePanel;
+        [SerializeField] private TMP_Text _endGameTitleText;
+        [SerializeField] private UnityEngine.UI.Button _returnToLobbyButton;
+
         private Player _localPlayer;
         private PlayerMovement _localMovement;
         private MonSumo.World.Zone.ZoneController _zoneController;
@@ -121,6 +126,26 @@ namespace MonSumo.UI
 
             _lastHpValue = _localPlayer.currentHP.Value;
             UpdateHeartsUI(_lastHpValue, false);
+
+            if (_returnToLobbyButton != null)
+            {
+                _returnToLobbyButton.onClick.RemoveAllListeners();
+                _returnToLobbyButton.onClick.AddListener(HandleReturnToLobbyClick);
+            }
+
+            if (_endGamePanel != null)
+            {
+                _endGamePanel.SetActive(false);
+            }
+        }
+
+        private void HandleReturnToLobbyClick()
+        {
+            if (_localPlayer != null)
+            {
+                _returnToLobbyButton.interactable = false; // Prevent double click
+                _localPlayer.RequestReturnToLobbyServerRpc();
+            }
         }
 
         private void UpdatePlayerUI()
@@ -156,6 +181,37 @@ namespace MonSumo.UI
                 {
                     float ratio = _localMovement.DashCooldownTimer / 3f;
                     _dashCooldownOverlay.fillAmount = Mathf.Clamp01(ratio);
+                }
+            }
+
+            // End Game Popup Monitoring
+            if (_endGamePanel != null)
+            {
+                if (_localPlayer.isDead.Value && !_endGamePanel.activeSelf)
+                {
+                    _endGamePanel.SetActive(true);
+                    if (_endGameTitleText != null)
+                    {
+                        _endGameTitleText.text = "DEFEATED";
+                        _endGameTitleText.color = new Color(0.85f, 0.15f, 0.15f, 1f); // Dark red
+                    }
+                    if (_returnToLobbyButton != null)
+                    {
+                        _returnToLobbyButton.interactable = true;
+                    }
+                }
+                else if (_localPlayer.isWinner.Value && !_endGamePanel.activeSelf)
+                {
+                    _endGamePanel.SetActive(true);
+                    if (_endGameTitleText != null)
+                    {
+                        _endGameTitleText.text = "VICTORY!";
+                        _endGameTitleText.color = new Color(0.95f, 0.75f, 0.3f, 1f); // Gold
+                    }
+                    if (_returnToLobbyButton != null)
+                    {
+                        _returnToLobbyButton.interactable = true;
+                    }
                 }
             }
         }

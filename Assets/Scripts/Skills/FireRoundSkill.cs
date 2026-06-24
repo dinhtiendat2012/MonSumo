@@ -1,5 +1,6 @@
 using Unity.Netcode;
 using UnityEngine;
+using MonSumo.Core;
 
 public class FireRoundSkill : NetworkBehaviour
 {
@@ -28,17 +29,28 @@ public class FireRoundSkill : NetworkBehaviour
             return;
 
         // Knockback
-        Rigidbody2D rb = other.attachedRigidbody;
-
-        if (rb != null)
+        Player targetPlayer = other.GetComponentInParent<Player>();
+        if (targetPlayer == null)
         {
-            Vector2 dir =
-                (other.transform.position -
-                 transform.position).normalized;
+            targetPlayer = other.GetComponent<Player>();
+        }
 
+        if (targetPlayer != null)
+        {
+            Vector2 dir = (other.transform.position - transform.position).normalized;
+            if (dir.sqrMagnitude < 0.01f)
+            {
+                dir = Vector2.up;
+            }
 
-            rb.AddForce(dir * knockbackForce,
-                        ForceMode2D.Impulse);
+            float force = knockbackForce;
+            if (targetPlayer.ReceivedPushMultiplier != 1f)
+            {
+                force *= targetPlayer.ReceivedPushMultiplier;
+            }
+
+            targetPlayer.ApplyKnockbackRpc(dir * force);
+            Debug.Log($"[Skill] Server: FireRoundSkill pushed Player {targetPlayer.OwnerClientId} with force {force}");
         }
     }
 }

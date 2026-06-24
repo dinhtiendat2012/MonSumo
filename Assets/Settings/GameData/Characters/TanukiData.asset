@@ -18,7 +18,7 @@ MonoBehaviour:
   animatorController: {fileID: 9100000, guid: de2d20338dbf3614384fc110ce9f45c7, type: 2}
   baseMass: 10
   baseSpeed: 5
-  basePushForce: 5
+  basePushForce: 100
   maxStamina: 100
   staminaRegenPerSecond: 120
   dashStaminaCost: 10
@@ -29,3 +29,5 @@ MonoBehaviour:
   sprintSpeedMultiplier: 1.5
   pushCooldown: 3
   knockbackDuration: 0.3
+  meleePushForce: 200
+  dashPushForce: 400

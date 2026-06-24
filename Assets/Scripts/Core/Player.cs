@@ -25,6 +25,9 @@ namespace MonSumo.Core
         public readonly NetworkVariable<float> currentSpeed = new(5f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
         public readonly NetworkVariable<float> currentPushForce = new(5f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
 
+        public readonly NetworkVariable<bool> isDead = new(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+        public readonly NetworkVariable<bool> isWinner = new(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+
         // Player Name synchronized from lobby
         public readonly NetworkVariable<Unity.Collections.FixedString32Bytes> playerName = new(
             "Player",
@@ -165,6 +168,12 @@ namespace MonSumo.Core
                 {
                     anim.runtimeAnimatorController = data.animatorController;
                 }
+
+                if (rb != null)
+                {
+                    rb.mass = data.baseMass;
+                    Debug.Log($"[VisualSync] Applied local rigidbody mass {data.baseMass} for characterId {characterId} on Client {OwnerClientId}");
+                }
             }
         }
 
@@ -236,17 +245,90 @@ namespace MonSumo.Core
         public void TakeDamage()
         {
             if (!IsServer) return;
+            if (isDead.Value) return; // Already dead
 
             currentHP.Value--;
             Debug.Log($"[PLAYER {OwnerClientId}] HP: {currentHP.Value}");
 
             if (currentHP.Value <= 0)
             {
-                GameOverClientRpc();
+                currentHP.Value = 0;
+                isDead.Value = true;
+                Debug.Log($"[PLAYER {OwnerClientId}] IS DEAD");
+                
+                // Hide player visual or disable movement
+                DisablePlayerPhysicsClientRpc();
+
+                // Check end conditions
+                CheckGameEndConditions();
             }
             else
             {
                 Respawn();
+            }
+        }
+
+        [Rpc(SendTo.Everyone)]
+        private void DisablePlayerPhysicsClientRpc()
+        {
+            if (rb != null)
+            {
+                rb.linearVelocity = Vector2.zero;
+                rb.simulated = false; // Disable physical movement and collision completely
+            }
+
+            // Make sprite transparent or hidden
+            var sr = GetComponentInChildren<SpriteRenderer>();
+            if (sr != null)
+            {
+                sr.enabled = false;
+            }
+
+            // Disable player HUD display inputs if owner
+            if (IsOwner && movement != null)
+            {
+                movement.enabled = false;
+            }
+        }
+
+        private void CheckGameEndConditions()
+        {
+            if (!IsServer) return;
+
+            var allPlayers = FindObjectsByType<Player>(FindObjectsSortMode.None);
+            
+            // Collect all living players
+            System.Collections.Generic.List<Player> livingPlayers = new System.Collections.Generic.List<Player>();
+            foreach (var p in allPlayers)
+            {
+                if (p != null && !p.isDead.Value)
+                {
+                    livingPlayers.Add(p);
+                }
+            }
+
+            // Check if game end reached
+            // In a multiplayer game (usually 2+ players), game ends when there is 1 or 0 living players remaining
+            if (livingPlayers.Count == 1)
+            {
+                Player winner = livingPlayers[0];
+                winner.isWinner.Value = true;
+                Debug.Log($"[GameEnd] Winner is Player {winner.OwnerClientId}");
+            }
+            else if (livingPlayers.Count == 0)
+            {
+                Debug.Log("[GameEnd] Everyone is dead! Draw game.");
+            }
+        }
+
+        [Rpc(SendTo.Server)]
+        public void RequestReturnToLobbyServerRpc()
+        {
+            if (NetworkManager.Singleton != null && NetworkManager.Singleton.IsServer)
+            {
+                Debug.Log("[LobbyReturn] Server is loading Lobby scene...");
+                // NetworkManager SceneManager will load Lobby and transition everyone cleanly
+                NetworkManager.Singleton.SceneManager.LoadScene("Lobby", LoadSceneMode.Single);
             }
         }
 
@@ -272,6 +354,8 @@ namespace MonSumo.Core
         [Rpc(SendTo.Owner)]
         public void ApplyKnockbackRpc(Vector2 force)
         {
+            if (isDead.Value) return; // Dead players can't be pushed
+
             if (rb != null)
             {
                 if (movement != null)
@@ -282,17 +366,6 @@ namespace MonSumo.Core
                 rb.AddForce(force, ForceMode2D.Impulse);
                 Debug.Log($"[Knockback] Applied force: {force}");
             }
-        }
-
-        [Rpc(SendTo.Owner)]
-        private void GameOverClientRpc()
-        {
-            Debug.Log("GAME OVER");
-            if (NetworkManager.Singleton != null)
-            {
-                NetworkManager.Singleton.Shutdown();
-            }
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
         private void Update()

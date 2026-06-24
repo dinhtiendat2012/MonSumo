@@ -36,6 +36,7 @@ namespace MonSumo.Core
         private SpriteRenderer _spriteRenderer;
         private SkillController _skillController;
         private PlayerStateMachine _stateMachine;
+        private readonly System.Collections.Generic.List<Player> _collidingPlayers = new();
 
         private readonly NetworkVariable<int> _netState = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
         private readonly NetworkVariable<Vector2> _netFacingDirection = new NetworkVariable<Vector2>(Vector2.down, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
@@ -66,6 +67,7 @@ namespace MonSumo.Core
                 _dashStaminaCost = data.dashStaminaCost;
                 _dashCooldown = data.dashCooldown;
                 _attackCooldown = data.pushCooldown;
+                _skillCooldown = data.skillCooldown;
                 
                 if (_animator != null && data.animatorController != null)
                 {
@@ -79,9 +81,6 @@ namespace MonSumo.Core
 
         private void Update()
         {
-            // Dynamically ignore solid collisions between players to prevent passive pushing
-            IgnoreOtherPlayersCollisions();
-
             if (IsOwner)
             {
                 // Handle WASD inputs
@@ -124,19 +123,29 @@ namespace MonSumo.Core
                 _netState.Value = (int)_stateMachine.StateEnum;
                 _netFacingDirection.Value = _facingDirection;
 
-                // Normal Attack (Wired in Phase 4)
+                // Normal Attack (Wired in Phase 4) - Allows dash-canceling to prevent action lockouts and dead-time
                 if (Input.GetMouseButtonDown(0))
                 {
+                    if (CurrentStateEnum == PlayerMovementState.Dash)
+                    {
+                        _stateMachine.ChangeState(new PlayerIdleState(), PlayerMovementState.Idle);
+                        Debug.Log("[Combat] Dash-canceled by Mouse Click!");
+                    }
                     RequestAttack();
                 }
 
-                // Skill Activation (KeyCode.E)
-                if (Input.GetKey(KeyCode.E))
+                // Skill Activation (KeyCode.E) - Allows dash-canceling
+                if (Input.GetKeyDown(KeyCode.E))
                 {
                     if (_skillCooldownTimer <= 0f)
                     {
+                        if (CurrentStateEnum == PlayerMovementState.Dash)
+                        {
+                            _stateMachine.ChangeState(new PlayerIdleState(), PlayerMovementState.Idle);
+                            Debug.Log("[Combat] Dash-canceled by Skill Use!");
+                        }
                         _skillCooldownTimer = _skillCooldown;
-                        _skillController.UseSkill();
+                        RequestUseSkillServerRpc();
                     }
                 }
             }
@@ -168,6 +177,39 @@ namespace MonSumo.Core
         {
             if (_rb != null)
             {
+                // If we are touching another player and trying to move towards them,
+                // dampen the tangential velocity (sliding component) to make collisions feel solid and firm!
+                if (_collidingPlayers.Count > 0 && velocity.sqrMagnitude > 0.01f)
+                {
+                    Vector2 combinedNormal = Vector2.zero;
+                    int activeCount = 0;
+                    foreach (var other in _collidingPlayers)
+                    {
+                        if (other != null)
+                        {
+                            Vector2 toOther = (other.transform.position - transform.position).normalized;
+                            combinedNormal += toOther;
+                            activeCount++;
+                        }
+                    }
+
+                    if (activeCount > 0)
+                    {
+                        Vector2 normal = combinedNormal.normalized;
+                        float dot = Vector2.Dot(velocity, normal);
+                        if (dot > 0f) // Moving towards the other player(s)
+                        {
+                            // Decompose velocity into normal (pushing) and tangential (sliding) components
+                            Vector2 normalProj = normal * dot;
+                            Vector2 tangentProj = velocity - normalProj;
+
+                            // Scale down the tangential sliding component completely (0.02) to lock head-on,
+                            // and keep 85% of normal pushing power for a firm Sumo wrestling push feel!
+                            velocity = normalProj * 0.85f + tangentProj * 0.02f;
+                        }
+                    }
+                }
+
                 _rb.linearVelocity = velocity;
             }
         }
@@ -261,23 +303,6 @@ namespace MonSumo.Core
             }
         }
 
-        private void IgnoreOtherPlayersCollisions()
-        {
-            Collider2D myCol = GetComponent<Collider2D>();
-            if (myCol == null) return;
-
-            var allMovements = FindObjectsByType<PlayerMovement>(FindObjectsSortMode.None);
-            foreach (var other in allMovements)
-            {
-                if (other == this) continue;
-                Collider2D otherCol = other.GetComponent<Collider2D>();
-                if (otherCol != null)
-                {
-                    Physics2D.IgnoreCollision(myCol, otherCol, true);
-                }
-            }
-        }
-
         #endregion
 
         #region Combat System (Phase 4)
@@ -307,14 +332,39 @@ namespace MonSumo.Core
                 ? _player.playerData.meleePushForce
                 : 8f;
 
-            Vector2 origin = (Vector2)transform.position + attackDirection.normalized * _attackRange;
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(origin, _attackRadius);
+            // Apply item/buff multipliers: (Current Push Force / Base Push Force)
+            if (_player != null && _player.playerData != null && _player.playerData.basePushForce > 0.01f)
+            {
+                float buffMultiplier = _player.currentPushForce.Value / _player.playerData.basePushForce;
+                baseKnockbackStrength *= buffMultiplier;
+                Debug.Log($"[Combat] Attack Buff Multiplier applied: {buffMultiplier}x (New Base: {baseKnockbackStrength})");
+            }
 
-            foreach (var col in colliders)
+            Vector2 origin = (Vector2)transform.position + attackDirection.normalized * _attackRange;
+            
+            // Combine forward attack circle and point-blank (touching) circle to guarantee point-blank hits!
+            System.Collections.Generic.HashSet<Collider2D> uniqueColliders = new System.Collections.Generic.HashSet<Collider2D>();
+            
+            foreach (var col in Physics2D.OverlapCircleAll(origin, _attackRadius))
+            {
+                uniqueColliders.Add(col);
+            }
+            
+            foreach (var col in Physics2D.OverlapCircleAll(transform.position, 1.2f))
+            {
+                uniqueColliders.Add(col);
+            }
+
+            foreach (var col in uniqueColliders)
             {
                 if (col.gameObject == gameObject) continue;
 
-                var targetPlayer = col.GetComponent<Player>();
+                var targetPlayer = col.GetComponentInParent<Player>();
+                if (targetPlayer == null)
+                {
+                    targetPlayer = col.GetComponent<Player>();
+                }
+
                 if (targetPlayer != null)
                 {
                     Vector2 pushDirection = (col.transform.position - transform.position).normalized;
@@ -360,6 +410,14 @@ namespace MonSumo.Core
                         ? _player.playerData.dashPushForce
                         : 18f;
 
+                    // Apply item/buff multipliers: (Current Push Force / Base Push Force)
+                    if (_player != null && _player.playerData != null && _player.playerData.basePushForce > 0.01f)
+                    {
+                        float buffMultiplier = _player.currentPushForce.Value / _player.playerData.basePushForce;
+                        force *= buffMultiplier;
+                        Debug.Log($"[Combat] Dash Buff Multiplier applied: {buffMultiplier}x (New Base: {force})");
+                    }
+
                     float actualKnockbackStrength = force;
                     if (targetPlayer.ReceivedPushMultiplier != 1f)
                     {
@@ -381,6 +439,101 @@ namespace MonSumo.Core
                         }
                     }
                 }
+            }
+        }
+
+        [Rpc(SendTo.Server)]
+        private void RequestUseSkillServerRpc()
+        {
+            PlaySkillVisualsRpc();
+        }
+
+        [Rpc(SendTo.Everyone)]
+        private void PlaySkillVisualsRpc()
+        {
+            if (_skillController != null)
+            {
+                _skillController.UseSkill();
+            }
+        }
+
+        private void OnDisable()
+        {
+            _collidingPlayers.Clear();
+        }
+
+        #endregion
+
+        #region Collision Handling
+
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            Player targetPlayer = collision.gameObject.GetComponent<Player>();
+            if (targetPlayer != null)
+            {
+                if (!_collidingPlayers.Contains(targetPlayer))
+                {
+                    _collidingPlayers.Add(targetPlayer);
+                }
+            }
+
+            // Only process solid collisions on the owner to prevent duplicate trigger and preserve authority
+            if (!IsOwner) return;
+
+            if (targetPlayer != null)
+            {
+                // If we are currently Dashing, apply heavy knockback and cancel our own dash forward velocity to stop sliding!
+                if (CurrentStateEnum == PlayerMovementState.Dash)
+                {
+                    Vector2 pushDir = (targetPlayer.transform.position - transform.position).normalized;
+                    if (pushDir.sqrMagnitude < 0.01f)
+                    {
+                        pushDir = _facingDirection;
+                    }
+
+                    // Trigger server-side heavy dash knockback
+                    RequestDashKnockbackServerRpc(targetPlayer.NetworkObjectId, pushDir);
+
+                    // Stop our own dash immediately so we don't slip/slide off their rounded collider sides!
+                    _stateMachine.ChangeState(new PlayerIdleState(), PlayerMovementState.Idle);
+                    Debug.Log($"[Collision] Owner {OwnerClientId} dashed into {targetPlayer.OwnerClientId}. Instantly canceled dash state to block sliding.");
+                }
+            }
+        }
+
+        private void OnCollisionStay2D(Collision2D collision)
+        {
+            // Only process solid collisions on the owner to prevent duplicate trigger and preserve authority
+            if (!IsOwner) return;
+
+            Player targetPlayer = collision.gameObject.GetComponent<Player>();
+            if (targetPlayer != null)
+            {
+                // If we are currently Dashing while already touching another player, apply heavy knockback and cancel our dash immediately!
+                if (CurrentStateEnum == PlayerMovementState.Dash)
+                {
+                    Vector2 pushDir = (targetPlayer.transform.position - transform.position).normalized;
+                    if (pushDir.sqrMagnitude < 0.01f)
+                    {
+                        pushDir = _facingDirection;
+                    }
+
+                    // Trigger server-side heavy dash knockback
+                    RequestDashKnockbackServerRpc(targetPlayer.NetworkObjectId, pushDir);
+
+                    // Stop our own dash immediately so we don't slip/slide off their rounded collider sides!
+                    _stateMachine.ChangeState(new PlayerIdleState(), PlayerMovementState.Idle);
+                    Debug.Log($"[Collision] Owner {OwnerClientId} dashed while already touching {targetPlayer.OwnerClientId}. Instantly canceled dash state and pushed.");
+                }
+            }
+        }
+
+        private void OnCollisionExit2D(Collision2D collision)
+        {
+            Player targetPlayer = collision.gameObject.GetComponent<Player>();
+            if (targetPlayer != null)
+            {
+                _collidingPlayers.Remove(targetPlayer);
             }
         }
 
