@@ -96,8 +96,8 @@ namespace MonSumo.Networking.Lobby
                 GamePlayerSpawner.RegisterPlayerName(slot.ClientId, slot.PlayerName.ToString());
             }
 
-            // Arm spawner to spawn players on load completion
-            GamePlayerSpawner.Arm(NetworkManager, _gameSceneName);
+            // Arm spawner to spawn players on load completion of the Match scene
+            GamePlayerSpawner.Arm(NetworkManager, "Match");
 
             NetworkManager.SceneManager.LoadScene(_gameSceneName, LoadSceneMode.Single);
         }

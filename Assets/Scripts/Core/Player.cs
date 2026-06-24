@@ -10,6 +10,15 @@ namespace MonSumo.Core
         [Header("Yokai Config")]
         public PlayerDataSO playerData;
 
+        [Header("Character Registry")]
+        [SerializeField] private PlayerDataSO[] availableCharacters;
+
+        public readonly NetworkVariable<int> selectedCharacterId = new(
+            1, // Default is 1 (Tanuki)
+            NetworkVariableReadPermission.Everyone,
+            NetworkVariableWritePermission.Server
+        );
+
         [Header("Network Stats")]
         public readonly NetworkVariable<int> currentHP = new(3, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
         public readonly NetworkVariable<float> currentWeight = new(10f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
@@ -48,23 +57,113 @@ namespace MonSumo.Core
             movement = GetComponent<PlayerMovement>();
         }
 
+        private void OnEnable()
+        {
+            selectedCharacterId.OnValueChanged += HandleCharacterTypeChanged;
+        }
+
+        private void OnDisable()
+        {
+            selectedCharacterId.OnValueChanged -= HandleCharacterTypeChanged;
+        }
+
+        private void HandleCharacterTypeChanged(int oldValue, int newValue)
+        {
+            ApplyCharacterVisuals(newValue);
+        }
+
         public override void OnNetworkSpawn()
         {
             if (IsServer)
             {
-                if (playerData != null)
+                // Assign server-side stats for the default selected character first
+                ApplyCharacterStats(selectedCharacterId.Value);
+            }
+
+            // Apply visuals locally
+            ApplyCharacterVisuals(selectedCharacterId.Value);
+
+            // Clients send their selection to Server
+            if (IsOwner)
+            {
+                int mySelection = CharacterSelection.SelectionCharacterId;
+                // Default to 1 (Tanuki) if None selected
+                if (mySelection == 0) mySelection = 1;
+
+                RequestSetCharacterServerRpc(mySelection);
+            }
+        }
+
+        [Rpc(SendTo.Server)]
+        private void RequestSetCharacterServerRpc(int characterId)
+        {
+            selectedCharacterId.Value = characterId;
+            ApplyCharacterStats(characterId);
+        }
+
+        private PlayerDataSO GetPlayerData(int characterId)
+        {
+            if (availableCharacters == null || availableCharacters.Length == 0) return null;
+
+            string targetName = "";
+            switch (characterId)
+            {
+                case 1: targetName = "Tanuki"; break;
+                case 2: targetName = "Kappa"; break;
+                case 3: targetName = "Oni"; break;
+                case 4: targetName = "Tengu"; break;
+                case 5: targetName = "Yuki_Onna"; break;
+                case 6: targetName = "Nurikabe"; break;
+            }
+
+            foreach (var data in availableCharacters)
+            {
+                if (data != null)
                 {
-                    currentHP.Value = 3; // base HP
-                    currentWeight.Value = playerData.baseMass;
-                    currentSpeed.Value = playerData.baseSpeed;
-                    currentPushForce.Value = playerData.basePushForce;
+                    bool nameMatch = !string.IsNullOrEmpty(data.yokaiName) && data.yokaiName.IndexOf(targetName, System.StringComparison.OrdinalIgnoreCase) >= 0;
+                    bool assetNameMatch = !string.IsNullOrEmpty(data.name) && data.name.IndexOf(targetName, System.StringComparison.OrdinalIgnoreCase) >= 0;
+
+                    if (nameMatch || assetNameMatch)
+                    {
+                        return data;
+                    }
                 }
-                else
+            }
+
+            return availableCharacters[0];
+        }
+
+        private void ApplyCharacterStats(int characterId)
+        {
+            if (!IsServer) return;
+
+            PlayerDataSO data = GetPlayerData(characterId);
+            if (data != null)
+            {
+                playerData = data;
+                currentHP.Value = 3;
+                currentWeight.Value = data.baseMass;
+                currentSpeed.Value = data.baseSpeed;
+                currentPushForce.Value = data.basePushForce;
+
+                if (rb != null)
                 {
-                    currentHP.Value = 3;
-                    currentWeight.Value = 10f;
-                    currentSpeed.Value = 5f;
-                    currentPushForce.Value = 5f;
+                    rb.mass = data.baseMass;
+                }
+            }
+        }
+
+        private void ApplyCharacterVisuals(int characterId)
+        {
+            PlayerDataSO data = GetPlayerData(characterId);
+            if (data != null)
+            {
+                playerData = data;
+
+                var anim = GetComponent<Animator>();
+                if (anim != null && data.animatorController != null)
+                {
+                    anim.runtimeAnimatorController = data.animatorController;
                 }
             }
         }

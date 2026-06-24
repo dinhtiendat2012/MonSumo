@@ -3894,7 +3894,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  _gameSceneName: Match
+  _gameSceneName: CharacterSelectScene
 --- !u!114 &1503260240
 MonoBehaviour:
   m_ObjectHideFlags: 0
