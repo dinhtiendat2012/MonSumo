@@ -37,5 +37,6 @@ namespace MonSumo.Data
         public float knockbackDuration = 0.3f;
         public float meleePushForce = 8f;
         public float dashPushForce = 18f;
+        public float skillPushForce = 20f;
     }
 }

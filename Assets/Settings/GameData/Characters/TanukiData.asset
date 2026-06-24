@@ -32,3 +32,4 @@ MonoBehaviour:
   knockbackDuration: 0.3
   meleePushForce: 200
   dashPushForce: 400
+  skillPushForce: 300

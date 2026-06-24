@@ -5,13 +5,15 @@ using MonSumo.Core;
 public class FireRoundSkill : NetworkBehaviour
 {
     private ulong ownerClientId;
+    private Player ownerPlayer;
 
     [SerializeField] private float damage = 10f;
     [SerializeField] private float knockbackForce = 15f;
 
-    public void Init(ulong ownerId)
+    public void Init(Player owner)
     {
-        ownerClientId = ownerId;
+        ownerPlayer = owner;
+        ownerClientId = owner != null ? owner.OwnerClientId : 9999;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -43,7 +45,19 @@ public class FireRoundSkill : NetworkBehaviour
                 dir = Vector2.up;
             }
 
-            float force = knockbackForce;
+            // Get force from Caster Player Data dynamically, fallback to local serializeField config
+            float force = (ownerPlayer != null && ownerPlayer.playerData != null)
+                ? ownerPlayer.playerData.skillPushForce
+                : knockbackForce;
+
+            // Apply item/buff multipliers: (Current Push Force / Base Push Force)
+            if (ownerPlayer != null && ownerPlayer.playerData != null && ownerPlayer.playerData.basePushForce > 0.01f)
+            {
+                float buffMultiplier = ownerPlayer.currentPushForce.Value / ownerPlayer.playerData.basePushForce;
+                force *= buffMultiplier;
+                Debug.Log($"[Skill] Skill Buff Multiplier applied: {buffMultiplier}x (New Base: {force})");
+            }
+
             if (targetPlayer.ReceivedPushMultiplier != 1f)
             {
                 force *= targetPlayer.ReceivedPushMultiplier;
