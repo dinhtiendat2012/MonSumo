@@ -21,9 +21,10 @@ public class SelectionButton : MonoBehaviour
             Debug.Log("Character is locked!");
             return;
         }
-
+        CharacterSelection.SelectionCharacterId = (int)characterSelection;
         UIManager.GetComponent<CharacterUISelection>().UpdateSelectedUI(spriteRenderer);
 
-        CharacterSelection.SelectionCharacterId = (int)characterSelection;
+        
+        Debug.Log($"Selected character: {characterSelection}");
     }
 }
