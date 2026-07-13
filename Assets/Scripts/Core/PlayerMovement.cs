@@ -232,6 +232,11 @@ namespace MonSumo.Core
         {
             _currentStamina = Mathf.Max(0f, _currentStamina - _dashStaminaCost);
             _dashCooldownTimer = _dashCooldown;
+
+            if (_player != null)
+            {
+                _player.PlayDashAudio();
+            }
             
             // Send dash event to server for optional visual sync / log
             NotifyServerDashServerRpc();
@@ -335,6 +340,11 @@ namespace MonSumo.Core
         [Rpc(SendTo.Server)]
         private void RequestAttackServerRpc(Vector2 attackDirection)
         {
+            if (_player != null)
+            {
+                _player.PlayAttackAudio();
+            }
+
             float baseKnockbackStrength = (_player != null && _player.playerData != null)
                 ? _player.playerData.meleePushForce
                 : 8f;
@@ -388,6 +398,7 @@ namespace MonSumo.Core
                     }
 
                     targetPlayer.ApplyKnockbackRpc(pushDirection * actualKnockbackStrength);
+                    _player.PlayHitAudio();
                     Debug.Log($"[Combat] Server: Player {OwnerClientId} pushed Player {targetPlayer.OwnerClientId} with force {actualKnockbackStrength}");
 
                     // Apply Thorn Shield force reflection back to attacker
@@ -432,6 +443,7 @@ namespace MonSumo.Core
                     }
 
                     targetPlayer.ApplyKnockbackRpc(pushDirection.normalized * actualKnockbackStrength);
+                    _player.PlayHitAudio();
                     Debug.Log($"[Combat] Server: Player {OwnerClientId} dashed into Player {targetPlayer.OwnerClientId} with force {actualKnockbackStrength}");
 
                     // Apply Thorn Shield force reflection back to attacker
@@ -542,6 +554,11 @@ namespace MonSumo.Core
             {
                 _collidingPlayers.Remove(targetPlayer);
             }
+        }
+
+        public void PlayDashAudio()
+        {
+            _player.PlayDashAudio();
         }
 
         #endregion

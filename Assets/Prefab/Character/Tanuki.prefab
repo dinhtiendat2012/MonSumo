@@ -189,6 +189,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f8db4ecd37d6f8c48984d77defe796f1, type: 2}
   - {fileID: 11400000, guid: 953ca8e3766cc50489cf05e43352c637, type: 2}
   - {fileID: 11400000, guid: f14aa141ff9306f459ce50dffebc5181, type: 2}
+  itemPickupSFX: {fileID: 0}
   respawnPoint: {fileID: 0}
 --- !u!114 &2004544913340270394
 MonoBehaviour:
@@ -652,6 +653,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vfxObject: {fileID: 2511686738438379428}
+  castSFX: {fileID: 8300000, guid: 02f7f1e3278ccca459db25867939f3ca, type: 3}
 --- !u!1 &9019207443715863374
 GameObject:
   m_ObjectHideFlags: 0

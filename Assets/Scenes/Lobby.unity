@@ -529,7 +529,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4283219954
   m_fontColor: {r: 0.95, g: 0.75, b: 0.3, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -542,7 +542,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 0
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
@@ -890,6 +890,7 @@ GameObject:
   - component: {fileID: 390301461}
   - component: {fileID: 390301460}
   - component: {fileID: 390301462}
+  - component: {fileID: 390301463}
   m_Layer: 0
   m_Name: HostButton
   m_TagString: Untagged
@@ -1000,6 +1001,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &390301463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 390301458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdaa8c20fabde7344bf94aa06b89a213, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &420694090
 GameObject:
   m_ObjectHideFlags: 0
@@ -1790,7 +1803,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4283219954
   m_fontColor: {r: 0.95, g: 0.75, b: 0.3, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -1803,7 +1816,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 0
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
@@ -2302,6 +2315,7 @@ GameObject:
   - component: {fileID: 1033490058}
   - component: {fileID: 1033490057}
   - component: {fileID: 1033490059}
+  - component: {fileID: 1033490060}
   m_Layer: 0
   m_Name: StartButton
   m_TagString: Untagged
@@ -2412,6 +2426,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1033490060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1033490055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdaa8c20fabde7344bf94aa06b89a213, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1072912075
 GameObject:
   m_ObjectHideFlags: 0
@@ -2491,7 +2517,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 0
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
@@ -2627,7 +2653,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 0
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
@@ -4099,6 +4125,7 @@ GameObject:
   - component: {fileID: 1768355689}
   - component: {fileID: 1768355688}
   - component: {fileID: 1768355690}
+  - component: {fileID: 1768355691}
   m_Layer: 0
   m_Name: JoinButton
   m_TagString: Untagged
@@ -4209,6 +4236,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1768355691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1768355686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdaa8c20fabde7344bf94aa06b89a213, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1850949118
 GameObject:
   m_ObjectHideFlags: 0
@@ -4282,6 +4321,7 @@ GameObject:
   - component: {fileID: 1972930037}
   - component: {fileID: 1972930036}
   - component: {fileID: 1972930038}
+  - component: {fileID: 1972930039}
   m_Layer: 0
   m_Name: LeaveButton
   m_TagString: Untagged
@@ -4392,6 +4432,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1972930039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1972930034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdaa8c20fabde7344bf94aa06b89a213, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2061032355
 GameObject:
   m_ObjectHideFlags: 0
@@ -4958,7 +5010,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -35}
-  m_SizeDelta: {x: 440, y: 370}
+  m_SizeDelta: {x: 440, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2147349603
 MonoBehaviour:

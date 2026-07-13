@@ -65,8 +65,9 @@ public class ZoneOut : NetworkBehaviour
         if (isOutside)
         {
             Player player = GetComponent<Player>();
-            if (player != null)
+            if (player != null && !player.isDead.Value)
             {
+                player.PlayDeathAudio();
                 player.TakeDamage();
                 _cooldownTimer = damageCooldown; // Cooldown to avoid double-triggering before respawn syncs
             }

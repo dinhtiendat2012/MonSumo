@@ -13,6 +13,12 @@ namespace MonSumo.Core
         [Header("Character Registry")]
         [SerializeField] private PlayerDataSO[] availableCharacters;
 
+        [Header("Audio")]
+        private AudioClip itemPickupSFX;
+        private AudioClip attackSFX;
+        private AudioClip dashSFX;
+        private AudioClip hitSFX;
+
         public readonly NetworkVariable<int> selectedCharacterId = new(
             1, // Default is 1 (Tanuki)
             NetworkVariableReadPermission.Everyone,
@@ -40,6 +46,8 @@ namespace MonSumo.Core
 
         private Rigidbody2D rb;
         private PlayerMovement movement;
+
+        
 
         // Multipliers
         private float _speedMultiplier = 1f;
@@ -144,6 +152,12 @@ namespace MonSumo.Core
             if (data != null)
             {
                 playerData = data;
+
+                attackSFX = data.attackSFX;
+                dashSFX = data.dashSFX;
+                hitSFX = data.hitSFX;
+                itemPickupSFX = data.itemPickupSFX;
+
                 currentHP.Value = 3;
                 currentWeight.Value = data.baseMass;
                 currentSpeed.Value = data.baseSpeed;
@@ -162,6 +176,11 @@ namespace MonSumo.Core
             if (data != null)
             {
                 playerData = data;
+
+                attackSFX = data.attackSFX;
+                dashSFX = data.dashSFX;
+                hitSFX = data.hitSFX;
+                itemPickupSFX = data.itemPickupSFX;
 
                 var anim = GetComponent<Animator>();
                 if (anim != null && data.animatorController != null)
@@ -184,6 +203,8 @@ namespace MonSumo.Core
             _activeItems[itemData.itemType] = itemData.duration;
             _activeItemConfigs[itemData.itemType] = itemData;
             RecalculateStats();
+
+            PlayAudioClientRpc(PlayerAudioType.ItemPickup);
             
             Debug.Log($"[Item] Applied {itemData.itemName} to Player {OwnerClientId}. Duration: {itemData.duration}s");
         }
@@ -254,10 +275,13 @@ namespace MonSumo.Core
             {
                 currentHP.Value = 0;
                 isDead.Value = true;
-                Debug.Log($"[PLAYER {OwnerClientId}] IS DEAD");
+                
+                // PlayDeathAudio();
                 
                 // Hide player visual or disable movement
                 DisablePlayerPhysicsClientRpc();
+
+                PlayLoseAudio();
 
                 // Check end conditions
                 CheckGameEndConditions();
@@ -313,6 +337,16 @@ namespace MonSumo.Core
             {
                 Player winner = livingPlayers[0];
                 winner.isWinner.Value = true;
+
+                winner.PlayWinAudio();
+
+                foreach (var player in allPlayers)
+                {
+                    if (player != null && player != winner)
+                    {
+                        player.PlayLoseAudio();
+                    }
+                }
                 Debug.Log($"[GameEnd] Winner is Player {winner.OwnerClientId}");
             }
             else if (livingPlayers.Count == 0)
@@ -397,6 +431,133 @@ namespace MonSumo.Core
         private void RequestTakeDamageServerRpc()
         {
             TakeDamage();
+        }
+
+        private void PlayItemPickupSFX()
+        {
+            if (AudioManager.Instance == null)
+                return;
+
+            AudioManager.Instance.PlaySFX(itemPickupSFX);
+        }
+
+        private void PlayAttackSFX()
+        {
+            if (AudioManager.Instance == null)
+                return;
+
+            AudioManager.Instance.PlaySFX(attackSFX);
+        }
+
+        [Rpc(SendTo.Owner)]
+        private void PlayAudioClientRpc(PlayerAudioType audioType)
+        {
+            switch (audioType)
+            {
+                case PlayerAudioType.ItemPickup:
+                    PlayItemPickupSFX();
+                    break;
+            }
+        }
+
+        [Rpc(SendTo.Everyone)]
+        private void PlayWorldAudioClientRpc(PlayerAudioType audioType)
+        {
+            switch (audioType)
+            {
+                case PlayerAudioType.Attack:
+                    PlayAttackSFX();
+                    break;
+                case PlayerAudioType.Dash:
+                    PlayDashSFX();
+                    break;
+                case PlayerAudioType.Hit:
+                    PlayHitSFX();
+                    break;
+                case PlayerAudioType.Death:
+                    AudioManager.Instance.PlayDeathSFX();
+                    break;             
+            }
+        }
+
+        [Rpc(SendTo.Owner)]
+        private void PlayWinAudioClientRpc()
+        {
+            if (AudioManager.Instance == null)
+                return;
+
+            AudioManager.Instance.PlayWinSFX();
+        }
+
+        [Rpc(SendTo.Owner)]
+        private void PlayLoseAudioClientRpc()
+        {
+            if (AudioManager.Instance == null)
+                return;
+
+            AudioManager.Instance.PlayLoseSFX();
+        }
+
+        public AudioClip GetDashSFX()
+        {
+            return dashSFX;
+        }
+
+        public AudioClip GetHitSFX()
+        {
+            return hitSFX;
+        }
+
+        public AudioClip GetItemPickupSFX()
+        {
+            return itemPickupSFX;
+        }
+
+        private void PlayDashSFX()
+        {
+            if (AudioManager.Instance == null)
+                return;
+
+            AudioManager.Instance.PlaySFX(dashSFX);
+        }
+
+        private void PlayHitSFX()
+        {
+            if (AudioManager.Instance == null)
+                return;
+
+            AudioManager.Instance.PlaySFX(hitSFX);
+        }
+
+        public void PlayHitAudio()
+        {
+            PlayWorldAudioClientRpc(PlayerAudioType.Hit);
+        }
+
+        public void PlayDashAudio()
+        {
+            PlayWorldAudioClientRpc(PlayerAudioType.Dash);
+        }
+        
+        public void PlayAttackAudio()
+        {
+            PlayWorldAudioClientRpc(PlayerAudioType.Attack);
+        }
+
+        public void PlayDeathAudio()
+        {
+            Debug.Log("[AUDIO] PlayDeathAudio() called");
+            PlayWorldAudioClientRpc(PlayerAudioType.Death);
+        }
+
+        public void PlayWinAudio()
+        {
+            PlayWinAudioClientRpc();
+        }
+
+        public void PlayLoseAudio()
+        {
+            PlayLoseAudioClientRpc();
         }
     }
 }

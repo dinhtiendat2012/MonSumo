@@ -17,6 +17,8 @@ namespace MonSumo.Core.State
             // Trigger dash logic (consume stamina, reset cooldown)
             controller.TriggerDash();
 
+            controller.PlayDashAudio();
+
             // Set direction: input direction if moving, otherwise forward (or local facing direction)
             Vector2 input = controller.GetMoveInput();
             if (input.sqrMagnitude > 0.01f)
