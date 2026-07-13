@@ -1,7 +1,16 @@
 using UnityEngine;
+using MonSumo.Core;
+
 public class SkillController : MonoBehaviour
 {
     [SerializeField] private FireRoundPoint firePoint;
+
+    private Player player;
+
+    private void Awake()
+    {
+        player = GetComponentInParent<Player>();
+    }
 
     public void UseSkill()
     {

@@ -13,6 +13,12 @@ namespace MonSumo.Core
         [Header("Character Registry")]
         [SerializeField] private PlayerDataSO[] availableCharacters;
 
+        [Header("Audio")]
+        private AudioClip itemPickupSFX;
+        private AudioClip attackSFX;
+        private AudioClip dashSFX;
+        private AudioClip hitSFX;
+
         public readonly NetworkVariable<int> selectedCharacterId = new(
             1, // Default is 1 (Tanuki)
             NetworkVariableReadPermission.Everyone,
@@ -24,6 +30,9 @@ namespace MonSumo.Core
         public readonly NetworkVariable<float> currentWeight = new(10f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
         public readonly NetworkVariable<float> currentSpeed = new(5f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
         public readonly NetworkVariable<float> currentPushForce = new(5f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+
+        public readonly NetworkVariable<bool> isDead = new(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+        public readonly NetworkVariable<bool> isWinner = new(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
 
         // Player Name synchronized from lobby
         public readonly NetworkVariable<Unity.Collections.FixedString32Bytes> playerName = new(
@@ -37,6 +46,8 @@ namespace MonSumo.Core
 
         private Rigidbody2D rb;
         private PlayerMovement movement;
+
+        
 
         // Multipliers
         private float _speedMultiplier = 1f;
@@ -141,6 +152,12 @@ namespace MonSumo.Core
             if (data != null)
             {
                 playerData = data;
+
+                attackSFX = data.attackSFX;
+                dashSFX = data.dashSFX;
+                hitSFX = data.hitSFX;
+                itemPickupSFX = data.itemPickupSFX;
+
                 currentHP.Value = 3;
                 currentWeight.Value = data.baseMass;
                 currentSpeed.Value = data.baseSpeed;
@@ -160,10 +177,21 @@ namespace MonSumo.Core
             {
                 playerData = data;
 
+                attackSFX = data.attackSFX;
+                dashSFX = data.dashSFX;
+                hitSFX = data.hitSFX;
+                itemPickupSFX = data.itemPickupSFX;
+
                 var anim = GetComponent<Animator>();
                 if (anim != null && data.animatorController != null)
                 {
                     anim.runtimeAnimatorController = data.animatorController;
+                }
+
+                if (rb != null)
+                {
+                    rb.mass = data.baseMass;
+                    Debug.Log($"[VisualSync] Applied local rigidbody mass {data.baseMass} for characterId {characterId} on Client {OwnerClientId}");
                 }
             }
         }
@@ -175,6 +203,8 @@ namespace MonSumo.Core
             _activeItems[itemData.itemType] = itemData.duration;
             _activeItemConfigs[itemData.itemType] = itemData;
             RecalculateStats();
+
+            PlayAudioClientRpc(PlayerAudioType.ItemPickup);
             
             Debug.Log($"[Item] Applied {itemData.itemName} to Player {OwnerClientId}. Duration: {itemData.duration}s");
         }
@@ -236,17 +266,103 @@ namespace MonSumo.Core
         public void TakeDamage()
         {
             if (!IsServer) return;
+            if (isDead.Value) return; // Already dead
 
             currentHP.Value--;
             Debug.Log($"[PLAYER {OwnerClientId}] HP: {currentHP.Value}");
 
             if (currentHP.Value <= 0)
             {
-                GameOverClientRpc();
+                currentHP.Value = 0;
+                isDead.Value = true;
+                
+                // PlayDeathAudio();
+                
+                // Hide player visual or disable movement
+                DisablePlayerPhysicsClientRpc();
+
+                PlayLoseAudio();
+
+                // Check end conditions
+                CheckGameEndConditions();
             }
             else
             {
                 Respawn();
+            }
+        }
+
+        [Rpc(SendTo.Everyone)]
+        private void DisablePlayerPhysicsClientRpc()
+        {
+            if (rb != null)
+            {
+                rb.linearVelocity = Vector2.zero;
+                rb.simulated = false; // Disable physical movement and collision completely
+            }
+
+            // Make sprite transparent or hidden
+            var sr = GetComponentInChildren<SpriteRenderer>();
+            if (sr != null)
+            {
+                sr.enabled = false;
+            }
+
+            // Disable player HUD display inputs if owner
+            if (IsOwner && movement != null)
+            {
+                movement.enabled = false;
+            }
+        }
+
+        private void CheckGameEndConditions()
+        {
+            if (!IsServer) return;
+
+            var allPlayers = FindObjectsByType<Player>(FindObjectsSortMode.None);
+            
+            // Collect all living players
+            System.Collections.Generic.List<Player> livingPlayers = new System.Collections.Generic.List<Player>();
+            foreach (var p in allPlayers)
+            {
+                if (p != null && !p.isDead.Value)
+                {
+                    livingPlayers.Add(p);
+                }
+            }
+
+            // Check if game end reached
+            // In a multiplayer game (usually 2+ players), game ends when there is 1 or 0 living players remaining
+            if (livingPlayers.Count == 1)
+            {
+                Player winner = livingPlayers[0];
+                winner.isWinner.Value = true;
+
+                winner.PlayWinAudio();
+
+                foreach (var player in allPlayers)
+                {
+                    if (player != null && player != winner)
+                    {
+                        player.PlayLoseAudio();
+                    }
+                }
+                Debug.Log($"[GameEnd] Winner is Player {winner.OwnerClientId}");
+            }
+            else if (livingPlayers.Count == 0)
+            {
+                Debug.Log("[GameEnd] Everyone is dead! Draw game.");
+            }
+        }
+
+        [Rpc(SendTo.Server)]
+        public void RequestReturnToLobbyServerRpc()
+        {
+            if (NetworkManager.Singleton != null && NetworkManager.Singleton.IsServer)
+            {
+                Debug.Log("[LobbyReturn] Server is loading Lobby scene...");
+                // NetworkManager SceneManager will load Lobby and transition everyone cleanly
+                NetworkManager.Singleton.SceneManager.LoadScene("Lobby", LoadSceneMode.Single);
             }
         }
 
@@ -255,6 +371,15 @@ namespace MonSumo.Core
             if (!IsServer) return;
 
             Vector2 spawnPos = respawnPoint != null ? (Vector2)respawnPoint.position : Vector2.zero;
+
+            // Try to respawn in the center of the active shrinking/moving safe zone instead of the static initial point
+            var zoneController = Object.FindAnyObjectByType<MonSumo.World.Zone.ZoneController>();
+            if (zoneController != null)
+            {
+                spawnPos = zoneController.Center;
+                Debug.Log($"[Respawn] Dynamically set respawn position to current Zone Center: {spawnPos}");
+            }
+
             RespawnClientRpc(spawnPos);
         }
 
@@ -272,6 +397,8 @@ namespace MonSumo.Core
         [Rpc(SendTo.Owner)]
         public void ApplyKnockbackRpc(Vector2 force)
         {
+            if (isDead.Value) return; // Dead players can't be pushed
+
             if (rb != null)
             {
                 if (movement != null)
@@ -282,17 +409,6 @@ namespace MonSumo.Core
                 rb.AddForce(force, ForceMode2D.Impulse);
                 Debug.Log($"[Knockback] Applied force: {force}");
             }
-        }
-
-        [Rpc(SendTo.Owner)]
-        private void GameOverClientRpc()
-        {
-            Debug.Log("GAME OVER");
-            if (NetworkManager.Singleton != null)
-            {
-                NetworkManager.Singleton.Shutdown();
-            }
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
         private void Update()
@@ -315,6 +431,133 @@ namespace MonSumo.Core
         private void RequestTakeDamageServerRpc()
         {
             TakeDamage();
+        }
+
+        private void PlayItemPickupSFX()
+        {
+            if (AudioManager.Instance == null)
+                return;
+
+            AudioManager.Instance.PlaySFX(itemPickupSFX);
+        }
+
+        private void PlayAttackSFX()
+        {
+            if (AudioManager.Instance == null)
+                return;
+
+            AudioManager.Instance.PlaySFX(attackSFX);
+        }
+
+        [Rpc(SendTo.Owner)]
+        private void PlayAudioClientRpc(PlayerAudioType audioType)
+        {
+            switch (audioType)
+            {
+                case PlayerAudioType.ItemPickup:
+                    PlayItemPickupSFX();
+                    break;
+            }
+        }
+
+        [Rpc(SendTo.Everyone)]
+        private void PlayWorldAudioClientRpc(PlayerAudioType audioType)
+        {
+            switch (audioType)
+            {
+                case PlayerAudioType.Attack:
+                    PlayAttackSFX();
+                    break;
+                case PlayerAudioType.Dash:
+                    PlayDashSFX();
+                    break;
+                case PlayerAudioType.Hit:
+                    PlayHitSFX();
+                    break;
+                case PlayerAudioType.Death:
+                    AudioManager.Instance.PlayDeathSFX();
+                    break;             
+            }
+        }
+
+        [Rpc(SendTo.Owner)]
+        private void PlayWinAudioClientRpc()
+        {
+            if (AudioManager.Instance == null)
+                return;
+
+            AudioManager.Instance.PlayWinSFX();
+        }
+
+        [Rpc(SendTo.Owner)]
+        private void PlayLoseAudioClientRpc()
+        {
+            if (AudioManager.Instance == null)
+                return;
+
+            AudioManager.Instance.PlayLoseSFX();
+        }
+
+        public AudioClip GetDashSFX()
+        {
+            return dashSFX;
+        }
+
+        public AudioClip GetHitSFX()
+        {
+            return hitSFX;
+        }
+
+        public AudioClip GetItemPickupSFX()
+        {
+            return itemPickupSFX;
+        }
+
+        private void PlayDashSFX()
+        {
+            if (AudioManager.Instance == null)
+                return;
+
+            AudioManager.Instance.PlaySFX(dashSFX);
+        }
+
+        private void PlayHitSFX()
+        {
+            if (AudioManager.Instance == null)
+                return;
+
+            AudioManager.Instance.PlaySFX(hitSFX);
+        }
+
+        public void PlayHitAudio()
+        {
+            PlayWorldAudioClientRpc(PlayerAudioType.Hit);
+        }
+
+        public void PlayDashAudio()
+        {
+            PlayWorldAudioClientRpc(PlayerAudioType.Dash);
+        }
+        
+        public void PlayAttackAudio()
+        {
+            PlayWorldAudioClientRpc(PlayerAudioType.Attack);
+        }
+
+        public void PlayDeathAudio()
+        {
+            Debug.Log("[AUDIO] PlayDeathAudio() called");
+            PlayWorldAudioClientRpc(PlayerAudioType.Death);
+        }
+
+        public void PlayWinAudio()
+        {
+            PlayWinAudioClientRpc();
+        }
+
+        public void PlayLoseAudio()
+        {
+            PlayLoseAudioClientRpc();
         }
     }
 }

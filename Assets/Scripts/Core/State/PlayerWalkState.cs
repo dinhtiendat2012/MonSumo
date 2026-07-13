@@ -14,7 +14,7 @@ namespace MonSumo.Core.State
             var controller = stateMachine.Controller;
 
             // Handle Dash Request
-            if (Input.GetKeyDown(KeyCode.Q) && controller.CanDash())
+            if (Input.GetKeyDown(KeyCode.Space) && controller.CanDash())
             {
                 stateMachine.ChangeState(new PlayerDashState(), PlayerMovementState.Dash);
                 return;

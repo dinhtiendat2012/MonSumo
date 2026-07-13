@@ -33,8 +33,16 @@ namespace MonSumo.Data
 
         [Header("Combat settings")]
         public float pushCooldown = 3f;
+        public float skillCooldown = 5f;
         public float knockbackDuration = 0.3f;
         public float meleePushForce = 8f;
         public float dashPushForce = 18f;
+        public float skillPushForce = 20f;
+
+        [Header("Audio")]
+        public AudioClip attackSFX;
+        public AudioClip dashSFX;
+        public AudioClip hitSFX;
+        public AudioClip itemPickupSFX;
     }
 }
