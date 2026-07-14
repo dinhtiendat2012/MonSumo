@@ -1,10 +1,49 @@
 fileFormatVersion: 2
-guid: 1ce6e97976d0600438fc47bdcd69ea99
+guid: ca7bde9c780b46a4e823d48919a6ec57
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6040732750188920097
-    second: congtorii_0
+      213: -6132793395018472329
+    second: ezgif-frame-001_0
+  - first:
+      213: -4542614844354091616
+    second: ezgif-frame-001_1
+  - first:
+      213: -3145319045738540844
+    second: ezgif-frame-001_2
+  - first:
+      213: 1548342784632795237
+    second: ezgif-frame-001_3
+  - first:
+      213: 1746921917011009987
+    second: ezgif-frame-001_4
+  - first:
+      213: 4608421063190519981
+    second: ezgif-frame-001_5
+  - first:
+      213: -6887904838211383911
+    second: ezgif-frame-001_6
+  - first:
+      213: 5486121181756030120
+    second: ezgif-frame-001_7
+  - first:
+      213: 1067995554404378465
+    second: ezgif-frame-001_8
+  - first:
+      213: -2342662956547399004
+    second: ezgif-frame-001_9
+  - first:
+      213: 8543474402494998099
+    second: ezgif-frame-001_10
+  - first:
+      213: 956794401343832469
+    second: ezgif-frame-001_11
+  - first:
+      213: 5090034876743211012
+    second: ezgif-frame-001_12
+  - first:
+      213: 3438242279840322465
+    second: ezgif-frame-001_13
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,79 +139,67 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: congtorii_0
+      name: l1
       rect:
         serializedVersion: 2
-        x: 93
-        y: 28
-        width: 480
-        height: 60
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 199
+        y: 65
+        width: 134
+        height: 170
+      alignment: 9
+      pivot: {x: 0.3727294, y: 0.07295945}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
-      outline:
-      - - {x: -132, y: -12}
-        - {x: -113, y: -23}
-        - {x: -88, y: -23}
-        - {x: -71, y: -13}
-        - {x: -70, y: 29}
-        - {x: -132, y: 30}
-      - - {x: 71, y: -12}
-        - {x: 96, y: -23}
-        - {x: 120, y: -22}
-        - {x: 134, y: -11}
-        - {x: 134, y: 30}
-        - {x: 71, y: 30}
+      outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 12d341e5e6ef4d350800000000000000
-      internalID: 6040732750188920097
+      spriteID: 774ef0176e0f3eaa0800000000000000
+      internalID: -6132793395018472329
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: congtorii_1
+      name: d1
       rect:
         serializedVersion: 2
-        x: 84
-        y: 89
-        width: 496
-        height: 280
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 355
+        y: 67
+        width: 125
+        height: 168
+      alignment: 9
+      pivot: {x: 0.40077513, y: 0.055371057}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: ca8674d0136f9cc4cb1739b294e512b9
-      internalID: 1566715352
+      spriteID: 8ac7059e52e922c40800000000000000
+      internalID: 5486121181756030120
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: congtorii_2
+      name: b1
       rect:
         serializedVersion: 2
-        x: 66
-        y: 0
-        width: 536
-        height: 373
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 42
+        y: 66
+        width: 73
+        height: 57
+      alignment: 9
+      pivot: {x: 0.5, y: 0.24479863}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: f2909766f2111ce46a4b54a9bb41be8d
-      internalID: -384513271
+      spriteID: 4a2a686f3703d7fd0800000000000000
+      internalID: -2342662956547399004
       vertices: []
       indices: 
       edges: []
@@ -181,7 +208,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e71faa4170cd9a45a6a803f9d96ca74
+    spriteID: e6a5780ccf094b847afd3fe90a3711aa
     internalID: 0
     vertices: []
     indices: 
@@ -191,9 +218,20 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      congtorii_0: 6040732750188920097
-      congtorii_1: 1566715352
-      congtorii_2: -384513271
+      b1: -2342662956547399004
+      d1: 5486121181756030120
+      ezgif-frame-001_1: -4542614844354091616
+      ezgif-frame-001_10: 8543474402494998099
+      ezgif-frame-001_11: 956794401343832469
+      ezgif-frame-001_12: 5090034876743211012
+      ezgif-frame-001_13: 3438242279840322465
+      ezgif-frame-001_2: -3145319045738540844
+      ezgif-frame-001_3: 1548342784632795237
+      ezgif-frame-001_4: 1746921917011009987
+      ezgif-frame-001_5: 4608421063190519981
+      ezgif-frame-001_6: -6887904838211383911
+      ezgif-frame-001_8: 1067995554404378465
+      l1: -6132793395018472329
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,10 +1,28 @@
 fileFormatVersion: 2
-guid: 1ce6e97976d0600438fc47bdcd69ea99
+guid: c73b9666128e67543ac43afc71cc9ef9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6040732750188920097
-    second: congtorii_0
+      213: 1884483453899774419
+    second: image-removebg-preview__6_-removebg-preview_0
+  - first:
+      213: 7636297791640325119
+    second: image-removebg-preview__6_-removebg-preview_1
+  - first:
+      213: -5665474209941139700
+    second: image-removebg-preview__6_-removebg-preview_2
+  - first:
+      213: -761670659761560835
+    second: image-removebg-preview__6_-removebg-preview_3
+  - first:
+      213: -4262473802368004148
+    second: image-removebg-preview__6_-removebg-preview_4
+  - first:
+      213: 6269946509721395798
+    second: image-removebg-preview__6_-removebg-preview_5
+  - first:
+      213: -6392691726183624844
+    second: image-removebg-preview__6_-removebg-preview_6
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,79 +118,111 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: congtorii_0
+      name: image-removebg-preview__6_-removebg-preview_0
       rect:
         serializedVersion: 2
-        x: 93
-        y: 28
-        width: 480
-        height: 60
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline:
-      - - {x: -132, y: -12}
-        - {x: -113, y: -23}
-        - {x: -88, y: -23}
-        - {x: -71, y: -13}
-        - {x: -70, y: 29}
-        - {x: -132, y: 30}
-      - - {x: 71, y: -12}
-        - {x: 96, y: -23}
-        - {x: 120, y: -22}
-        - {x: 134, y: -11}
-        - {x: 134, y: 30}
-        - {x: 71, y: 30}
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 12d341e5e6ef4d350800000000000000
-      internalID: 6040732750188920097
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: congtorii_1
-      rect:
-        serializedVersion: 2
-        x: 84
-        y: 89
-        width: 496
-        height: 280
+        x: 6
+        y: 130
+        width: 84
+        height: 177
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: ca8674d0136f9cc4cb1739b294e512b9
-      internalID: 1566715352
+      spriteID: 3d91cc687b7072a10800000000000000
+      internalID: 1884483453899774419
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: congtorii_2
+      name: image-removebg-preview__6_-removebg-preview_1
       rect:
         serializedVersion: 2
-        x: 66
-        y: 0
-        width: 536
-        height: 373
+        x: 92
+        y: 124
+        width: 130
+        height: 128
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: f2909766f2111ce46a4b54a9bb41be8d
-      internalID: -384513271
+      spriteID: ffb42d5f16499f960800000000000000
+      internalID: 7636297791640325119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: image-removebg-preview__6_-removebg-preview_2
+      rect:
+        serializedVersion: 2
+        x: 227
+        y: 129
+        width: 51
+        height: 63
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0f425819313061b0800000000000000
+      internalID: -5665474209941139700
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: image-removebg-preview__6_-removebg-preview_3
+      rect:
+        serializedVersion: 2
+        x: 277
+        y: 125
+        width: 115
+        height: 185
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df2231902900e65f0800000000000000
+      internalID: -761670659761560835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: image-removebg-preview__6_-removebg-preview_6
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 127
+        width: 105
+        height: 106
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47f0f36beb89847a0800000000000000
+      internalID: -6392691726183624844
       vertices: []
       indices: 
       edges: []
@@ -181,7 +231,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e71faa4170cd9a45a6a803f9d96ca74
+    spriteID: 9218d7f5dd622144cbd507442cd261ba
     internalID: 0
     vertices: []
     indices: 
@@ -191,9 +241,13 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      congtorii_0: 6040732750188920097
-      congtorii_1: 1566715352
-      congtorii_2: -384513271
+      image-removebg-preview__6_-removebg-preview_0: 1884483453899774419
+      image-removebg-preview__6_-removebg-preview_1: 7636297791640325119
+      image-removebg-preview__6_-removebg-preview_2: -5665474209941139700
+      image-removebg-preview__6_-removebg-preview_3: -761670659761560835
+      image-removebg-preview__6_-removebg-preview_4: -4262473802368004148
+      image-removebg-preview__6_-removebg-preview_5: 6269946509721395798
+      image-removebg-preview__6_-removebg-preview_6: -6392691726183624844
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,10 +1,61 @@
 fileFormatVersion: 2
-guid: 1ce6e97976d0600438fc47bdcd69ea99
+guid: 13cfa1efa1effda48805bb4caa55ae3e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6040732750188920097
-    second: congtorii_0
+      213: 1015393939384079712
+    second: ezgif-frame-004_0
+  - first:
+      213: -628536379962588963
+    second: ezgif-frame-004_1
+  - first:
+      213: -105097857702141751
+    second: ezgif-frame-004_2
+  - first:
+      213: 7993232625986222934
+    second: ezgif-frame-004_3
+  - first:
+      213: 5308507313741215204
+    second: ezgif-frame-004_4
+  - first:
+      213: -2533771656874338049
+    second: ezgif-frame-004_5
+  - first:
+      213: -7040564098648253817
+    second: ezgif-frame-004_6
+  - first:
+      213: -8997003389758857086
+    second: ezgif-frame-004_7
+  - first:
+      213: -2944381736657914232
+    second: ezgif-frame-004_8
+  - first:
+      213: 2896305389132559171
+    second: ezgif-frame-004_9
+  - first:
+      213: 5931413165152727405
+    second: ezgif-frame-004_10
+  - first:
+      213: 1485580660190080001
+    second: ezgif-frame-004_11
+  - first:
+      213: -833742084237939424
+    second: ezgif-frame-004_12
+  - first:
+      213: 7117164422705236436
+    second: ezgif-frame-004_13
+  - first:
+      213: -4835996431232693768
+    second: ezgif-frame-004_14
+  - first:
+      213: 8394390710604252420
+    second: ezgif-frame-004_15
+  - first:
+      213: -1547365744916633941
+    second: ezgif-frame-004_16
+  - first:
+      213: 5980472996570505023
+    second: ezgif-frame-004_17
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,79 +151,67 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: congtorii_0
+      name: l4
       rect:
         serializedVersion: 2
-        x: 93
-        y: 28
-        width: 480
-        height: 60
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 201
+        y: 64
+        width: 132
+        height: 174
+      alignment: 9
+      pivot: {x: 0.37080094, y: 0.07230715}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
-      outline:
-      - - {x: -132, y: -12}
-        - {x: -113, y: -23}
-        - {x: -88, y: -23}
-        - {x: -71, y: -13}
-        - {x: -70, y: 29}
-        - {x: -132, y: 30}
-      - - {x: 71, y: -12}
-        - {x: 96, y: -23}
-        - {x: 120, y: -22}
-        - {x: 134, y: -11}
-        - {x: 134, y: 30}
-        - {x: 71, y: 30}
+      outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 12d341e5e6ef4d350800000000000000
-      internalID: 6040732750188920097
+      spriteID: 65bb8fe29baadee60800000000000000
+      internalID: 7993232625986222934
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: congtorii_1
+      name: d4
       rect:
         serializedVersion: 2
-        x: 84
-        y: 89
-        width: 496
-        height: 280
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 354
+        y: 66
+        width: 123
+        height: 126
+      alignment: 9
+      pivot: {x: 0.38655722, y: 0.08164142}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: ca8674d0136f9cc4cb1739b294e512b9
-      internalID: 1566715352
+      spriteID: 4e5bb13b64b9ba940800000000000000
+      internalID: 5308507313741215204
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: congtorii_2
+      name: b4
       rect:
         serializedVersion: 2
-        x: 66
-        y: 0
-        width: 536
-        height: 373
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 35
+        y: 67
+        width: 98
+        height: 103
+      alignment: 9
+      pivot: {x: 0.40507835, y: 0.12369248}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: f2909766f2111ce46a4b54a9bb41be8d
-      internalID: -384513271
+      spriteID: 10ce1df4db7dd9410800000000000000
+      internalID: 1485580660190080001
       vertices: []
       indices: 
       edges: []
@@ -181,7 +220,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e71faa4170cd9a45a6a803f9d96ca74
+    spriteID: 53a69683c26f0ca409d7b2b6c2375bf0
     internalID: 0
     vertices: []
     indices: 
@@ -191,9 +230,24 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      congtorii_0: 6040732750188920097
-      congtorii_1: 1566715352
-      congtorii_2: -384513271
+      b4: 1485580660190080001
+      d4: 5308507313741215204
+      ezgif-frame-004_0: 1015393939384079712
+      ezgif-frame-004_1: -628536379962588963
+      ezgif-frame-004_10: 5931413165152727405
+      ezgif-frame-004_12: -833742084237939424
+      ezgif-frame-004_13: 7117164422705236436
+      ezgif-frame-004_14: -4835996431232693768
+      ezgif-frame-004_15: 8394390710604252420
+      ezgif-frame-004_16: -1547365744916633941
+      ezgif-frame-004_17: 5980472996570505023
+      ezgif-frame-004_2: -105097857702141751
+      ezgif-frame-004_5: -2533771656874338049
+      ezgif-frame-004_6: -7040564098648253817
+      ezgif-frame-004_7: -8997003389758857086
+      ezgif-frame-004_8: -2944381736657914232
+      ezgif-frame-004_9: 2896305389132559171
+      l4: 7993232625986222934
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
