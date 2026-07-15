@@ -6,11 +6,7 @@ public class LionFireController : MonoBehaviour
     [SerializeField] private LionFireSkill skillObject;
     [SerializeField] private float activeSkillTime = 0.58f;
     [SerializeField] private float deactiveSkillTime = 3f;
-    private void Awake()
-    {
-        if (skillObject == null) return;
-        skillObject.gameObject.SetActive(false);
-    }
+    
     private void Start()
     {
         StartCoroutine(CycleRoutine());

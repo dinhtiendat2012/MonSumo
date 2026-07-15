@@ -2,44 +2,38 @@ using MonSumo.Core;
 using Unity.Netcode;
 using UnityEngine;
 
-public class TurnamiSkill : NetworkBehaviour
+public class TornadoSkill : NetworkBehaviour
 {
-    [Header("Tsunami Settings")]
-    [Tooltip("Lực đẩy của sóng thần áp dụng lên Player")]
-    [SerializeField] private float pushForce = 15f;
+    [Header("Tornado Settings")]
+    [Tooltip("Lực đẩy của vòi rồng áp dụng lên Player")]
+    [SerializeField] private float pushForce = 300f;
+    [SerializeField] private Transform center;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        // Chỉ xử lý logic đẩy trên Server để đảm bảo tính đồng bộ hệ thống Network
+        
         if (!IsServer) return;
-
-        // Kiểm tra xem đối tượng va chạm có chứa component Player hay không
-        Player player = collision.GetComponent<Player>();
-        if (player != null)
+        if (other.gameObject.CompareTag("Player"))
         {
-            // Tính toán hướng từ gốc (tâm của Tsunami GameObject) đến vị trí của Player
-            Vector2 originPosition = transform.position;
-            Vector2 playerPosition = player.transform.position;
+            Player targetPlayer = other.GetComponent<Player>();
 
-            Vector2 pushDirection = (playerPosition - originPosition).normalized;
+            if (targetPlayer == null)
+                return;
 
-            // Nếu trùng vị trí tuyệt đối (hướng bằng 0), mặc định đẩy lên trên
-            if (pushDirection.sqrMagnitude < 0.001f)
-            {
-                pushDirection = Vector2.up;
-            }
+            Vector2 dir =
+                ((Vector2)targetPlayer.transform.position -
+                 (Vector2)center.position).normalized;
 
-            // Áp dụng hệ số giảm/tăng lực đẩy từ item nếu Player đang có (ví dụ: Thorn Shield)
-            float finalForce = pushForce;
-            if (player.ReceivedPushMultiplier != 1f)
-            {
-                finalForce *= player.ReceivedPushMultiplier;
-            }
+            if (dir.sqrMagnitude < 0.01f)
+                dir = Vector2.zero;
 
-            // Gọi RPC áp dụng lực đẩy (Knockback) lên Player thông qua Rigidbody2D của họ
-            player.ApplyKnockbackRpc(pushDirection * finalForce);
+            float force = pushForce;
 
-            Debug.Log($"[Tsunami] Đã đẩy Player {player.OwnerClientId} theo hướng {pushDirection} với lực {finalForce}");
+            if (targetPlayer.ReceivedPushMultiplier != 1f)
+                force *= targetPlayer.ReceivedPushMultiplier;
+
+            targetPlayer.ApplyKnockbackRpc(dir * force);
         }
     }
+
 }

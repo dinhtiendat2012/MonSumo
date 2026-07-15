@@ -170,8 +170,8 @@ namespace MonSumo.Core
 
         #region Helper methods for States
 
-        public Vector2 GetMoveInput() => _moveInput;
-
+        public Vector2 GetMoveInput() => _moveInput.normalized;
+        
         public Vector2 GetFacingDirection() => _facingDirection;
 
         public float GetBaseSpeed()
