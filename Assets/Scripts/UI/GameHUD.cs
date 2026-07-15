@@ -126,11 +126,26 @@ namespace MonSumo.UI
             if (_localPlayer == null) return;
 
             // Setup avatar icon
-            if (_avatarImage != null && _localPlayer.playerData != null)
+            if (_avatarImage != null)
             {
-                _avatarImage.sprite = _localPlayer.playerData.lobbyIcon != null 
-                    ? _localPlayer.playerData.lobbyIcon 
-                    : (_localPlayer.playerData.animatorController != null ? _localPlayer.playerData.lobbyIcon : null);
+                if (_localPlayer.playerData != null && _localPlayer.playerData.lobbyIcon != null)
+                {
+                    _avatarImage.sprite = _localPlayer.playerData.lobbyIcon;
+                    _avatarImage.color = Color.white;
+                    _avatarImage.enabled = true;
+                }
+                else
+                {
+                    _avatarImage.sprite = null;
+                    _avatarImage.enabled = false;
+                }
+
+                // Set parent AvatarFrame background color to black
+                var parentImage = _avatarImage.transform.parent != null ? _avatarImage.transform.parent.GetComponent<Image>() : null;
+                if (parentImage != null)
+                {
+                    parentImage.color = Color.black;
+                }
             }
 
             _lastHpValue = _localPlayer.currentHP.Value;
@@ -160,6 +175,23 @@ namespace MonSumo.UI
         private void UpdatePlayerUI()
         {
             if (_localPlayer == null) return;
+
+            // Update avatar if not yet set
+            if (_avatarImage != null && (_avatarImage.sprite == null || !_avatarImage.enabled))
+            {
+                if (_localPlayer.playerData != null && _localPlayer.playerData.lobbyIcon != null)
+                {
+                    _avatarImage.sprite = _localPlayer.playerData.lobbyIcon;
+                    _avatarImage.color = Color.white;
+                    _avatarImage.enabled = true;
+
+                    var parentImage = _avatarImage.transform.parent != null ? _avatarImage.transform.parent.GetComponent<Image>() : null;
+                    if (parentImage != null)
+                    {
+                        parentImage.color = Color.black;
+                    }
+                }
+            }
 
             // HP Change Detection
             int currentHp = _localPlayer.currentHP.Value;

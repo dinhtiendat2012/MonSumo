@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   yokaiType: 4
   yokaiName: Tanuki
-  lobbyIcon: {fileID: 0}
+  lobbyIcon: {fileID: -8963219801567323207, guid: 1d4fbbe9330bf3e40a87eec124033600, type: 3}
   animatorController: {fileID: 9100000, guid: de2d20338dbf3614384fc110ce9f45c7, type: 2}
   baseMass: 10
   baseSpeed: 5

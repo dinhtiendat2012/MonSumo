@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   yokaiType: 0
   yokaiName: 
-  lobbyIcon: {fileID: 0}
+  lobbyIcon: {fileID: -4610802405667146468, guid: 3dd3a4d36e18eae4e907f0b296a1aee0, type: 3}
   animatorController: {fileID: 0}
   baseMass: 10
   baseSpeed: 5
