@@ -949,7 +949,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterSelection: 3
   UIManager: {fileID: 0}
-  spriteRenderer: {fileID: 0}
+  spriteRenderer: {fileID: -3715280972482791317, guid: f88bc67164491074c995cb8e3d55485b, type: 3}
 --- !u!114 &545193358
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1231,6 +1231,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: lock_0 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1802668636867208078, guid: 0f7694992beb9864bb09057581375157, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7762293202457957397, guid: 0f7694992beb9864bb09057581375157, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.2764912
@@ -1493,6 +1497,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1002965733}
   - component: {fileID: 1002965732}
+  - component: {fileID: 1002965734}
   m_Layer: 0
   m_Name: bground
   m_TagString: Untagged
@@ -1565,11 +1570,23 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 575.10004}
-  m_LocalScale: {x: 150, y: 110, z: 63.9}
+  m_LocalScale: {x: 134.47264, y: 134.47264, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1040690579}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1002965734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1002965731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c574b57f639aa1488ef67b31ffaf86e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1040690575
 GameObject:
   m_ObjectHideFlags: 0
@@ -2022,10 +2039,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.1567029
+    x: 0.08747515
     y: 0
-    width: 0.6865942
-    height: 1
+    width: 1.5069584
+    height: 1.6382861
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60

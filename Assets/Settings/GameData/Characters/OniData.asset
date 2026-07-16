@@ -13,18 +13,27 @@ MonoBehaviour:
   m_Name: OniData
   m_EditorClassIdentifier: 
   yokaiType: 0
-  yokaiName: 
+  yokaiName: Oni
   lobbyIcon: {fileID: -3715280972482791317, guid: f88bc67164491074c995cb8e3d55485b, type: 3}
-  animatorController: {fileID: 0}
+  animatorController: {fileID: 9100000, guid: c48f4a8f9554ef448965b86619c78a74, type: 2}
   baseMass: 10
   baseSpeed: 5
-  basePushForce: 5
+  basePushForce: 100
   maxStamina: 100
-  staminaRegenPerSecond: 120
-  dashStaminaCost: 10
+  staminaRegenPerSecond: 50
+  dashStaminaCost: 30
   dashCooldown: 3
   dashSpeedMultiplier: 4
   dashDuration: 0.2
-  sprintStaminaCostPerSecond: 2
+  sprintStaminaCostPerSecond: 20
   sprintSpeedMultiplier: 1.5
-  pushCooldown: 3
+  pushCooldown: 1
+  skillCooldown: 5
+  knockbackDuration: 0.3
+  meleePushForce: 200
+  dashPushForce: 400
+  skillPushForce: 300
+  attackSFX: {fileID: 8300000, guid: d4d94f36cf5384445aa2c72997bf3f00, type: 3}
+  dashSFX: {fileID: 8300000, guid: 75272b68d0bb1ec41afd0d0e81465a77, type: 3}
+  hitSFX: {fileID: 8300000, guid: 122da549ef410ee4aab87e20783c225f, type: 3}
+  itemPickupSFX: {fileID: 8300000, guid: 861cb289a99c88b44838dddaa0eecaa4, type: 3}
