@@ -475,7 +475,10 @@ namespace MonSumo.Core
                     PlayHitSFX();
                     break;
                 case PlayerAudioType.Death:
-                    AudioManager.Instance.PlayDeathSFX();
+                    if (AudioManager.Instance != null)
+                    {
+                        AudioManager.Instance.PlayDeathSFX();
+                    }
                     break;             
             }
         }
