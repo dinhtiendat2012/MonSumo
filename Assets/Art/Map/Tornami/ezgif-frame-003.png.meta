@@ -1,0 +1,247 @@
+fileFormatVersion: 2
+guid: c5cab36f40cf60a4bbeb04fc1c562caa
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3010259692064062411
+    second: ezgif-frame-003_0
+  - first:
+      213: 7099445176225543122
+    second: ezgif-frame-003_1
+  - first:
+      213: 2640694139998435294
+    second: ezgif-frame-003_2
+  - first:
+      213: 1101458258844314610
+    second: ezgif-frame-003_3
+  - first:
+      213: 7055504954329380009
+    second: ezgif-frame-003_4
+  - first:
+      213: -5421804530493624251
+    second: ezgif-frame-003_5
+  - first:
+      213: 6853309245383070782
+    second: ezgif-frame-003_6
+  - first:
+      213: 3121729550402459322
+    second: ezgif-frame-003_7
+  - first:
+      213: -2611697453710115821
+    second: ezgif-frame-003_8
+  - first:
+      213: -8186298330185541805
+    second: ezgif-frame-003_9
+  - first:
+      213: 7877323021658424947
+    second: ezgif-frame-003_10
+  - first:
+      213: -8536650335738377755
+    second: ezgif-frame-003_11
+  - first:
+      213: 5131911875884500525
+    second: ezgif-frame-003_12
+  - first:
+      213: -3231451979475739792
+    second: ezgif-frame-003_13
+  - first:
+      213: -6137750814880154377
+    second: ezgif-frame-003_14
+  - first:
+      213: 5927064038387102042
+    second: ezgif-frame-003_15
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: l3
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 64
+        width: 128
+        height: 169
+      alignment: 9
+      pivot: {x: 0.36676347, y: 0.08717504}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2fbe55d537a294f00800000000000000
+      internalID: 1101458258844314610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: d3
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 67
+        width: 128
+        height: 145
+      alignment: 9
+      pivot: {x: 0.36676335, y: 0.08299913}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e3455f2c278db1f50800000000000000
+      internalID: 6853309245383070782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: b3
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 66
+        width: 88
+        height: 91
+      alignment: 9
+      pivot: {x: 0.4295278, y: 0.15925589}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d2644bc39a6383740800000000000000
+      internalID: 5131911875884500525
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: b25e36553d5e09b4893a3b0e30aa5ab5
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      b3: 5131911875884500525
+      d3: 6853309245383070782
+      ezgif-frame-003_0: -3010259692064062411
+      ezgif-frame-003_1: 7099445176225543122
+      ezgif-frame-003_10: 7877323021658424947
+      ezgif-frame-003_11: -8536650335738377755
+      ezgif-frame-003_13: -3231451979475739792
+      ezgif-frame-003_14: -6137750814880154377
+      ezgif-frame-003_15: 5927064038387102042
+      ezgif-frame-003_2: 2640694139998435294
+      ezgif-frame-003_4: 7055504954329380009
+      ezgif-frame-003_5: -5421804530493624251
+      ezgif-frame-003_7: 3121729550402459322
+      ezgif-frame-003_8: -2611697453710115821
+      ezgif-frame-003_9: -8186298330185541805
+      l3: 1101458258844314610
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -10,6 +10,8 @@ public class FireRoundPoint : MonoBehaviour
     private Player _player;
     private FireRoundSkill _fireSkill;
 
+    [SerializeField] private AudioClip castSFX;
+
     private void Awake()
     {
         if (vfxObject != null)
@@ -24,6 +26,12 @@ public class FireRoundPoint : MonoBehaviour
     public void Cast()
     {
         if (vfxObject == null) return;
+
+        // Play skill cast SFX
+        if (castSFX != null && AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySFX(castSFX);
+        }
 
         if (_fireSkill != null && _player != null)
         {

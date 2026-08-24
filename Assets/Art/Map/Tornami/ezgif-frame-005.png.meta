@@ -1,0 +1,259 @@
+fileFormatVersion: 2
+guid: 2c9210b6e9355b040bfea278c7b6d116
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 167901717341673732
+    second: ezgif-frame-005_0
+  - first:
+      213: 5496709342313745491
+    second: ezgif-frame-005_1
+  - first:
+      213: 7533355103607272293
+    second: ezgif-frame-005_2
+  - first:
+      213: -3631598682813166460
+    second: ezgif-frame-005_3
+  - first:
+      213: 1928814752735328450
+    second: ezgif-frame-005_4
+  - first:
+      213: -6511801354291439339
+    second: ezgif-frame-005_5
+  - first:
+      213: -1026654815867695173
+    second: ezgif-frame-005_6
+  - first:
+      213: -3859209611216868504
+    second: ezgif-frame-005_7
+  - first:
+      213: 971829678533780348
+    second: ezgif-frame-005_8
+  - first:
+      213: -8537998907125799167
+    second: ezgif-frame-005_9
+  - first:
+      213: 3185484213615059153
+    second: ezgif-frame-005_10
+  - first:
+      213: 776932918877956590
+    second: ezgif-frame-005_11
+  - first:
+      213: -6198435962463507676
+    second: ezgif-frame-005_12
+  - first:
+      213: -6366769216593437882
+    second: ezgif-frame-005_13
+  - first:
+      213: 66773384915589988
+    second: ezgif-frame-005_14
+  - first:
+      213: 3733000145589983353
+    second: ezgif-frame-005_15
+  - first:
+      213: 3318301295729073630
+    second: ezgif-frame-005_16
+  - first:
+      213: 4721752829464594485
+    second: ezgif-frame-005_17
+  - first:
+      213: 4630080913896627225
+    second: ezgif-frame-005_18
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: l5
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 65
+        width: 118
+        height: 167
+      alignment: 9
+      pivot: {x: 0.38175008, y: 0.08223103}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48c05203d38f99dc0800000000000000
+      internalID: -3631598682813166460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: b5
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 66
+        width: 116
+        height: 116
+      alignment: 9
+      pivot: {x: 0.3836351, y: 0.11240341}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5191d855b2f61a5a0800000000000000
+      internalID: -6511801354291439339
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: d5
+      rect:
+        serializedVersion: 2
+        x: 353
+        y: 64
+        width: 112
+        height: 112
+      alignment: 9
+      pivot: {x: 0.42231914, y: 0.13329323}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d0e32ec30d153c20800000000000000
+      internalID: 3185484213615059153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: cb9c3bfb010d81e46a26078db807ea85
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      b5: -6511801354291439339
+      d5: 3185484213615059153
+      ezgif-frame-005_0: 167901717341673732
+      ezgif-frame-005_1: 5496709342313745491
+      ezgif-frame-005_11: 776932918877956590
+      ezgif-frame-005_12: -6198435962463507676
+      ezgif-frame-005_13: -6366769216593437882
+      ezgif-frame-005_14: 66773384915589988
+      ezgif-frame-005_15: 3733000145589983353
+      ezgif-frame-005_16: 3318301295729073630
+      ezgif-frame-005_17: 4721752829464594485
+      ezgif-frame-005_18: 4630080913896627225
+      ezgif-frame-005_2: 7533355103607272293
+      ezgif-frame-005_4: 1928814752735328450
+      ezgif-frame-005_6: -1026654815867695173
+      ezgif-frame-005_7: -3859209611216868504
+      ezgif-frame-005_8: 971829678533780348
+      ezgif-frame-005_9: -8537998907125799167
+      l5: -3631598682813166460
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

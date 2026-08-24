@@ -38,5 +38,11 @@ namespace MonSumo.Data
         public float meleePushForce = 8f;
         public float dashPushForce = 18f;
         public float skillPushForce = 20f;
+
+        [Header("Audio")]
+        public AudioClip attackSFX;
+        public AudioClip dashSFX;
+        public AudioClip hitSFX;
+        public AudioClip itemPickupSFX;
     }
 }

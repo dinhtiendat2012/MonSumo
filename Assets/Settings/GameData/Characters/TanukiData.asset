@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   yokaiType: 4
   yokaiName: Tanuki
-  lobbyIcon: {fileID: 0}
+  lobbyIcon: {fileID: -8963219801567323207, guid: 1d4fbbe9330bf3e40a87eec124033600, type: 3}
   animatorController: {fileID: 9100000, guid: de2d20338dbf3614384fc110ce9f45c7, type: 2}
   baseMass: 10
   baseSpeed: 5
@@ -33,3 +33,7 @@ MonoBehaviour:
   meleePushForce: 200
   dashPushForce: 400
   skillPushForce: 300
+  attackSFX: {fileID: 8300000, guid: d4d94f36cf5384445aa2c72997bf3f00, type: 3}
+  dashSFX: {fileID: 8300000, guid: 75272b68d0bb1ec41afd0d0e81465a77, type: 3}
+  hitSFX: {fileID: 8300000, guid: 122da549ef410ee4aab87e20783c225f, type: 3}
+  itemPickupSFX: {fileID: 8300000, guid: 861cb289a99c88b44838dddaa0eecaa4, type: 3}

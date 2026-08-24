@@ -207,6 +207,7 @@ GameObject:
   - component: {fileID: 163887746}
   - component: {fileID: 163887745}
   - component: {fileID: 163887748}
+  - component: {fileID: 163887749}
   m_Layer: 5
   m_Name: KappaButton
   m_TagString: Untagged
@@ -344,6 +345,18 @@ MonoBehaviour:
   characterSelection: 2
   UIManager: {fileID: 0}
   spriteRenderer: {fileID: 0}
+--- !u!114 &163887749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 163887743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdaa8c20fabde7344bf94aa06b89a213, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &167190634
 GameObject:
   m_ObjectHideFlags: 0
@@ -590,6 +603,7 @@ GameObject:
   - component: {fileID: 375068172}
   - component: {fileID: 375068171}
   - component: {fileID: 375068174}
+  - component: {fileID: 375068175}
   m_Layer: 5
   m_Name: TanukiButton
   m_TagString: Untagged
@@ -726,6 +740,18 @@ MonoBehaviour:
   characterSelection: 1
   UIManager: {fileID: 1380508975}
   spriteRenderer: {fileID: -8963219801567323207, guid: 1d4fbbe9330bf3e40a87eec124033600, type: 3}
+--- !u!114 &375068175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 375068168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdaa8c20fabde7344bf94aa06b89a213, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &391563380
 GameObject:
   m_ObjectHideFlags: 0
@@ -880,6 +906,7 @@ GameObject:
   - component: {fileID: 545193359}
   - component: {fileID: 545193358}
   - component: {fileID: 545193357}
+  - component: {fileID: 545193361}
   m_Layer: 5
   m_Name: OniButton
   m_TagString: Untagged
@@ -922,7 +949,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterSelection: 3
   UIManager: {fileID: 0}
-  spriteRenderer: {fileID: 0}
+  spriteRenderer: {fileID: -3715280972482791317, guid: f88bc67164491074c995cb8e3d55485b, type: 3}
 --- !u!114 &545193358
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1017,6 +1044,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 545193355}
   m_CullTransparentMesh: 1
+--- !u!114 &545193361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 545193355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdaa8c20fabde7344bf94aa06b89a213, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &701413360
 GameObject:
   m_ObjectHideFlags: 0
@@ -1030,6 +1069,7 @@ GameObject:
   - component: {fileID: 701413364}
   - component: {fileID: 701413363}
   - component: {fileID: 701413362}
+  - component: {fileID: 701413366}
   m_Layer: 5
   m_Name: YukiButton
   m_TagString: Untagged
@@ -1167,6 +1207,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 701413360}
   m_CullTransparentMesh: 1
+--- !u!114 &701413366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 701413360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdaa8c20fabde7344bf94aa06b89a213, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &717801565
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1178,6 +1230,10 @@ PrefabInstance:
     - target: {fileID: 1802668636867208078, guid: 0f7694992beb9864bb09057581375157, type: 3}
       propertyPath: m_Name
       value: lock_0 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1802668636867208078, guid: 0f7694992beb9864bb09057581375157, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7762293202457957397, guid: 0f7694992beb9864bb09057581375157, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1441,6 +1497,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1002965733}
   - component: {fileID: 1002965732}
+  - component: {fileID: 1002965734}
   m_Layer: 0
   m_Name: bground
   m_TagString: Untagged
@@ -1513,11 +1570,23 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 575.10004}
-  m_LocalScale: {x: 150, y: 110, z: 63.9}
+  m_LocalScale: {x: 134.47264, y: 134.47264, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1040690579}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1002965734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1002965731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c574b57f639aa1488ef67b31ffaf86e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1040690575
 GameObject:
   m_ObjectHideFlags: 0
@@ -1970,15 +2039,15 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.0032743947
+    x: 0.08747515
     y: 0
-    width: 0.9927964
-    height: 1.000583
+    width: 1.5069584
+    height: 1.6382861
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 3.195
+  orthographic size: 2.885
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -2234,6 +2303,7 @@ GameObject:
   - component: {fileID: 1508642744}
   - component: {fileID: 1508642743}
   - component: {fileID: 1508642746}
+  - component: {fileID: 1508642747}
   m_Layer: 5
   m_Name: NurikabeButton
   m_TagString: Untagged
@@ -2371,6 +2441,18 @@ MonoBehaviour:
   characterSelection: 0
   UIManager: {fileID: 0}
   spriteRenderer: {fileID: 0}
+--- !u!114 &1508642747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1508642741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdaa8c20fabde7344bf94aa06b89a213, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1640809353 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7762293202457957397, guid: 0f7694992beb9864bb09057581375157, type: 3}
@@ -2538,6 +2620,7 @@ GameObject:
   - component: {fileID: 1917043282}
   - component: {fileID: 1917043281}
   - component: {fileID: 1917043280}
+  - component: {fileID: 1917043284}
   m_Layer: 5
   m_Name: TenguButton
   m_TagString: Untagged
@@ -2675,6 +2758,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1917043278}
   m_CullTransparentMesh: 1
+--- !u!114 &1917043284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1917043278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdaa8c20fabde7344bf94aa06b89a213, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1947489797
 GameObject:
   m_ObjectHideFlags: 0
@@ -2823,6 +2918,7 @@ GameObject:
   - component: {fileID: 2076683905}
   - component: {fileID: 2076683904}
   - component: {fileID: 2076683903}
+  - component: {fileID: 2076683906}
   m_Layer: 5
   m_Name: ConfirmButton
   m_TagString: Untagged
@@ -2944,6 +3040,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2076683901}
   m_CullTransparentMesh: 1
+--- !u!114 &2076683906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2076683901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdaa8c20fabde7344bf94aa06b89a213, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7908396222493535990
 PrefabInstance:
   m_ObjectHideFlags: 0

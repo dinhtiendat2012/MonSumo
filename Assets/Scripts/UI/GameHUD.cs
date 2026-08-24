@@ -53,6 +53,7 @@ namespace MonSumo.UI
         private float _alertTimer;
 
         private int _lastHpValue = 3;
+        private int _currentAvatarCharacterId = -1;
         private Coroutine[] _heartCoroutines = new Coroutine[3];
 
         private void Start()
@@ -125,13 +126,8 @@ namespace MonSumo.UI
         {
             if (_localPlayer == null) return;
 
-            // Setup avatar icon
-            if (_avatarImage != null && _localPlayer.playerData != null)
-            {
-                _avatarImage.sprite = _localPlayer.playerData.lobbyIcon != null 
-                    ? _localPlayer.playerData.lobbyIcon 
-                    : (_localPlayer.playerData.animatorController != null ? _localPlayer.playerData.lobbyIcon : null);
-            }
+            _currentAvatarCharacterId = _localPlayer.selectedCharacterId.Value;
+            UpdateAvatarUI();
 
             _lastHpValue = _localPlayer.currentHP.Value;
             UpdateHeartsUI(_lastHpValue, false);
@@ -148,6 +144,30 @@ namespace MonSumo.UI
             }
         }
 
+        private void UpdateAvatarUI()
+        {
+            if (_localPlayer == null || _avatarImage == null) return;
+
+            if (_localPlayer.playerData != null && _localPlayer.playerData.lobbyIcon != null)
+            {
+                _avatarImage.sprite = _localPlayer.playerData.lobbyIcon;
+                _avatarImage.color = Color.white;
+                _avatarImage.enabled = true;
+            }
+            else
+            {
+                _avatarImage.sprite = null;
+                _avatarImage.enabled = false;
+            }
+
+            // Set parent AvatarFrame background color to transparent as requested
+            var parentImage = _avatarImage.transform.parent != null ? _avatarImage.transform.parent.GetComponent<UnityEngine.UI.Image>() : null;
+            if (parentImage != null)
+            {
+                parentImage.color = new Color(0f, 0f, 0f, 0f); // transparent
+            }
+        }
+
         private void HandleReturnToLobbyClick()
         {
             if (_localPlayer != null)
@@ -160,6 +180,14 @@ namespace MonSumo.UI
         private void UpdatePlayerUI()
         {
             if (_localPlayer == null) return;
+
+            // Dynamically sync and update player avatar if selection has changed or loaded
+            int charId = _localPlayer.selectedCharacterId.Value;
+            if (charId != _currentAvatarCharacterId)
+            {
+                UpdateAvatarUI();
+                _currentAvatarCharacterId = charId;
+            }
 
             // HP Change Detection
             int currentHp = _localPlayer.currentHP.Value;
